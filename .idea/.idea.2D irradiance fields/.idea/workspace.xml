@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad3ec9c0-88bd-4840-883e-9d906858d72e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/scripts/Custom2dRendererData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/scripts/Custom2dRendererData.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Custom2D data.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Custom2D data.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UniversalRenderPipelineAsset.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UniversalRenderPipelineAsset.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/Custom2dRendererData.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/Custom2dRendererData.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/Pipeline2d.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/Pipeline2d.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/test.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/test.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,221 +25,67 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/scripts/Pipeline2d.cs">
+        <entry file="file://$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+            <state relative-caret-position="285">
+              <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
               <folding>
-                <marker date="1582508260002" expanded="true" signature="6:146" ph="..." />
-                <marker date="1582508260002" expanded="true" signature="199:792" ph="{...}" />
-                <marker date="1582508260002" expanded="true" signature="320:387" ph="{...}" />
-                <marker date="1582508260002" expanded="true" signature="485:790" ph="{...}" />
-                <marker date="1582508260002" expanded="true" signature="848:3262" ph="{...}" />
-                <marker date="1582508260002" expanded="true" signature="1363:1459" ph="{...}" />
-                <marker date="1582508260002" expanded="true" signature="1563:3260" ph="{...}" />
-                <marker date="1582508260002" expanded="true" signature="2508:3201" ph="{...}" />
+                <marker date="1582665473892" expanded="false" signature="6:146" ph="..." />
+                <marker date="1582665473892" expanded="true" signature="193:790" ph="{...}" />
+                <marker date="1582665473892" expanded="true" signature="310:381" ph="{...}" />
+                <marker date="1582665473892" expanded="true" signature="479:788" ph="{...}" />
+                <marker date="1582665473892" expanded="true" signature="848:3230" ph="{...}" />
+                <marker date="1582665473892" expanded="true" signature="1158:1254" ph="{...}" />
+                <marker date="1582665473892" expanded="true" signature="1358:3228" ph="{...}" />
+                <marker date="1582665473892" expanded="true" signature="1723:1974" ph="{...}" />
+                <marker date="1582665473892" expanded="true" signature="1811:1964" ph="{...}" />
+                <marker date="1582665473892" expanded="true" signature="2462:3169" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/scripts/Custom2dRendererData.cs">
+        <entry file="file://$PROJECT_DIR$/Assets/scripts/BasicMovement.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="299">
+              <caret line="16" column="85" selection-start-line="16" selection-start-column="85" selection-end-line="16" selection-end-column="85" />
               <folding>
-                <marker date="1582508255468" expanded="false" signature="6:57" ph="..." />
-                <marker date="1582508255468" expanded="true" signature="190:300" ph="{...}" />
-                <marker date="1582508255468" expanded="true" signature="243:298" ph="{...}" />
+                <marker date="1582665644469" expanded="false" signature="6:103" ph="..." />
+                <marker date="1582665644469" expanded="true" signature="147:442" ph="{...}" />
+                <marker date="1582665644469" expanded="true" signature="217:238" ph="{...}" />
+                <marker date="1582665644469" expanded="true" signature="261:440" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/TooD/TooDIrradianceCamera.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="46">
+              <caret line="2" column="33" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="33" />
+              <folding>
+                <marker date="1582664321382" expanded="true" signature="69:144" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs">
+        <entry file="file://$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6">
-              <caret line="80" column="39" lean-forward="true" selection-start-line="80" selection-start-column="39" selection-end-line="80" selection-end-column="39" />
+            <state relative-caret-position="345">
+              <caret line="147" column="36" selection-start-line="147" selection-start-column="36" selection-end-line="147" selection-end-column="36" />
               <folding>
-                <marker date="1582511200256" expanded="true" signature="6:117" ph="..." />
-                <marker date="1582511200256" expanded="true" signature="170:2608" ph="{...}" />
-                <marker date="1582511200256" expanded="true" signature="523:657" ph="{...}" />
-                <marker date="1582511200256" expanded="true" signature="559:626" ph="{...}" />
-                <marker date="1582511200256" expanded="true" signature="680:1279" ph="{...}" />
-                <marker date="1582511200256" expanded="true" signature="1123:1273" ph="{...}" />
-                <marker date="1582511200256" expanded="true" signature="1326:1432" ph="{...}" />
-                <marker date="1582511200256" expanded="true" signature="1473:1547" ph="{...}" />
-                <marker date="1582511200256" expanded="true" signature="1586:1732" ph="{...}" />
-                <marker date="1582511200256" expanded="true" signature="1768:1876" ph="{...}" />
-                <marker date="1582511200256" expanded="true" signature="1917:2606" ph="{...}" />
-                <marker date="1582511200256" expanded="true" signature="1971:2231" ph="{...}" />
-                <marker date="1582511200256" expanded="true" signature="2033:2221" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/Data/UniversalRenderPipelineAsset.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="309" selection-start-line="309" selection-end-line="309" />
-              <folding>
-                <marker date="1581507184000" expanded="true" signature="193:381" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="367:379" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="425:27744" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="506:581" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="654:726" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="802:919" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="990:1074" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="1146:1229" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="1268:1377" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="1455:1534" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="1615:1697" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="1733:1782" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="1854:1928" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="1962:2024" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="2125:27742" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="3358:3431" ph="/* TODO: Shader Quality Tiers ... */" />
-                <marker date="1581507184000" expanded="true" signature="5612:5858" ph="/* Note: A lut size of 16^3 is barely usable with the HDR grading mode. 32 should be the ... */" />
-                <marker date="1581507184000" expanded="true" signature="10986:11287" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="11347:12400" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="11577:12090" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="12464:13301" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="13355:14031" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="13381:14021" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="13522:13697" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="13803:13946" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="14095:14337" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="14121:14327" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="14397:15264" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="14571:14868" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="16111:16400" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="16137:16390" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="16274:16347" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="16448:16569" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="16618:16741" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="16789:16858" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="16900:16971" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="17004:17109" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="17145:17254" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="17288:17414" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="17472:17545" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="17591:17667" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="17716:17800" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="17865:17945" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="17990:18158" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="18210:18292" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="18348:18439" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="18476:18604" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="18661:18772" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="18808:18872" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="18910:18974" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="19012:19145" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="19184:19319" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="19360:19431" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="19476:19605" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="19648:19721" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="19781:19906" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="19952:20005" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="20040:20149" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="20199:20314" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="20354:20516" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="20566:20656" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="20714:20804" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="20858:20948" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="21005:21094" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="21146:21247" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="21307:21408" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="21473:21574" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="21626:21714" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="21760:22811" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="21786:22801" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="21834:22330" ph="/* TODO: When importing project, AssetPreviewUpdater:CreatePreviewForAsset will be called multiple time ... */" />
-                <marker date="1581507184000" expanded="true" signature="24126:24146" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="24188:25412" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="24234:24441" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="24478:24906" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="24943:25219" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="25016:25112" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="26262:26375" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="26423:26550" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="26598:26746" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="26756:27066" ph="/// Check to see if the RendererData list contains valide RendererData references. ... " />
-                <marker date="1581507184000" expanded="true" signature="27135:27431" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="27486:27736" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Renderer2D.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="989">
-              <caret line="45" column="42" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Passes/Render2DLightingPass.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1311">
-              <caret line="60" column="61" selection-start-line="60" selection-start-column="61" selection-end-line="60" selection-end-column="61" />
-              <folding>
-                <marker date="1581507184000" expanded="true" signature="186:6051" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="251:6049" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="975:1135" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="1240:6043" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="3368:5528" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="3399:3730" ph="/* Some renderers override their sorting layer value with short.MinValue or short.MaxValue. ... */" />
-                <marker date="1581507184000" expanded="true" signature="4509:4624" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="4645:4743" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="5254:5514" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Renderer2DData.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1265">
-              <caret line="59" column="24" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="24" />
-              <folding>
-                <marker date="1581507184000" expanded="true" signature="296:6234" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="465:6232" ph="{...}" />
-                <marker date="1581507184000" expanded="true" signature="2478:2846" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/7d/9ac528bf/RenderPipeline.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-              <folding>
-                <marker date="1582498655999" expanded="true" signature="0:342" ph="/* Decompiled with JetBrains decompiler ... */" />
-                <marker date="1582498655999" expanded="true" signature="390:3117" ph="{...}" />
-                <marker date="1582498655999" expanded="true" signature="395:530" ph="///   &lt;para&gt;Defines a series of commands and settings that describes how Unity renders a frame.&lt;/para&gt; ... " />
-                <marker date="1582498655999" expanded="true" signature="569:3115" ph="{...}" />
-                <marker date="1582498655999" expanded="true" signature="578:761" ph="///   &lt;para&gt;Defines custom rendering for this RenderPipeline.&lt;/para&gt; ... " />
-                <marker date="1582498655999" expanded="true" signature="854:1076" ph="///   &lt;para&gt;Calls the delegate before a camera render begins. Can only be used during SRP rendering.&lt;/para&gt; ... " />
-                <marker date="1582498655999" expanded="true" signature="1173:1252" ph="{...}" />
-                <marker date="1582498655999" expanded="true" signature="1258:1479" ph="///   &lt;para&gt;Calls the delegate before a camera render begins. Can only be used during SRP rendering.&lt;/para&gt; ... " />
-                <marker date="1582498655999" expanded="true" signature="1574:1653" ph="{...}" />
-                <marker date="1582498655999" expanded="true" signature="1659:1867" ph="///   &lt;para&gt;Calls the delegate, used during SRP rendering, after a camera render ends.&lt;/para&gt; ... " />
-                <marker date="1582498655999" expanded="true" signature="1962:2039" ph="{...}" />
-                <marker date="1582498655999" expanded="true" signature="2045:2263" ph="///   &lt;para&gt;Calls the delegate after a camera render ends. Can only be used during SRP rendering.&lt;/para&gt; ... " />
-                <marker date="1582498655999" expanded="true" signature="2356:2433" ph="{...}" />
-                <marker date="1582498655999" expanded="true" signature="2518:2740" ph="{...}" />
-                <marker date="1582498655999" expanded="true" signature="2746:2863" ph="///   &lt;para&gt;Returns true when the RenderPipeline is invalid or destroyed.&lt;/para&gt; ... " />
-                <marker date="1582498655999" expanded="true" signature="2939:3047" ph="{...}" />
-                <marker date="1582498655999" expanded="true" signature="3099:3111" ph="{...}" />
+                <marker date="1582665932846" expanded="true" signature="21:5010" ph="{...}" />
+                <marker date="1582665932846" expanded="true" signature="42:289" ph="{...}" />
+                <marker date="1582665932846" expanded="true" signature="306:396" ph="{...}" />
+                <marker date="1582665932846" expanded="true" signature="423:4976" ph="{...}" />
+                <marker date="1582665932846" expanded="true" signature="632:3125" ph="{...}" />
+                <marker date="1582665932846" expanded="true" signature="706:3108" ph="{...}" />
+                <marker date="1582665932846" expanded="true" signature="3156:4970" ph="{...}" />
+                <marker date="1582665932846" expanded="true" signature="3231:4953" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -244,36 +101,67 @@
       <find>pass</find>
       <find>stencil</find>
       <find>clear</find>
+      <find>CameraTarget</find>
+      <find>camera</find>
+      <find>CameraData</find>
+      <find>linear</find>
+      <find>_EnableExternalAlpha</find>
+      <find>_AlphaTex</find>
+      <find>_Flip</find>
+      <find>_RendererColor</find>
+      <find>_MainTex</find>
+      <find>_normal</find>
+      <find>CombinedShapeLightShared</find>
+      <find>clip</find>
+      <find>colorAttachment</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/scripts/Pipeline2d.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/32/0d317ea7/ScriptableCullingParameters.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/Passes/ScriptableRenderPass.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/RenderingUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/cb/6e6cbb34/CommandBuffer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/UniversalRenderPipeline.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Renderer2DData.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Passes/Render2DLightingPass.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/DontDestroy.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/8b/9befb6f3/ScriptableRenderContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Passes/Utility/RendererLighting.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TooD/TooDRendererData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/Passes/FinalBlitPass.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F6176381-6B4C-4C15-AD9B-5F29A9C1DC28/3a/4f77f778/ClearFlag.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/7d/9ac528bf/RenderPipeline.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/5b/20cad812/RenderBufferStoreAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Renderer2D.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Editor/2D/Light2DEditorUtility.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/scripts/Custom2dRendererData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/b7/ad62fc17/RenderPipelineAsset.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/ForwardRenderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@7.1.8/Runtime/Utilities/CoreUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/ScriptableRendererData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@7.1.8/Runtime/Utilities/ResourceReloader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/DBEEBE4E-964C-4926-B16D-3D70792A99AF/83/19b8f4fb/CameraData.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/17/b33e455b/RenderBufferLoadAction.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/DBEEBE4E-964C-4926-B16D-3D70792A99AF/49/b634026d/RenderingData.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/ScriptableRenderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/14/c75d0d54/QualitySettings.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/18/29cbf375/Camera.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/70/eb27fe6b/CameraClearFlags.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/Passes/ScriptableRenderPass.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/RenderingUtils.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Shaders/2D/Sprite-Lit-Default.shader" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Renderer2DData.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Passes/Render2DLightingPass.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/8b/9befb6f3/ScriptableRenderContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Shaders/2D/Include/CombinedShapeLightShared.hlsl" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Passes/Utility/RendererLighting.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/2e/898a2843/RenderPipelineManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TooD/TooDIrradianceCamera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Editor/2D/Light2DEditorUtility.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/UniversalAdditionalCameraData.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/scripts/BasicMovement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/b7/ad62fc17/RenderPipelineAsset.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/ForwardRenderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/ee/193178af/Gizmos.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/Data/UniversalRenderPipelineAsset.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/ScriptableRenderer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/18/29cbf375/Camera.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/RenderTargetHandle.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/4a/0d659389/Component.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -281,10 +169,16 @@
         <option value="$PROJECT_DIR$/Assets/IrradianceProbeManager.cs" />
         <option value="$PROJECT_DIR$/Assets/scripts/SurfaceRenderPass.cs" />
         <option value="$PROJECT_DIR$/Assets/scripts/2d Pipeline.cs" />
-        <option value="$PROJECT_DIR$/Assets/scripts/Pipeline2d.cs" />
         <option value="$PROJECT_DIR$/Assets/scripts/Custom2dRendererData.cs" />
         <option value="$PROJECT_DIR$/Assets/scripts/DontDestroy.cs" />
         <option value="$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/Pipeline2d.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/TooDRendererData.cs" />
+        <option value="$PROJECT_DIR$/Assets/TooD/Pipeline2d.cs" />
+        <option value="$PROJECT_DIR$/Assets/TooD/TooDIrradianceCamera.cs" />
+        <option value="$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/BasicMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader" />
       </list>
     </option>
   </component>
@@ -301,10 +195,10 @@
     </navigator>
     <panes>
       <pane id="FileSystemExplorer" />
+      <pane id="AssemblyExplorer" />
       <pane id="SolutionExplorer">
         <option name="show-all-files" value="false" />
       </pane>
-      <pane id="AssemblyExplorer" />
       <pane id="UnityExplorer">
         <option name="show-hidden-items" value="false" />
         <option name="show-project-names" value="true" />
@@ -340,10 +234,10 @@
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="15392">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="15392" />
       <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
@@ -359,12 +253,14 @@
       <option name="presentableId" value="Default" />
       <updated>1582497565852</updated>
       <workItem from="1582497575021" duration="6076000" />
-      <workItem from="1582508221073" duration="3090000" />
+      <workItem from="1582508221073" duration="3595000" />
+      <workItem from="1582644958368" duration="5322000" />
+      <workItem from="1582658838117" duration="4634000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9166000" />
+    <option name="totallyTimeSpent" value="19627000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -377,14 +273,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25253063" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25785828" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.3991462" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -396,7 +293,7 @@
       <window_info anchor="bottom" id="Tool Output" order="12" />
       <window_info anchor="bottom" id="Database Changes" order="13" />
       <window_info anchor="bottom" id="Unit Tests" order="14" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="15" visible="true" weight="0.32870865" />
+      <window_info anchor="bottom" id="Terminal" order="15" weight="0.32870865" />
       <window_info anchor="bottom" id="Event Log" order="16" side_tool="true" />
       <window_info anchor="bottom" id="ANTLR Preview" order="17" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -426,34 +323,6 @@
     <entry file="file://$PROJECT_DIR$/Assets/IrradianceProbeManager.cs" />
     <entry file="file://$PROJECT_DIR$/Assets/scripts/SurfaceRenderPass.cs" />
     <entry file="file://$PROJECT_DIR$/Assets/scripts/2d Pipeline.cs" />
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/cb/6e6cbb34/CommandBuffer.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="2049" column="23" selection-start-line="2049" selection-start-column="16" selection-end-line="2049" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/ForwardRenderer.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="296" column="56" selection-start-line="296" selection-start-column="56" selection-end-line="296" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/18/29cbf375/Camera.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="1207" column="30" lean-forward="true" selection-start-line="1207" selection-start-column="30" selection-end-line="1207" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/UniversalRenderPipeline.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="223" column="16" lean-forward="true" selection-start-line="223" selection-start-column="16" selection-end-line="223" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/32/0d317ea7/ScriptableCullingParameters.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
@@ -539,13 +408,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Editor/2D/Light2DEditorUtility.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2300">
-          <caret line="103" column="20" selection-start-line="103" selection-start-column="20" selection-end-line="103" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/ScriptableRendererData.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -580,159 +442,6 @@
             <marker date="1581507184000" expanded="true" signature="12027:12299" ph="{...}" />
             <marker date="1581507184000" expanded="true" signature="12311:12642" ph="/// Attribute specifying that it contains element that should be reloaded. ... " />
             <marker date="1581507184000" expanded="true" signature="12744:12752" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/ScriptableRenderer.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="130" column="20" selection-start-line="130" selection-start-column="20" selection-end-line="130" selection-end-column="20" />
-          <folding>
-            <marker date="1581507184000" expanded="false" signature="6:139" ph="..." />
-            <marker date="1581507184000" expanded="true" signature="182:26269" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="189:1016" ph="///  Class &lt;c&gt;ScriptableRenderer&lt;/c&gt; implements a rendering strategy. It describes how culling and lighting works ... " />
-            <marker date="1581507184000" expanded="true" signature="1103:26267" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="1220:3245" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="2103:2668" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="2685:3235" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="3302:3362" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="3413:3473" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="3541:3600" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="3668:3732" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="3770:4352" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="3793:3960" ph="/* Executes render passes that are inputs to the main rendering ... */" />
-            <marker date="1581507184000" expanded="true" signature="4034:4178" ph="/* Main bulk of render pass execution. They required camera state to be properly set ... */" />
-            <marker date="1581507184000" expanded="true" signature="5274:5404" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="5468:5747" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="5537:5716" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="5757:6130" ph="/// Configures the camera target. ... " />
-            <marker date="1581507184000" expanded="true" signature="6244:6358" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="6368:6840" ph="/// Configures the render passes that will execute for this renderer. ... " />
-            <marker date="1581507184000" expanded="true" signature="6952:7342" ph="/// Override this method to implement the lighting setup for the renderer. You can use this to ... " />
-            <marker date="1581507184000" expanded="true" signature="7448:7468" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="7478:7923" ph="/// Override this method to configure the culling parameters for the renderer. You can use this to configure if ... " />
-            <marker date="1581507184000" expanded="true" signature="8064:8084" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="8094:8274" ph="/// Called upon finishing camera rendering. You can release any resources created on setup here. ... " />
-            <marker date="1581507184000" expanded="true" signature="8337:8357" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="8367:8700" ph="/// Execute the enqueued render passes. This automatically handles editor and stereo rendering. ... " />
-            <marker date="1581507184000" expanded="true" signature="8794:13140" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="9002:9424" ph="/* Cache the time for after the call to `SetupCameraProperties` and set the time variables in shader ... */" />
-            <marker date="1581507184000" expanded="true" signature="10585:10781" ph="/* Before Render Block. This render blocks always execute in mono rendering. ... */" />
-            <marker date="1581507184000" expanded="true" signature="10895:11478" ph="/* Configure shader variables and other unity properties that are required for rendering. ... */" />
-            <marker date="1581507184000" expanded="true" signature="11633:11876" ph="/* Override time values from when `SetupCameraProperties` were called. ... */" />
-            <marker date="1581507184000" expanded="true" signature="13150:13303" ph="/// Enqueues a render pass for execution. ... " />
-            <marker date="1581507184000" expanded="true" signature="13362:13429" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="13439:13702" ph="/// Returns a clear flag based on CameraClearFlags. ... " />
-            <marker date="1581507184000" expanded="true" signature="13791:16013" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="13831:14066" ph="/* We need public API to tell if FrameDebugger is active and enabled. In that case ... */" />
-            <marker date="1581507184000" expanded="true" signature="14147:15683" ph="/* Universal RP doesn't support CameraClearFlags.DepthOnly and CameraClearFlags.Nothing. ... */" />
-            <marker date="1581507184000" expanded="true" signature="16023:16153" ph="/* Initialize Camera Render State ... */" />
-            <marker date="1581507184000" expanded="true" signature="16247:17275" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="17306:17773" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="17945:18345" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="18104:18276" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="18476:20866" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="18903:19079" ph="/* When render pass doesn't call ConfigureTarget we assume it's expected to render to camera target ... */" />
-            <marker date="1581507184000" expanded="true" signature="19129:19275" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="19372:20348" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="19589:19858" ph="/* Overlay cameras composite on top of previous ones. They don't clear. ... */" />
-            <marker date="1581507184000" expanded="true" signature="20165:20334" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="20945:21054" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="21131:21285" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="21469:22292" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="22623:22959" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="23448:24209" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="23532:23705" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="23722:24199" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="24345:24504" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="24695:25408" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="24838:24955" ph="/* For each block, it finds the first render pass index that has an event ... */" />
-            <marker date="1581507184000" expanded="true" signature="25021:25324" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="25479:25856" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="25930:26261" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="26008:26251" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/8b/9befb6f3/ScriptableRenderContext.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="312" column="16" selection-start-line="312" selection-start-column="16" selection-end-line="312" selection-end-column="16" />
-          <folding>
-            <marker date="1582498941849" expanded="true" signature="0:351" ph="/* Decompiled with JetBrains decompiler ... */" />
-            <marker date="1582498941849" expanded="false" signature="359:525" ph="..." />
-            <marker date="1582498941849" expanded="true" signature="558:22318" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="563:684" ph="///   &lt;para&gt;Defines state and drawing commands used in a custom render pipelines.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="1193:22316" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="2458:2565" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="2817:2895" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="2942:3039" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="3089:3184" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="3416:3596" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="3665:3771" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="3777:3961" ph="///   &lt;para&gt;Emit UI geometry into the Scene view for rendering.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="4245:4352" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="4475:4598" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="4689:4808" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="4893:5006" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="5071:5169" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="5224:5316" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="5369:5459" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="5517:5617" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="5695:5798" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="5837:5874" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="5951:6017" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="6202:6438" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="6634:6774" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="6910:7147" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="7239:7432" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="7576:7684" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="7797:7897" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="7903:7985" ph="///   &lt;para&gt;Ends the current sub pass.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="8014:8112" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="8118:8203" ph="///   &lt;para&gt;Ends the current render pass.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="8235:8336" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="8342:8434" ph="///   &lt;para&gt;Submit rendering loop for execution.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="8459:8524" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="8563:8647" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="8689:8769" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="8928:9124" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="9329:9691" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="9950:10640" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="10712:10943" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="10949:11117" ph="///   &lt;para&gt;Execute a custom graphics command buffer.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="11183:11373" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="11379:13997" ph="///         &lt;para&gt;Executes a command buffer on an async compute queue with the queue selected based on the Comput ... " />
-            <marker date="1582498941849" expanded="true" signature="14096:14302" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="14308:14639" ph="///   &lt;para&gt;Setup camera specific global shader variables.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="14718:14788" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="14869:14973" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="14979:15247" ph="///   &lt;para&gt;Indicate completion of stereo rendering on a single frame.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="15294:15351" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="15408:15467" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="15542:15640" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="15646:15921" ph="///   &lt;para&gt;Fine-grain control to begin stereo rendering on the scriptable render context.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="15966:16015" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="16070:16153" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="16159:16346" ph="///   &lt;para&gt;Stop stereo rendering on the scriptable render context.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="16390:16467" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="16473:16609" ph="///   &lt;para&gt;Draw skybox.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="16651:16726" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="16732:16870" ph="///   &lt;para&gt;Use this function to invoke the OnRenderObject callback for MonoBehaviour scripts.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="16917:17004" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="17010:17465" ph="///   &lt;para&gt;Draw a subset of Gizmos (before or after postprocessing) for the given camera.&lt;/para&gt; ... " />
-            <marker date="1582498941849" expanded="true" signature="17532:17620" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="17703:17907" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="17990:18511" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="18217:18296" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="18323:18505" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="18566:18632" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="18677:18825" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="18864:18915" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="19012:19057" ph="{...}" />
-            <marker date="1582498941849" expanded="true" signature="19154:19200" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -826,79 +535,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/Passes/ScriptableRenderPass.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/scripts/DontDestroy.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="5" lean-forward="true" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+          <folding>
+            <marker date="1582508387858" expanded="true" signature="59:136" ph="{...}" />
+            <marker date="1582508387858" expanded="true" signature="78:134" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/ee/193178af/Gizmos.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
-          <caret line="207" column="31" selection-start-line="207" selection-start-column="31" selection-end-line="207" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Renderer2D.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="989">
-          <caret line="45" column="42" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Passes/Render2DLightingPass.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1311">
-          <caret line="60" column="61" selection-start-line="60" selection-start-column="61" selection-end-line="60" selection-end-column="61" />
-          <folding>
-            <marker date="1581507184000" expanded="true" signature="186:6051" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="251:6049" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="975:1135" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="1240:6043" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="3368:5528" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="3399:3730" ph="/* Some renderers override their sorting layer value with short.MinValue or short.MaxValue. ... */" />
-            <marker date="1581507184000" expanded="true" signature="4509:4624" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="4645:4743" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="5254:5514" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Renderer2DData.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1265">
-          <caret line="59" column="24" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="24" />
-          <folding>
-            <marker date="1581507184000" expanded="true" signature="296:6234" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="465:6232" ph="{...}" />
-            <marker date="1581507184000" expanded="true" signature="2478:2846" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/7d/9ac528bf/RenderPipeline.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-          <folding>
-            <marker date="1582498655999" expanded="true" signature="0:342" ph="/* Decompiled with JetBrains decompiler ... */" />
-            <marker date="1582498655999" expanded="true" signature="390:3117" ph="{...}" />
-            <marker date="1582498655999" expanded="true" signature="395:530" ph="///   &lt;para&gt;Defines a series of commands and settings that describes how Unity renders a frame.&lt;/para&gt; ... " />
-            <marker date="1582498655999" expanded="true" signature="569:3115" ph="{...}" />
-            <marker date="1582498655999" expanded="true" signature="578:761" ph="///   &lt;para&gt;Defines custom rendering for this RenderPipeline.&lt;/para&gt; ... " />
-            <marker date="1582498655999" expanded="true" signature="854:1076" ph="///   &lt;para&gt;Calls the delegate before a camera render begins. Can only be used during SRP rendering.&lt;/para&gt; ... " />
-            <marker date="1582498655999" expanded="true" signature="1173:1252" ph="{...}" />
-            <marker date="1582498655999" expanded="true" signature="1258:1479" ph="///   &lt;para&gt;Calls the delegate before a camera render begins. Can only be used during SRP rendering.&lt;/para&gt; ... " />
-            <marker date="1582498655999" expanded="true" signature="1574:1653" ph="{...}" />
-            <marker date="1582498655999" expanded="true" signature="1659:1867" ph="///   &lt;para&gt;Calls the delegate, used during SRP rendering, after a camera render ends.&lt;/para&gt; ... " />
-            <marker date="1582498655999" expanded="true" signature="1962:2039" ph="{...}" />
-            <marker date="1582498655999" expanded="true" signature="2045:2263" ph="///   &lt;para&gt;Calls the delegate after a camera render ends. Can only be used during SRP rendering.&lt;/para&gt; ... " />
-            <marker date="1582498655999" expanded="true" signature="2356:2433" ph="{...}" />
-            <marker date="1582498655999" expanded="true" signature="2518:2740" ph="{...}" />
-            <marker date="1582498655999" expanded="true" signature="2746:2863" ph="///   &lt;para&gt;Returns true when the RenderPipeline is invalid or destroyed.&lt;/para&gt; ... " />
-            <marker date="1582498655999" expanded="true" signature="2939:3047" ph="{...}" />
-            <marker date="1582498655999" expanded="true" signature="3099:3111" ph="{...}" />
-          </folding>
+          <caret line="444" column="31" selection-start-line="444" selection-start-column="31" selection-end-line="444" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/Data/UniversalRenderPipelineAsset.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
+        <state relative-caret-position="7084">
           <caret line="309" selection-start-line="309" selection-end-line="309" />
           <folding>
             <marker date="1581507184000" expanded="true" signature="193:381" ph="{...}" />
@@ -988,6 +645,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Renderer2DData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1265">
+          <caret line="59" column="24" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="24" />
+          <folding>
+            <marker date="1581507184000" expanded="true" signature="296:6234" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="465:6232" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2478:2846" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/ForwardRenderer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3243">
+          <caret line="141" column="112" selection-start-line="141" selection-start-column="112" selection-end-line="141" selection-end-column="112" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/RenderTargetHandle.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="60" selection-start-line="4" selection-start-column="60" selection-end-line="4" selection-end-column="60" />
+          <folding>
+            <marker date="1581507184000" expanded="true" signature="83:1358" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="164:1356" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="355:429" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="481:668" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="517:607" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="722:777" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="826:985" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1028:1071" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1156:1210" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1295:1350" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/Passes/FinalBlitPass.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-414">
+          <caret line="36" column="101" selection-start-line="36" selection-start-column="88" selection-end-line="36" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/scripts/Custom2dRendererData.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -999,59 +701,1133 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/scripts/DontDestroy.cs">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/DBEEBE4E-964C-4926-B16D-3D70792A99AF/83/19b8f4fb/CameraData.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="4" column="5" lean-forward="true" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+        <state relative-caret-position="138">
+          <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Passes/Render2DLightingPass.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="41" column="16" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
           <folding>
-            <marker date="1582508387858" expanded="true" signature="59:136" ph="{...}" />
-            <marker date="1582508387858" expanded="true" signature="78:134" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="186:6051" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="251:6049" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="975:1135" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1240:6043" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3368:5528" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3399:3730" ph="/* Some renderers override their sorting layer value with short.MinValue or short.MaxValue. ... */" />
+            <marker date="1581507184000" expanded="true" signature="4509:4624" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="4645:4743" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5254:5514" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/8b/9befb6f3/ScriptableRenderContext.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="257" column="20" selection-start-line="257" selection-start-column="20" selection-end-line="257" selection-end-column="20" />
+          <folding>
+            <marker date="1582498941849" expanded="true" signature="0:351" ph="/* Decompiled with JetBrains decompiler ... */" />
+            <marker date="1582498941849" expanded="true" signature="558:22318" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="563:684" ph="///   &lt;para&gt;Defines state and drawing commands used in a custom render pipelines.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="1193:22316" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="2458:2565" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="2817:2895" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="2942:3039" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="3089:3184" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="3416:3596" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="3665:3771" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="3777:3961" ph="///   &lt;para&gt;Emit UI geometry into the Scene view for rendering.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="4245:4352" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="4475:4598" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="4689:4808" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="4893:5006" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="5071:5169" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="5224:5316" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="5369:5459" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="5517:5617" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="5695:5798" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="5837:5874" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="5951:6017" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="6202:6438" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="6634:6774" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="6910:7147" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="7239:7432" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="7576:7684" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="7797:7897" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="7903:7985" ph="///   &lt;para&gt;Ends the current sub pass.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="8014:8112" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="8118:8203" ph="///   &lt;para&gt;Ends the current render pass.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="8235:8336" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="8342:8434" ph="///   &lt;para&gt;Submit rendering loop for execution.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="8459:8524" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="8563:8647" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="8689:8769" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="8928:9124" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="9329:9691" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="9950:10640" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="10712:10943" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="10949:11117" ph="///   &lt;para&gt;Execute a custom graphics command buffer.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="11183:11373" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="11379:13997" ph="///         &lt;para&gt;Executes a command buffer on an async compute queue with the queue selected based on the Comput ... " />
+            <marker date="1582498941849" expanded="true" signature="14096:14302" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="14308:14639" ph="///   &lt;para&gt;Setup camera specific global shader variables.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="14718:14788" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="14869:14973" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="14979:15247" ph="///   &lt;para&gt;Indicate completion of stereo rendering on a single frame.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="15294:15351" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="15408:15467" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="15542:15640" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="15646:15921" ph="///   &lt;para&gt;Fine-grain control to begin stereo rendering on the scriptable render context.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="15966:16015" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="16070:16153" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="16159:16346" ph="///   &lt;para&gt;Stop stereo rendering on the scriptable render context.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="16390:16467" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="16473:16609" ph="///   &lt;para&gt;Draw skybox.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="16651:16726" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="16732:16870" ph="///   &lt;para&gt;Use this function to invoke the OnRenderObject callback for MonoBehaviour scripts.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="16917:17004" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="17010:17465" ph="///   &lt;para&gt;Draw a subset of Gizmos (before or after postprocessing) for the given camera.&lt;/para&gt; ... " />
+            <marker date="1582498941849" expanded="true" signature="17532:17620" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="17703:17907" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="17990:18511" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="18217:18296" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="18323:18505" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="18566:18632" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="18677:18825" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="18864:18915" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="19012:19057" ph="{...}" />
+            <marker date="1582498941849" expanded="true" signature="19154:19200" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/2e/898a2843/RenderPipelineManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="86" column="63" selection-start-line="86" selection-start-column="63" selection-end-line="86" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/7d/9ac528bf/RenderPipeline.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
+          <folding>
+            <marker date="1582498655999" expanded="true" signature="0:342" ph="/* Decompiled with JetBrains decompiler ... */" />
+            <marker date="1582498655999" expanded="true" signature="390:3117" ph="{...}" />
+            <marker date="1582498655999" expanded="true" signature="395:530" ph="///   &lt;para&gt;Defines a series of commands and settings that describes how Unity renders a frame.&lt;/para&gt; ... " />
+            <marker date="1582498655999" expanded="true" signature="569:3115" ph="{...}" />
+            <marker date="1582498655999" expanded="true" signature="578:761" ph="///   &lt;para&gt;Defines custom rendering for this RenderPipeline.&lt;/para&gt; ... " />
+            <marker date="1582498655999" expanded="true" signature="854:1076" ph="///   &lt;para&gt;Calls the delegate before a camera render begins. Can only be used during SRP rendering.&lt;/para&gt; ... " />
+            <marker date="1582498655999" expanded="true" signature="1173:1252" ph="{...}" />
+            <marker date="1582498655999" expanded="true" signature="1258:1479" ph="///   &lt;para&gt;Calls the delegate before a camera render begins. Can only be used during SRP rendering.&lt;/para&gt; ... " />
+            <marker date="1582498655999" expanded="true" signature="1574:1653" ph="{...}" />
+            <marker date="1582498655999" expanded="true" signature="1659:1867" ph="///   &lt;para&gt;Calls the delegate, used during SRP rendering, after a camera render ends.&lt;/para&gt; ... " />
+            <marker date="1582498655999" expanded="true" signature="1962:2039" ph="{...}" />
+            <marker date="1582498655999" expanded="true" signature="2045:2263" ph="///   &lt;para&gt;Calls the delegate after a camera render ends. Can only be used during SRP rendering.&lt;/para&gt; ... " />
+            <marker date="1582498655999" expanded="true" signature="2356:2433" ph="{...}" />
+            <marker date="1582498655999" expanded="true" signature="2518:2740" ph="{...}" />
+            <marker date="1582498655999" expanded="true" signature="2746:2863" ph="///   &lt;para&gt;Returns true when the RenderPipeline is invalid or destroyed.&lt;/para&gt; ... " />
+            <marker date="1582498655999" expanded="true" signature="2939:3047" ph="{...}" />
+            <marker date="1582498655999" expanded="true" signature="3099:3111" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/14/c75d0d54/QualitySettings.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="333" column="36" selection-start-line="333" selection-start-column="36" selection-end-line="333" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/4a/0d659389/Component.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/DBEEBE4E-964C-4926-B16D-3D70792A99AF/49/b634026d/RenderingData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+          <folding>
+            <marker date="1582645565575" expanded="true" signature="0:383" ph="/* Decompiled with JetBrains decompiler ... */" />
+            <marker date="1582645565575" expanded="true" signature="468:862" ph="{...}" />
+            <marker date="1582645565575" expanded="true" signature="544:860" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/scripts/Pipeline2d.cs">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="23" column="1" lean-forward="true" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/scripts/TooDRendererData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="3" column="70" lean-forward="true" selection-start-line="3" selection-start-column="70" selection-end-line="3" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Shaders/2D/Sprite-Lit-Default.shader">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
-          <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+          <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
           <folding>
-            <marker date="1582508260002" expanded="true" signature="6:146" ph="..." />
-            <marker date="1582508260002" expanded="true" signature="199:792" ph="{...}" />
-            <marker date="1582508260002" expanded="true" signature="320:387" ph="{...}" />
-            <marker date="1582508260002" expanded="true" signature="485:790" ph="{...}" />
-            <marker date="1582508260002" expanded="true" signature="848:3262" ph="{...}" />
-            <marker date="1582508260002" expanded="true" signature="1363:1459" ph="{...}" />
-            <marker date="1582508260002" expanded="true" signature="1563:3260" ph="{...}" />
-            <marker date="1582508260002" expanded="true" signature="2508:3201" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="57:7278" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="78:705" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="722:812" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="839:7244" ph="{...}" />
+            <marker date="1581507184000" expanded="false" signature="1048:3638" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1122:3621" ph="{...}" />
+            <marker date="1581507184000" expanded="false" signature="3661:5864" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3739:5847" ph="{...}" />
+            <marker date="1581507184000" expanded="false" signature="5886:7238" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="6014:7221" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/ee/193178af/Gizmos.cs">
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Shaders/2D/Include/CombinedShapeLightShared.hlsl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="444" column="31" selection-start-line="444" selection-start-column="31" selection-end-line="444" selection-end-column="31" />
+        <state relative-caret-position="138">
+          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/ScriptableRenderer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="180" column="20" selection-start-line="180" selection-start-column="20" selection-end-line="180" selection-end-column="20" />
+          <folding>
+            <marker date="1581507184000" expanded="true" signature="182:26269" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="189:1016" ph="///  Class &lt;c&gt;ScriptableRenderer&lt;/c&gt; implements a rendering strategy. It describes how culling and lighting works ... " />
+            <marker date="1581507184000" expanded="true" signature="1103:26267" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1220:3245" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2103:2668" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2685:3235" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3302:3362" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3413:3473" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3541:3600" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3668:3732" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3770:4352" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3793:3960" ph="/* Executes render passes that are inputs to the main rendering ... */" />
+            <marker date="1581507184000" expanded="true" signature="4034:4178" ph="/* Main bulk of render pass execution. They required camera state to be properly set ... */" />
+            <marker date="1581507184000" expanded="true" signature="5274:5404" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5468:5747" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5537:5716" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5757:6130" ph="/// Configures the camera target. ... " />
+            <marker date="1581507184000" expanded="true" signature="6244:6358" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="6368:6840" ph="/// Configures the render passes that will execute for this renderer. ... " />
+            <marker date="1581507184000" expanded="true" signature="6952:7342" ph="/// Override this method to implement the lighting setup for the renderer. You can use this to ... " />
+            <marker date="1581507184000" expanded="true" signature="7448:7468" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="7478:7923" ph="/// Override this method to configure the culling parameters for the renderer. You can use this to configure if ... " />
+            <marker date="1581507184000" expanded="true" signature="8064:8084" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="8094:8274" ph="/// Called upon finishing camera rendering. You can release any resources created on setup here. ... " />
+            <marker date="1581507184000" expanded="true" signature="8337:8357" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="8367:8700" ph="/// Execute the enqueued render passes. This automatically handles editor and stereo rendering. ... " />
+            <marker date="1581507184000" expanded="true" signature="8794:13140" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="9002:9424" ph="/* Cache the time for after the call to `SetupCameraProperties` and set the time variables in shader ... */" />
+            <marker date="1581507184000" expanded="true" signature="10585:10781" ph="/* Before Render Block. This render blocks always execute in mono rendering. ... */" />
+            <marker date="1581507184000" expanded="true" signature="10895:11478" ph="/* Configure shader variables and other unity properties that are required for rendering. ... */" />
+            <marker date="1581507184000" expanded="true" signature="11633:11876" ph="/* Override time values from when `SetupCameraProperties` were called. ... */" />
+            <marker date="1581507184000" expanded="true" signature="13150:13303" ph="/// Enqueues a render pass for execution. ... " />
+            <marker date="1581507184000" expanded="true" signature="13362:13429" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="13439:13702" ph="/// Returns a clear flag based on CameraClearFlags. ... " />
+            <marker date="1581507184000" expanded="true" signature="13791:16013" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="13831:14066" ph="/* We need public API to tell if FrameDebugger is active and enabled. In that case ... */" />
+            <marker date="1581507184000" expanded="true" signature="14147:15683" ph="/* Universal RP doesn't support CameraClearFlags.DepthOnly and CameraClearFlags.Nothing. ... */" />
+            <marker date="1581507184000" expanded="true" signature="16023:16153" ph="/* Initialize Camera Render State ... */" />
+            <marker date="1581507184000" expanded="true" signature="16247:17275" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="17306:17773" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="17945:18345" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="18104:18276" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="18476:20866" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="18903:19079" ph="/* When render pass doesn't call ConfigureTarget we assume it's expected to render to camera target ... */" />
+            <marker date="1581507184000" expanded="true" signature="19129:19275" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="19372:20348" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="19589:19858" ph="/* Overlay cameras composite on top of previous ones. They don't clear. ... */" />
+            <marker date="1581507184000" expanded="true" signature="20165:20334" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="20945:21054" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="21131:21285" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="21469:22292" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="22623:22959" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="23448:24209" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="23532:23705" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="23722:24199" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="24345:24504" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="24695:25408" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="24838:24955" ph="/* For each block, it finds the first render pass index that has an event ... */" />
+            <marker date="1581507184000" expanded="true" signature="25021:25324" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="25479:25856" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="25930:26261" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="26008:26251" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6">
-          <caret line="80" column="39" lean-forward="true" selection-start-line="80" selection-start-column="39" selection-end-line="80" selection-end-column="39" />
+        <state relative-caret-position="176">
+          <caret line="39" column="24" selection-start-line="39" selection-start-column="24" selection-end-line="39" selection-end-column="24" />
           <folding>
-            <marker date="1582511200256" expanded="true" signature="6:117" ph="..." />
-            <marker date="1582511200256" expanded="true" signature="170:2608" ph="{...}" />
-            <marker date="1582511200256" expanded="true" signature="523:657" ph="{...}" />
-            <marker date="1582511200256" expanded="true" signature="559:626" ph="{...}" />
-            <marker date="1582511200256" expanded="true" signature="680:1279" ph="{...}" />
-            <marker date="1582511200256" expanded="true" signature="1123:1273" ph="{...}" />
-            <marker date="1582511200256" expanded="true" signature="1326:1432" ph="{...}" />
-            <marker date="1582511200256" expanded="true" signature="1473:1547" ph="{...}" />
-            <marker date="1582511200256" expanded="true" signature="1586:1732" ph="{...}" />
-            <marker date="1582511200256" expanded="true" signature="1768:1876" ph="{...}" />
-            <marker date="1582511200256" expanded="true" signature="1917:2606" ph="{...}" />
-            <marker date="1582511200256" expanded="true" signature="1971:2231" ph="{...}" />
-            <marker date="1582511200256" expanded="true" signature="2033:2221" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="6:117" ph="..." />
+            <marker date="1582650578822" expanded="true" signature="170:3688" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="780:1134" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="816:883" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="1164:1202" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="1221:1990" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="1626:1753" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="2039:2146" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="2170:2300" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="2352:2458" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="2499:2610" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="2653:2799" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="2835:2947" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="2988:3686" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="3042:3307" ph="{...}" />
+            <marker date="1582650578822" expanded="true" signature="3104:3297" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/2D/Renderer2D.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="27" column="44" selection-start-line="27" selection-start-column="44" selection-end-line="27" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Editor/2D/Light2DEditorUtility.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-14">
+          <caret line="81" column="17" selection-start-line="81" selection-start-column="17" selection-end-line="81" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/TooD/Pipeline2d.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="4" column="38" lean-forward="true" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/TooD/PipelineTooD.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="4" column="38" lean-forward="true" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/17/b33e455b/RenderBufferLoadAction.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/5b/20cad812/RenderBufferStoreAction.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="25" column="17" lean-forward="true" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/18/29cbf375/Camera.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="274" column="35" selection-start-line="274" selection-start-column="35" selection-end-line="274" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F6176381-6B4C-4C15-AD9B-5F29A9C1DC28/3a/4f77f778/ClearFlag.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+          <folding>
+            <marker date="1582664674931" expanded="true" signature="0:359" ph="/* Decompiled with JetBrains decompiler ... */" />
+            <marker date="1582664674931" expanded="true" signature="407:536" ph="{...}" />
+            <marker date="1582664674931" expanded="true" signature="443:534" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/70/eb27fe6b/CameraClearFlags.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="21" column="14" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="14" />
+          <folding>
+            <marker date="1582664908891" expanded="true" signature="0:334" ph="/* Decompiled with JetBrains decompiler ... */" />
+            <marker date="1582664908891" expanded="true" signature="357:963" ph="{...}" />
+            <marker date="1582664908891" expanded="true" signature="362:494" ph="///   &lt;para&gt;Values for Camera.clearFlags, determining what to clear when rendering a Camera.&lt;/para&gt; ... " />
+            <marker date="1582664908891" expanded="true" signature="525:961" ph="{...}" />
+            <marker date="1582664908891" expanded="true" signature="534:612" ph="///   &lt;para&gt;Clear with the skybox.&lt;/para&gt; ... " />
+            <marker date="1582664908891" expanded="true" signature="648:734" ph="///   &lt;para&gt;Clear with a background color.&lt;/para&gt; ... " />
+            <marker date="1582664908891" expanded="true" signature="759:843" ph="///   &lt;para&gt;Clear only the depth buffer.&lt;/para&gt; ... " />
+            <marker date="1582664908891" expanded="true" signature="863:940" ph="///   &lt;para&gt;Don't clear anything.&lt;/para&gt; ... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/cb/6e6cbb34/CommandBuffer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="1984" column="17" selection-start-line="1984" selection-start-column="17" selection-end-line="1984" selection-end-column="17" />
+          <folding>
+            <marker date="1582499273653" expanded="true" signature="0:341" ph="/* Decompiled with JetBrains decompiler ... */" />
+            <marker date="1582499273653" expanded="false" signature="349:594" ph="..." />
+            <marker date="1582499273653" expanded="true" signature="627:207677" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="632:721" ph="///   &lt;para&gt;List of graphics commands to execute.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="1044:207675" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="1081:1564" ph="///   &lt;para&gt;Converts and copies a source texture to a destination texture with a different format or dimensions.&lt; ... " />
+            <marker date="1582499273653" expanded="true" signature="1651:1833" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="1839:2322" ph="///   &lt;para&gt;Converts and copies a source texture to a destination texture with a different format or dimensions.&lt; ... " />
+            <marker date="1582499273653" expanded="true" signature="2466:2666" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="2672:2800" ph="///   &lt;para&gt;Adds an &quot;AsyncGPUReadback.WaitAllRequests&quot; command to the CommandBuffer.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="3077:3283" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="3436:3656" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="3756:3962" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="4095:4311" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="4475:4798" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="4963:5190" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="5414:5661" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="5916:6270" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="6526:6784" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="6977:7235" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="7462:7734" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="7921:8179" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="8386:8654" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="8892:9267" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="9506:9785" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="10083:10382" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="10711:11117" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="11447:11757" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="14270:14502" ph="///   &lt;para&gt;Add a &quot;set invert culling&quot; command to the buffer.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="14809:14908" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="16052:16462" ph="///   &lt;para&gt;Adds a command to set a float parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="16724:17137" ph="///   &lt;para&gt;Adds a command to set an integer parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="17393:17804" ph="///   &lt;para&gt;Adds a command to set a vector parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="18007:18094" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="18100:18498" ph="///   &lt;para&gt;Adds a command to set a vector array parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="18798:19209" ph="///   &lt;para&gt;Adds a command to set a matrix parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="19414:19501" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="19507:19927" ph="///   &lt;para&gt;Adds a command to set a matrix array parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="21208:21761" ph="///   &lt;para&gt;Adds a command to set an input or output buffer parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="24329:24431" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="25013:25115" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="26742:27059" ph="///   &lt;para&gt;Adds a command to set the pass for the RayTracingShader to be used. &lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="28015:28350" ph="///   &lt;para&gt;Adds a command to copy ComputeBuffer counter value.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="28547:28631" ph="///   &lt;para&gt;Name of this command buffer.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="28771:28876" ph="///   &lt;para&gt;Size of this command buffer in bytes (Read Only).&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="29001:29090" ph="///   &lt;para&gt;Clear all commands in the buffer.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="29503:29620" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="29958:30160" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="30238:30425" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="30696:30837" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="31155:31315" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="31675:31824" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="32232:32401" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="33750:33837" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="34431:34538" ph="///   &lt;para&gt;Clear random write targets for level pixel shaders.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="34770:34951" ph="///   &lt;para&gt;Add a command to set the rendering viewport.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="35110:35170" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="35176:35366" ph="///   &lt;para&gt;Add a command to enable the hardware scissor rectangle.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="35535:35599" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="35605:35717" ph="///   &lt;para&gt;Add a command to disable the hardware scissor rectangle.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="36725:36857" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="37200:37339" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="38044:38191" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="38408:38562" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="38749:38891" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="39054:39148" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="39484:39693" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="40001:40159" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="40165:41244" ph="///   &lt;para&gt;Add a &quot;get a temporary render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="41505:41670" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="41902:42025" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="42233:42338" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="42506:42670" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="42804:42936" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="43020:43113" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="43180:43245" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="43480:43568" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="43574:44653" ph="///   &lt;para&gt;Add a &quot;get a temporary render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="44745:44820" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="44894:44965" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="45629:45773" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="45983:46108" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="46294:46401" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="46407:47359" ph="///   &lt;para&gt;Add a &quot;get a temporary render texture array&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="47643:47839" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="48094:48271" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="48502:48668" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="48859:49046" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="49203:49358" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="49490:49596" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="49680:49758" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="49764:49947" ph="///   &lt;para&gt;Add a &quot;release a temporary render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="50155:50525" ph="///   &lt;para&gt;Adds a &quot;clear render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="50751:50854" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="50946:51151" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="51157:51373" ph="///   &lt;para&gt;Add a &quot;set global shader float property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="51586:51808" ph="///   &lt;para&gt;Sets the given global integer property for all shaders.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="52015:52232" ph="///   &lt;para&gt;Add a &quot;set global shader vector property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="52386:52454" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="52460:52676" ph="///   &lt;para&gt;Add a &quot;set global shader color property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="52826:52893" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="52899:53116" ph="///   &lt;para&gt;Add a &quot;set global shader matrix property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="53272:53340" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="53346:53513" ph="///   &lt;para&gt;Adds a command to enable global shader keyword.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="53727:53896" ph="///   &lt;para&gt;Adds a command to disable global shader keyword.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="54112:54277" ph="///   &lt;para&gt;Add a command to set the view matrix.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="54440:54497" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="54503:54679" ph="///   &lt;para&gt;Add a command to set the projection matrix.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="54854:54917" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="54923:55182" ph="///   &lt;para&gt;Add a command to set the view and projection matrices.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="55385:55464" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="55470:55689" ph="///   &lt;para&gt;Add a command to set global depth bias.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="55860:56049" ph="///   &lt;para&gt;Set flags describing the intention for how the command buffer will be executed.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="57353:57584" ph="///   &lt;para&gt;Add a &quot;set global shader float array property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="57834:58066" ph="///   &lt;para&gt;Add a &quot;set global shader vector array property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="58320:58552" ph="///   &lt;para&gt;Add a &quot;set global shader matrix array property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="59101:59318" ph="///   &lt;para&gt;Add a &quot;set global shader buffer property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="60059:60242" ph="///   &lt;para&gt;Adds a command to begin profile sampling.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="60437:60620" ph="///   &lt;para&gt;Adds a command to begin profile sampling.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="61823:62247" ph="///   &lt;para&gt;Add a command to bind a global constant buffer.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="62534:62719" ph="///   &lt;para&gt;Increments the updateCount property of a Texture.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="62885:62949" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="62955:63143" ph="///   &lt;para&gt;Adds a command to multiply the instance count of every draw call by a specific multiplier.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="63362:64701" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="64760:65057" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="65063:66402" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="66552:66919" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="66925:68264" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="68518:68961" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="68967:70306" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="70379:70869" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="70875:72214" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="72312:72794" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="72800:74139" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="74278:74907" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="74913:76252" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="76344:76655" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="76661:78000" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="78125:78629" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="78635:79974" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="80130:80626" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="80632:81971" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="82149:82792" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="82798:84137" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="84430:84887" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="84893:86232" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="86327:87073" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="87079:88418" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="88599:89380" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="89386:90725" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="90866:93007" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="93013:94352" ph="///   &lt;para&gt;Add a &quot;set active render target&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="94413:96484" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="96755:96897" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="97211:97371" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="97689:97843" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="98230:98425" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="98816:99005" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="99027:99066" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="99093:99173" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="99215:99287" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="99293:99383" ph="///   &lt;para&gt;Create a new empty command buffer.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="99410:99469" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="99496:99530" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="99536:99905" ph="///   &lt;para&gt;Shortcut for calling GommandBuffer.CreateGraphicsFence with GraphicsFenceType.AsyncQueueSynchronizati ... " />
+            <marker date="1582499273653" expanded="true" signature="99957:100096" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="100102:100471" ph="///   &lt;para&gt;Shortcut for calling GommandBuffer.CreateGraphicsFence with GraphicsFenceType.AsyncQueueSynchronizati ... " />
+            <marker date="1582499273653" expanded="true" signature="100549:100704" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="100825:101072" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="101078:101746" ph="///   &lt;para&gt;Instructs the GPU to wait until the given GraphicsFence is passed.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="101808:101903" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="101909:102577" ph="///   &lt;para&gt;Instructs the GPU to wait until the given GraphicsFence is passed.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="102667:102782" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="102878:103211" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="103217:103627" ph="///   &lt;para&gt;Adds a command to set a float parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="103717:103809" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="103815:104228" ph="///   &lt;para&gt;Adds a command to set an integer parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="104314:104404" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="104410:104821" ph="///   &lt;para&gt;Adds a command to set a vector parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="104914:105007" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="105013:105411" ph="///   &lt;para&gt;Adds a command to set a vector array parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="105533:105634" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="105640:106051" ph="///   &lt;para&gt;Adds a command to set a matrix parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="106146:106239" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="106245:106665" ph="///   &lt;para&gt;Adds a command to set a matrix array parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="106789:106890" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="106896:107330" ph="///   &lt;para&gt;Adds a command to set multiple consecutive float parameters on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="107452:107552" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="107558:107992" ph="///   &lt;para&gt;Adds a command to set multiple consecutive float parameters on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="108113:108194" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="108200:108636" ph="///   &lt;para&gt;Adds a command to set multiple consecutive integer parameters on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="108735:108833" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="108839:109275" ph="///   &lt;para&gt;Adds a command to set multiple consecutive integer parameters on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="109373:109452" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="109458:110251" ph="///   &lt;para&gt;Adds a command to set a texture parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="110401:110556" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="110562:111355" ph="///   &lt;para&gt;Adds a command to set a texture parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="111504:111640" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="111646:112439" ph="///   &lt;para&gt;Adds a command to set a texture parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="112609:112771" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="112777:113570" ph="///   &lt;para&gt;Adds a command to set a texture parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="113739:113882" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="113888:114681" ph="///   &lt;para&gt;Adds a command to set a texture parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="114890:115028" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="115034:115827" ph="///   &lt;para&gt;Adds a command to set a texture parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="116035:116154" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="116160:116713" ph="///   &lt;para&gt;Adds a command to set an input or output buffer parameter on a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="116857:116966" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="116972:117696" ph="///   &lt;para&gt;Add a command to execute a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="117862:117984" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="117990:118714" ph="///   &lt;para&gt;Add a command to execute a ComputeShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="118864:118977" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="118983:119230" ph="///   &lt;para&gt;Adds a command to build the RayTracingAccelerationStructure to be used for the scene. &lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="119345:119438" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="119444:120074" ph="///   &lt;para&gt;Adds a command to set the RayTracingAccelerationStructure to be used with the RayTracingShader. &lt;/par ... " />
+            <marker date="1582499273653" expanded="true" signature="120257:120403" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="120409:121039" ph="///   &lt;para&gt;Adds a command to set the RayTracingAccelerationStructure to be used with the RayTracingShader. &lt;/par ... " />
+            <marker date="1582499273653" expanded="true" signature="121221:121348" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="121479:121590" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="121720:121812" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="121818:122344" ph="///   &lt;para&gt;Adds a command to set a texture parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="122480:122592" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="122728:122821" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="122827:123294" ph="///   &lt;para&gt;Adds a command to set a float parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="123393:123500" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="123506:123973" ph="///   &lt;para&gt;Adds a command to set a float parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="124071:124159" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="124165:124656" ph="///   &lt;para&gt;Adds a command to set multiple consecutive float parameters on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="124787:124893" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="124899:125390" ph="///   &lt;para&gt;Adds a command to set multiple consecutive float parameters on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="125520:125607" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="125613:126083" ph="///   &lt;para&gt;Adds a command to set an integer parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="126178:126283" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="126289:126759" ph="///   &lt;para&gt;Adds a command to set an integer parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="126853:126939" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="126945:127438" ph="///   &lt;para&gt;Adds a command to set multiple consecutive integer parameters on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="127565:127669" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="127675:128168" ph="///   &lt;para&gt;Adds a command to set multiple consecutive integer parameters on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="128294:128379" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="128385:128853" ph="///   &lt;para&gt;Adds a command to set a vector parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="128974:129082" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="129088:129556" ph="///   &lt;para&gt;Adds a command to set a vector parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="129676:129765" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="129771:130226" ph="///   &lt;para&gt;Adds a command to set a vector array parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="130364:130480" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="130486:130941" ph="///   &lt;para&gt;Adds a command to set a vector array parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="131078:131175" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="131181:131649" ph="///   &lt;para&gt;Adds a command to set a matrix parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="131772:131880" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="131886:132354" ph="///   &lt;para&gt;Adds a command to set a matrix parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="132476:132565" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="132571:133048" ph="///   &lt;para&gt;Adds a command to set a matrix array parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="133188:133304" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="133310:133787" ph="///   &lt;para&gt;Adds a command to set a matrix array parameter on a RayTracingShader.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="133926:134023" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="134203:134309" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="134315:134496" ph="///   &lt;para&gt;Generate mipmap levels of a render texture.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="134543:134829" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="134835:135182" ph="///   &lt;para&gt;Force an antialiased render texture to be resolved.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="135271:135460" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="135466:136074" ph="///   &lt;para&gt;Add a &quot;draw mesh&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="136252:137003" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="136563:136775" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="137142:137255" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="137347:137422" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="137496:137556" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="137562:137956" ph="///   &lt;para&gt;Add a &quot;draw renderer&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="138082:138767" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="138364:138551" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="138853:138928" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="138996:139056" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="139062:139722" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="139942:140318" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="140324:140984" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="141164:141301" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="141307:141967" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="142122:142217" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="142223:142976" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="143229:143600" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="143606:144359" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="144572:144721" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="144727:145480" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="145668:145775" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="145781:146475" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="146713:147197" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="147203:147897" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="148095:148240" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="148246:148940" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="149116:149222" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="149228:150013" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="150285:150765" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="150771:151556" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="151788:151946" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="151952:152737" ph="///   &lt;para&gt;Add a &quot;draw procedural geometry&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="152947:153066" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="153072:154278" ph="///         &lt;para&gt;Add a &quot;draw mesh with instancing&quot; command. ... " />
+            <marker date="1582499273653" expanded="true" signature="154486:155684" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="155690:156896" ph="///         &lt;para&gt;Add a &quot;draw mesh with instancing&quot; command. ... " />
+            <marker date="1582499273653" expanded="true" signature="157064:157195" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="157201:158407" ph="///         &lt;para&gt;Add a &quot;draw mesh with instancing&quot; command. ... " />
+            <marker date="1582499273653" expanded="true" signature="158558:158669" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="158675:160034" ph="///         &lt;para&gt;Add a &quot;draw mesh with instancing&quot; command. ... " />
+            <marker date="1582499273653" expanded="true" signature="160231:161147" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="161153:162015" ph="///   &lt;para&gt;Add a &quot;draw mesh with indirect instancing&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="162244:163021" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="163027:163889" ph="///   &lt;para&gt;Add a &quot;draw mesh with indirect instancing&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="164078:164228" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="164234:165096" ph="///   &lt;para&gt;Add a &quot;draw mesh with indirect instancing&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="165263:165404" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="165410:165677" ph="///   &lt;para&gt;Adds a command onto the commandbuffer to draw the VR Device's occlusion mesh to the current render ta ... " />
+            <marker date="1582499273653" expanded="true" signature="165742:165816" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="165822:166276" ph="///   &lt;para&gt;Set random write target for level pixel shaders.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="166351:166537" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="166543:166997" ph="///   &lt;para&gt;Set random write target for level pixel shaders.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="167094:167301" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="167372:167439" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="167445:168730" ph="///   &lt;para&gt;Adds a command to copy a texture into another texture.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="168814:168920" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="168926:170211" ph="///   &lt;para&gt;Adds a command to copy a texture into another texture.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="170352:170474" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="170480:171765" ph="///   &lt;para&gt;Adds a command to copy a texture into another texture.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="171942:172072" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="172078:173363" ph="///   &lt;para&gt;Adds a command to copy a texture into another texture.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="173645:173796" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="173802:174568" ph="///   &lt;para&gt;Add a &quot;blit into a render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="174634:174903" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="174909:175675" ph="///   &lt;para&gt;Add a &quot;blit into a render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="175772:176010" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="176016:176782" ph="///   &lt;para&gt;Add a &quot;blit into a render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="176862:177119" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="177125:177891" ph="///   &lt;para&gt;Add a &quot;blit into a render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="177981:178240" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="178246:179012" ph="///   &lt;para&gt;Add a &quot;blit into a render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="179093:179369" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="179375:180141" ph="///   &lt;para&gt;Add a &quot;blit into a render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="180278:180523" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="180529:181295" ph="///   &lt;para&gt;Add a &quot;blit into a render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="181390:181654" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="181660:182426" ph="///   &lt;para&gt;Add a &quot;blit into a render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="182556:182822" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="182828:183594" ph="///   &lt;para&gt;Add a &quot;blit into a render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="183742:184023" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="184029:184795" ph="///   &lt;para&gt;Add a &quot;blit into a render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="184986:185236" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="185242:186008" ph="///   &lt;para&gt;Add a &quot;blit into a render texture&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="186164:186443" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="186449:186665" ph="///   &lt;para&gt;Add a &quot;set global shader float property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="186722:186795" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="186801:187023" ph="///   &lt;para&gt;Sets the given global integer property for all shaders.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="187076:187147" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="187153:187370" ph="///   &lt;para&gt;Add a &quot;set global shader vector property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="187430:187504" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="187510:187726" ph="///   &lt;para&gt;Add a &quot;set global shader color property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="187783:187856" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="187862:188079" ph="///   &lt;para&gt;Add a &quot;set global shader matrix property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="188141:188215" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="188293:188380" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="188449:188712" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="188718:188949" ph="///   &lt;para&gt;Add a &quot;set global shader float array property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="189022:189109" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="189190:189278" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="189350:189614" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="189620:189852" ph="///   &lt;para&gt;Add a &quot;set global shader vector array property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="189928:190016" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="190099:190187" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="190261:190525" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="190531:190763" ph="///   &lt;para&gt;Add a &quot;set global shader matrix array property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="190841:190929" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="190935:191221" ph="///   &lt;para&gt;Add a &quot;set global shader texture property&quot; command, referencing a RenderTexture.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="191297:191405" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="191411:191697" ph="///   &lt;para&gt;Add a &quot;set global shader texture property&quot; command, referencing a RenderTexture.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="191772:191870" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="191876:192162" ph="///   &lt;para&gt;Add a &quot;set global shader texture property&quot; command, referencing a RenderTexture.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="192290:192374" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="192380:192666" ph="///   &lt;para&gt;Add a &quot;set global shader texture property&quot; command, referencing a RenderTexture.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="192793:192867" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="192873:193090" ph="///   &lt;para&gt;Add a &quot;set global shader buffer property&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="193156:193230" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="193236:193483" ph="///   &lt;para&gt;Add a &quot;set shadow sampling mode&quot; command.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="193580:193770" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="193834:193893" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="193899:194185" ph="///   &lt;para&gt;Send a user-defined event to a native code plugin.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="194248:194416" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="194422:194823" ph="///   &lt;para&gt;Send a user-defined event to a native code plugin with custom data.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="194906:195205" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="195211:195772" ph="///   &lt;para&gt;Send a user-defined blit event to a native code plugin.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="195976:196217" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="196223:196606" ph="///   &lt;para&gt;Deprecated. Use CommandBuffer.IssuePluginCustomTextureUpdateV2 instead.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="197026:197131" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="197137:197520" ph="///   &lt;para&gt;Deprecated. Use CommandBuffer.IssuePluginCustomTextureUpdateV2 instead.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="197942:198047" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="198053:198417" ph="///   &lt;para&gt;Send a texture update event to a native code plugin.&lt;/para&gt; ... " />
+            <marker date="1582499273653" expanded="true" signature="198540:198762" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="198768:198970" ph="///   &lt;para&gt;This functionality is deprecated, and should no longer be used. Please use CommandBuffer.CreateGraphi ... " />
+            <marker date="1582499273653" expanded="true" signature="199189:199230" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="199423:199464" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="199470:200268" ph="///   &lt;para&gt;This functionality is deprecated, and should no longer be used. Please use CommandBuffer.WaitOnAsyncG ... " />
+            <marker date="1582499273653" expanded="true" signature="200499:200511" ph="{...}" />
+            <marker date="1582499273653" expanded="true" signature="200715:200727" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@7.1.8/Runtime/Utilities/CoreUtils.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="332" column="27" selection-start-line="332" selection-start-column="27" selection-end-line="332" selection-end-column="27" />
+          <folding>
+            <marker date="1581507184000" expanded="false" signature="6:66" ph="..." />
+            <marker date="1581507184000" expanded="true" signature="99:58173" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="151:264" ph="/// Set of utility functions for the Core Scriptable Render Pipeline Library ... " />
+            <marker date="1581507184000" expanded="true" signature="298:58171" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="313:502" ph="/// List of look at matrices for cubemap faces. ... " />
+            <marker date="1581507184000" expanded="true" signature="565:837" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="848:1031" ph="/// List of up vectors for cubemap faces. ... " />
+            <marker date="1581507184000" expanded="true" signature="1096:1366" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2189:2260" ph="/// Black cubemap texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="2307:2769" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2333:2759" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2395:2701" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2824:2897" ph="/// Magenta cubemap texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="2946:3420" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2972:3410" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3036:3350" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3485:3562" ph="/// Black cubemap array texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="3621:4226" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3647:4216" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3716:4151" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3886:4078" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="4279:4350" ph="/// White cubemap texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="4397:4859" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="4423:4849" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="4485:4791" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="4910:4999" ph="/// Empty 1x1 texture usable as a dummy UAV. ... " />
+            <marker date="1581507184000" expanded="true" signature="5044:5379" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5070:5369" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5124:5319" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5436:5502" ph="/// Black 3D texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="5553:6012" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5579:6002" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5643:5942" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="6022:6395" ph="/// Clear the currently bound render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="6498:6686" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="6696:6976" ph="/* We use -1 as a default value because when doing SPI for XR, it will bind the full texture array by default (an ... */" />
+            <marker date="1581507184000" expanded="true" signature="7052:7218" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="7303:7459" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="7469:8300" ph="/// Set the current render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="8518:8740" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="8749:9462" ph="/// Set the current render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="9679:9800" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="9810:10504" ph="/// Set the current render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="10724:10868" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="10878:11700" ph="/// Set the current render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="11941:12080" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="12090:13030" ph="/// Set the current render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="13289:13529" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="13539:13913" ph="/// Set the current multiple render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="14050:14160" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="14170:14672" ph="/// Set the current multiple render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="14847:14952" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="14962:15582" ph="/// Set the current multiple render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="15758:15925" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="15978:16581" ph="/// Set the current render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="16785:16930" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="16940:17425" ph="/// Set the current render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="17611:17722" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="17732:18613" ph="/// Set the current render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="18974:19182" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="19192:19955" ph="/// Set the current render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="20298:20472" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="20596:21511" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="20619:21307" ph="/* Clearing a partial viewport currently does not go through the hardware clear. ... */" />
+            <marker date="1581507184000" expanded="true" signature="21521:21757" ph="/* This set of RenderTarget management methods is supposed to be used when rendering RTHandle render texture. ... */" />
+            <marker date="1581507184000" expanded="true" signature="21767:22592" ph="/// Setup the current render texture using an RTHandle ... " />
+            <marker date="1581507184000" expanded="true" signature="22796:23023" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="23033:23740" ph="/// Setup the current render texture using an RTHandle ... " />
+            <marker date="1581507184000" expanded="true" signature="24057:24709" ph="/// Setup the current render texture using an RTHandle ... " />
+            <marker date="1581507184000" expanded="true" signature="24901:25269" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="25279:26059" ph="/// Setup the current render texture using an RTHandle ... " />
+            <marker date="1581507184000" expanded="true" signature="26272:26635" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="26645:27543" ph="/// Setup the current render texture using an RTHandle ... " />
+            <marker date="1581507184000" expanded="true" signature="27774:28203" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="28213:28558" ph="/// Set the current multiple render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="28681:28847" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="28857:29330" ph="/// Set the current multiple render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="29491:29720" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="29730:30321" ph="/// Set the current multiple render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="30483:30665" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="30675:31344" ph="/* Scaling viewport is done for auto-scaling render targets. ... */" />
+            <marker date="1581507184000" expanded="true" signature="31354:31633" ph="/// Setup the viewport to the size of the provided RTHandle. ... " />
+            <marker date="1581507184000" expanded="true" signature="31708:32007" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="31753:31997" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="32017:32747" ph="/// Generate a name based on render texture parameters. ... " />
+            <marker date="1581507184000" expanded="true" signature="32963:33450" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="33460:34088" ph="/// Generate a name based on texture parameters. ... " />
+            <marker date="1581507184000" expanded="true" signature="34279:34746" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="34756:35185" ph="/// Clear a cubemap render texture. ... " />
+            <marker date="1581507184000" expanded="true" signature="35315:35825" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="35409:35518" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="35559:35815" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="35630:35801" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="35835:36270" ph="/// Draws a full screen triangle. ... " />
+            <marker date="1581507184000" expanded="true" signature="36435:36583" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="36593:37179" ph="/// Draws a full screen triangle. ... " />
+            <marker date="1581507184000" expanded="true" signature="37392:37596" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="37606:38350" ph="/// Draws a full screen triangle. ... " />
+            <marker date="1581507184000" expanded="true" signature="38606:38858" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="38868:39620" ph="/// Draws a full screen triangle. ... " />
+            <marker date="1581507184000" expanded="true" signature="39879:40132" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="40223:40817" ph="/// Draws a full screen triangle. ... " />
+            <marker date="1581507184000" expanded="true" signature="41033:41489" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="41056:41369" ph="/* It is currently not possible to have MRT without also setting a depth target. ... */" />
+            <marker date="1581507184000" expanded="true" signature="41532:41823" ph="/// Converts the provided sRGB color to the current active color space. ... " />
+            <marker date="1581507184000" expanded="true" signature="41894:42013" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="42023:42313" ph="/// Converts the provided linear color to the current active color space. ... " />
+            <marker date="1581507184000" expanded="true" signature="42386:42504" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="42514:42863" ph="/// Creates a Material with the provided shader path. ... " />
+            <marker date="1581507184000" expanded="true" signature="42934:43367" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="43029:43206" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="43263:43332" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="43377:43687" ph="/// Creates a Material with the provided shader. ... " />
+            <marker date="1581507184000" expanded="true" signature="43754:44104" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="43796:43943" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="44000:44069" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="44114:44479" ph="/// Bitfield flag test. ... " />
+            <marker date="1581507184000" expanded="true" signature="44556:44645" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="44655:44883" ph="/// Swaps two values. ... " />
+            <marker date="1581507184000" expanded="true" signature="44936:45021" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="45031:45343" ph="/// Set a global keyword using a CommandBuffer ... " />
+            <marker date="1581507184000" expanded="true" signature="45428:45589" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="45708:46036" ph="/// Set a keyword immediatly on a Material. ... " />
+            <marker date="1581507184000" expanded="true" signature="46121:46280" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="46290:46431" ph="/// Destroys a UnityObject safely. ... " />
+            <marker date="1581507184000" expanded="true" signature="46483:46797" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="46522:46787" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="46858:47019" ph="/// Returns all assembly types. ... " />
+            <marker date="1581507184000" expanded="true" signature="47081:47695" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="47132:47648" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="47278:47632" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="47427:47534" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="47705:47954" ph="/// Returns a list of types that inherit from the provided type. ... " />
+            <marker date="1581507184000" expanded="true" signature="48022:48244" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="48254:48418" ph="/// Safely release a Compute Buffer. ... " />
+            <marker date="1581507184000" expanded="true" signature="48479:48565" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="48575:48868" ph="/// Creates a cube mesh. ... " />
+            <marker date="1581507184000" expanded="true" signature="48936:50491" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="50501:50811" ph="/// Returns true if &quot;Post Processes&quot; are enabled for the view associated with the given camera. ... " />
+            <marker date="1581507184000" expanded="true" signature="50877:51886" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="51365:51510" ph="/* Post-processing is disabled in scene view if either showImageEffects is disabled or we are ... */" />
+            <marker date="1581507184000" expanded="true" signature="51896:52214" ph="/// Returns true if &quot;Animated Materials&quot; are enabled for the view associated with the given camera. ... " />
+            <marker date="1581507184000" expanded="true" signature="52285:55329" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="53466:53696" ph="/* Warning: currently, there's no way to determine whether a given camera corresponds to this MaterialEditor. ... */" />
+            <marker date="1581507184000" expanded="true" signature="53938:55266" ph="/* TODO: how to handle reflection views? We don't know the parent window they are being rendered into, ... */" />
+            <marker date="1581507184000" expanded="true" signature="55339:55647" ph="/// Returns true if &quot;Scene Lighting&quot; is enabled for the view associated with the given camera. ... " />
+            <marker date="1581507184000" expanded="true" signature="55713:56401" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="57078:57364" ph="/// Returns true if &quot;Fog&quot; is enabled for the view associated with the given camera. ... " />
+            <marker date="1581507184000" expanded="true" signature="57428:58165" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/TooD/TooDRendererData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1582661633126" expanded="false" signature="6:57" ph="..." />
+            <marker date="1582661633126" expanded="true" signature="184:290" ph="{...}" />
+            <marker date="1582661633126" expanded="true" signature="237:288" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/UniversalRenderPipeline.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="194" column="74" selection-start-line="194" selection-start-column="54" selection-end-line="194" selection-end-column="74" />
+          <folding>
+            <marker date="1581507184000" expanded="false" signature="6:240" ph="..." />
+            <marker date="1581507184000" expanded="true" signature="278:555" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="442:553" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="527:547" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="598:28710" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="673:28708" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="724:1066" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1113:1395" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1565:1611" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1655:1700" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1744:1789" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1925:2190" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1948:2088" ph="/* No support to bitfield mask and int[] in gles2. Can't index fast more than 4 lights. ... */" />
+            <marker date="1581507184000" expanded="true" signature="2425:3563" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2451:3553" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2482:2615" ph="/* There are some performance issues by using SSBO in mobile. ... */" />
+            <marker date="1581507184000" expanded="true" signature="2750:3004" ph="/* We don't use SSBO in D3D because we can't figure out without adding shader variants if platforms is D3D10. ... */" />
+            <marker date="1581507184000" expanded="true" signature="3322:3483" ph="/* We use less limits for mobile as some mobile GPUs have small SP cache for constants ... */" />
+            <marker date="1581507184000" expanded="true" signature="3725:3767" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3777:4023" ph="/// Returns the current render pipeline asset for the current quality setting. ... " />
+            <marker date="1581507184000" expanded="true" signature="4080:4239" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="4106:4229" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="4315:5882" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5939:6330" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="6427:7342" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="6822:7276" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="7437:9459" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="8178:8376" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="8610:9327" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="9512:10429" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="10471:10674" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="10849:16445" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="11715:11875" ph="/* If XR is enabled, use XR renderScale. ... */" />
+            <marker date="1581507184000" expanded="true" signature="12662:13803" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="13866:14519" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="14536:15153" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="16633:18988" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="16935:18042" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="17345:18028" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="17430:18010" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="17837:17988" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="19198:22594" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="19306:20011" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="19467:19691" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="20840:21222" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="21589:22063" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="22726:22980" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="23146:24291" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="23488:23859" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="23876:24022" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="24371:24938" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="24599:24893" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="25108:26567" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="25522:26505" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="25678:25968" ph="/* Particle system lights have the light property as null. We sort lights so all particles lights ... */" />
+            <marker date="1581507184000" expanded="true" signature="26332:26491" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="26619:27369" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="27443:28698" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/UniversalAdditionalCameraData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="74" column="59" selection-start-line="74" selection-start-column="59" selection-end-line="74" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/Passes/ScriptableRenderPass.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="60" column="48" selection-start-line="60" selection-start-column="31" selection-end-line="60" selection-end-column="48" />
+          <folding>
+            <marker date="1581507184000" expanded="true" signature="131:12251" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="138:378" ph="/* Note: Spaced built-in events so we can add events in between them ... */" />
+            <marker date="1581507184000" expanded="true" signature="383:463" ph="/// Controls when the render pass executes. ... " />
+            <marker date="1581507184000" expanded="true" signature="537:1084" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1090:1244" ph="/// &lt;c&gt;ScriptableRenderPass&lt;/c&gt; implements a logical rendering pass that can be used to extend Universal RP rende ... " />
+            <marker date="1581507184000" expanded="true" signature="1333:12249" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1455:1513" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1568:1626" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1662:1714" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="1747:1800" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2221:2614" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="2624:3029" ph="/// Configures render targets for this render pass. Call this instead of CommandBuffer.SetRenderTarget. ... " />
+            <marker date="1581507184000" expanded="true" signature="3145:3304" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3314:3640" ph="/// Configures render targets for this render pass. Call this instead of CommandBuffer.SetRenderTarget. ... " />
+            <marker date="1581507184000" expanded="true" signature="3716:3897" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="3907:4252" ph="/// Configures clearing for the render targets for this render pass. Call this inside Configure. ... " />
+            <marker date="1581507184000" expanded="true" signature="4326:4422" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="4432:5275" ph="/// This method is called by the renderer before executing the render pass. ... " />
+            <marker date="1581507184000" expanded="true" signature="5381:5392" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5402:5619" ph="/// Cleanup any allocated data that was created during the execution of the pass. ... " />
+            <marker date="1581507184000" expanded="true" signature="5679:5690" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="5700:6047" ph="/// Execute the pass. This is where custom rendering occurs. Specific details are left to the implementation ... " />
+            <marker date="1581507184000" expanded="true" signature="6161:6863" ph="/// Add a blit command to the context for execution. This changes the active render target in the ScriptableRende ... " />
+            <marker date="1581507184000" expanded="true" signature="7019:7231" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="7241:8083" ph="/* Adds a Render Post-processing command for execution. This changes the active render target in the ScriptableR ... */" />
+            <marker date="1581507184000" expanded="true" signature="8544:8976" ph="/// Creates &lt;c&gt;DrawingSettings&lt;/c&gt; based on current the rendering state. ... " />
+            <marker date="1581507184000" expanded="true" signature="9120:9898" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="9399:9858" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="9908:10352" ph="/// Creates &lt;c&gt;DrawingSettings&lt;/c&gt; based on current rendering state. ... " />
+            <marker date="1581507184000" expanded="true" signature="10518:11159" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="10599:10874" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="11250:11332" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="11423:11505" ph="{...}" />
+            <marker date="1581507184000" expanded="true" signature="11907:12243" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/TooD/TooDIrradianceCamera.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="33" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="33" />
+          <folding>
+            <marker date="1582664321382" expanded="true" signature="69:144" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+          <folding>
+            <marker date="1582665473892" expanded="false" signature="6:146" ph="..." />
+            <marker date="1582665473892" expanded="true" signature="193:790" ph="{...}" />
+            <marker date="1582665473892" expanded="true" signature="310:381" ph="{...}" />
+            <marker date="1582665473892" expanded="true" signature="479:788" ph="{...}" />
+            <marker date="1582665473892" expanded="true" signature="848:3230" ph="{...}" />
+            <marker date="1582665473892" expanded="true" signature="1158:1254" ph="{...}" />
+            <marker date="1582665473892" expanded="true" signature="1358:3228" ph="{...}" />
+            <marker date="1582665473892" expanded="true" signature="1723:1974" ph="{...}" />
+            <marker date="1582665473892" expanded="true" signature="1811:1964" ph="{...}" />
+            <marker date="1582665473892" expanded="true" signature="2462:3169" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/scripts/BasicMovement.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="16" column="85" selection-start-line="16" selection-start-column="85" selection-end-line="16" selection-end-column="85" />
+          <folding>
+            <marker date="1582665644469" expanded="false" signature="6:103" ph="..." />
+            <marker date="1582665644469" expanded="true" signature="147:442" ph="{...}" />
+            <marker date="1582665644469" expanded="true" signature="217:238" ph="{...}" />
+            <marker date="1582665644469" expanded="true" signature="261:440" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="147" column="36" selection-start-line="147" selection-start-column="36" selection-end-line="147" selection-end-column="36" />
+          <folding>
+            <marker date="1582665932846" expanded="true" signature="21:5010" ph="{...}" />
+            <marker date="1582665932846" expanded="true" signature="42:289" ph="{...}" />
+            <marker date="1582665932846" expanded="true" signature="306:396" ph="{...}" />
+            <marker date="1582665932846" expanded="true" signature="423:4976" ph="{...}" />
+            <marker date="1582665932846" expanded="true" signature="632:3125" ph="{...}" />
+            <marker date="1582665932846" expanded="true" signature="706:3108" ph="{...}" />
+            <marker date="1582665932846" expanded="true" signature="3156:4970" ph="{...}" />
+            <marker date="1582665932846" expanded="true" signature="3231:4953" ph="{...}" />
           </folding>
         </state>
       </provider>
