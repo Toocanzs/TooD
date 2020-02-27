@@ -9,22 +9,37 @@ public class IrradianceProbeManager : MonoBehaviour
     public static IrradianceProbeManager Instance;
     
     [SerializeField]
-    private int2 probeCounts = new int2(10, 10);
+    public int2 probeCounts = new int2(10, 10);
     [SerializeField]
-    private float probeSeparation = 1f;
+    public float probeSeparation = 1f;
     [SerializeField]
     private float2 resetAreaPercent = new float2(0.5f,0.5f);
     [SerializeField]
     private Camera lightingCamera = null;
-    private float2 OriginOffset => 0.5f * probeSeparation;
+    public float2 OriginOffset => 0.5f * probeSeparation;
 
     [SerializeField]
     private int pixelsPerUnit = 32;
 
-    private int2 BufferSize => math.int2(math.float2(probeCounts) * probeSeparation * pixelsPerUnit);
+    public int2 BufferSize => math.int2(math.float2(probeCounts) * probeSeparation * pixelsPerUnit);
 
-    public RenderTexture buffer;
-    
+    public RenderTexture wallBuffer;
+
+    public int directionCount = 32;
+    //irradiance buffer is directionCount pixels wide, one for each direction,
+    //then GutterSize pixels on each side so the side pixels can bilinearly sample across the seam
+    public RenderTexture irradianceBuffer;
+    public const int GutterSize = 1;//each side
+
+    private int SingleProbePixelWidth => (directionCount + GutterSize * 2);
+
+    public float4x4 worldToWallBuffer;
+    public float4x4 worldDirectionToBufferDirection;
+
+
+    public int MaxRayLength => 250;
+        //(int) math.sqrt(wallBuffer.width * wallBuffer.width + wallBuffer.height * wallBuffer.height);
+
     void Start()
     {
         if (Instance != null)
@@ -35,14 +50,21 @@ public class IrradianceProbeManager : MonoBehaviour
         Instance = this;
 
         var size = BufferSize;
-        buffer = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
-        buffer.wrapMode = TextureWrapMode.Clamp;
-        buffer.Create();
+        wallBuffer = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+        wallBuffer.wrapMode = TextureWrapMode.Clamp;
+        wallBuffer.Create();
+        
+        irradianceBuffer = new RenderTexture(probeCounts.x * SingleProbePixelWidth, probeCounts.y, 0, RenderTextureFormat.ARGB64, RenderTextureReadWrite.Linear);
+        irradianceBuffer.enableRandomWrite = true;
+        irradianceBuffer.Create();
+
+        transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = irradianceBuffer;
     }
 
     private void OnDestroy()
     {
-        buffer.Release();
+        wallBuffer.Release();
+        irradianceBuffer.Release();
     }
 
     void Update()
@@ -65,6 +87,17 @@ public class IrradianceProbeManager : MonoBehaviour
         transform1.position = new float3(center, transform1.position.z);
         lightingCamera.orthographicSize = scale.y / 2;
         lightingCamera.aspect = scale.x / scale.y;
+
+        float4 dims = GetProbeAreaDims();
+        float3 pos = new float3(dims.xy, 0);
+        //Translate so origin is at probe origin
+        float4x4 step1 = float4x4.Translate(-pos);
+        //Scale afterwards to buffersize
+        float4x4 step2 = float4x4.Scale(pixelsPerUnit);
+        worldToWallBuffer = math.mul(step2,step1);
+
+        float2 bufferSize = BufferSize;
+        worldDirectionToBufferDirection = float4x4.Scale(1f / bufferSize.y, 1f / bufferSize.x, 0);
     }
 
     void SetCenter(Transform trs, float2 value)
@@ -85,7 +118,7 @@ public class IrradianceProbeManager : MonoBehaviour
         return GetProbeAreaOrigin() + OriginOffset + math.float2(probePos) * probeSeparation;
     }
 
-    private float2 GetProbeAreaOrigin()
+    public float2 GetProbeAreaOrigin()
     {
         return math.round(math.float3(transform.position).xy / probeSeparation) * probeSeparation;
     }

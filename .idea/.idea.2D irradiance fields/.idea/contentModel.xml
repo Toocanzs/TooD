@@ -7,11 +7,15 @@
       <e p="2D irradiance fields.sln" t="IncludeFlat" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Resources" t="Include">
+          <e p="ProbeRaycast.compute" t="Include" />
+        </e>
         <e p="scripts" t="Include">
           <e p="BasicMovement.cs" t="Include" />
           <e p="DontDestroy.cs" t="Include" />
           <e p="IrradianceProbeManager.cs" t="Include" />
         </e>
+        <e p="TestLineAlgorithm.cs" t="Include" />
         <e p="TooD" t="Include">
           <e p="TooD Sprite.shader" t="Include" />
           <e p="TooDIrradianceCamera.cs" t="Include" />
