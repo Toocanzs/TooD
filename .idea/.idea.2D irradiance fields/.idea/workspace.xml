@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad3ec9c0-88bd-4840-883e-9d906858d72e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/test.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/test.unity" afterDir="false" />
@@ -18,21 +17,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="50" column="62" lean-forward="true" selection-start-line="50" selection-start-column="62" selection-end-line="50" selection-end-column="62" />
+            <state relative-caret-position="375">
+              <caret line="63" column="110" lean-forward="true" selection-start-line="63" selection-start-column="110" selection-end-line="63" selection-end-column="110" />
               <folding>
-                <marker date="1582769431726" expanded="true" signature="6:171" ph="..." />
-                <marker date="1582769431726" expanded="true" signature="219:3313" ph="{...}" />
-                <marker date="1582769431726" expanded="true" signature="423:775" ph="{...}" />
-                <marker date="1582769431726" expanded="true" signature="605:683" ph="{...}" />
-                <marker date="1582769431726" expanded="true" signature="873:3311" ph="{...}" />
-                <marker date="1582769431726" expanded="true" signature="1221:3305" ph="{...}" />
-                <marker date="1582769431726" expanded="true" signature="3371:5756" ph="{...}" />
-                <marker date="1582769431726" expanded="true" signature="3682:3778" ph="{...}" />
-                <marker date="1582769431726" expanded="true" signature="3878:5754" ph="{...}" />
-                <marker date="1582769431726" expanded="true" signature="4243:4498" ph="{...}" />
-                <marker date="1582769431726" expanded="true" signature="4331:4488" ph="{...}" />
-                <marker date="1582769431726" expanded="true" signature="4991:5703" ph="{...}" />
+                <marker date="1589839294345" expanded="true" signature="6:171" ph="..." />
+                <marker date="1589839294345" expanded="true" signature="219:3867" ph="{...}" />
+                <marker date="1589839294345" expanded="true" signature="423:775" ph="{...}" />
+                <marker date="1589839294345" expanded="true" signature="605:683" ph="{...}" />
+                <marker date="1589839294345" expanded="true" signature="873:3865" ph="{...}" />
+                <marker date="1589839294345" expanded="true" signature="1221:3859" ph="{...}" />
+                <marker date="1589839294345" expanded="true" signature="3189:3359" ph="/* command.SetComputeMatrixParam(probeRaycastShader, &quot;worldDirectionToBufferDirection&quot;, ... */" />
+                <marker date="1589839294345" expanded="true" signature="3925:6310" ph="{...}" />
+                <marker date="1589839294345" expanded="true" signature="4236:4332" ph="{...}" />
+                <marker date="1589839294345" expanded="true" signature="4432:6308" ph="{...}" />
+                <marker date="1589839294345" expanded="true" signature="4797:5052" ph="{...}" />
+                <marker date="1589839294345" expanded="true" signature="4885:5042" ph="{...}" />
+                <marker date="1589839294345" expanded="true" signature="5545:6257" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -41,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
-              <caret line="123" column="1" lean-forward="true" selection-start-line="123" selection-start-column="1" selection-end-line="123" selection-end-column="1" />
+            <state relative-caret-position="513">
+              <caret line="151" column="52" lean-forward="true" selection-start-line="151" selection-start-column="52" selection-end-line="151" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -50,26 +50,39 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+            <state relative-caret-position="60">
+              <caret line="103" column="46" lean-forward="true" selection-start-line="103" selection-start-column="46" selection-end-line="103" selection-end-column="46" />
               <folding>
-                <marker date="1582769405157" expanded="true" signature="6:117" ph="..." />
-                <marker date="1582769405157" expanded="true" signature="170:5187" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="800:973" ph="/* irradiance buffer is directionCount pixels wide, one for each direction, ... */" />
-                <marker date="1582769405157" expanded="true" signature="1394:2118" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="1430:1497" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="2148:2226" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="2245:3490" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="2650:2777" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="3539:3646" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="3670:3800" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="3852:3958" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="3998:4109" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="4152:4298" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="4334:4446" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="4487:5185" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="4541:4806" ph="{...}" />
-                <marker date="1582769405157" expanded="true" signature="4603:4796" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="6:117" ph="..." />
+                <marker date="1589839615758" expanded="true" signature="170:7135" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="802:975" ph="/* irradiance buffer is directionCount pixels wide, one for each direction, ... */" />
+                <marker date="1589839615758" expanded="true" signature="2251:3229" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="2287:2354" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="3259:3380" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="3399:5279" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="3800:3973" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="3871:3963" ph="/* TODO: Transfer valid probe data to new area ... */" />
+                <marker date="1589839615758" expanded="true" signature="5328:5437" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="5461:5591" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="5643:5749" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="5800:5914" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="5955:6066" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="6105:6251" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="6287:6399" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="6440:7133" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="6494:6760" ph="{...}" />
+                <marker date="1589839615758" expanded="true" signature="6556:6750" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Desktop/2dGame/Assets/Radiosity/SwapBuffer.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#104#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -78,17 +91,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+            <state relative-caret-position="345">
+              <caret line="117" column="22" lean-forward="true" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="100" />
               <folding>
-                <marker date="1582666002291" expanded="true" signature="21:5231" ph="{...}" />
-                <marker date="1582666002291" expanded="true" signature="42:299" ph="{...}" />
-                <marker date="1582666002291" expanded="true" signature="316:406" ph="{...}" />
-                <marker date="1582666002291" expanded="true" signature="433:5197" ph="{...}" />
-                <marker date="1582666002291" expanded="true" signature="642:3135" ph="{...}" />
-                <marker date="1582666002291" expanded="true" signature="716:3118" ph="{...}" />
-                <marker date="1582666002291" expanded="true" signature="3166:5191" ph="{...}" />
-                <marker date="1582666002291" expanded="true" signature="3241:5174" ph="{...}" />
+                <marker date="1589837761752" expanded="true" signature="21:6626" ph="{...}" />
+                <marker date="1589837761752" expanded="true" signature="42:313" ph="{...}" />
+                <marker date="1589837761752" expanded="true" signature="330:420" ph="{...}" />
+                <marker date="1589837761752" expanded="true" signature="447:6592" ph="{...}" />
+                <marker date="1589837761752" expanded="true" signature="656:4530" ph="{...}" />
+                <marker date="1589837761752" expanded="true" signature="730:4513" ph="{...}" />
+                <marker date="1589837761752" expanded="true" signature="4561:6586" ph="{...}" />
+                <marker date="1589837761752" expanded="true" signature="4636:6569" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -97,7 +110,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/TestLineAlgorithm.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
+            <state relative-caret-position="443">
               <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
               <folding>
                 <marker date="1582746728157" expanded="false" signature="6:103" ph="..." />
@@ -231,34 +244,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>dispose</find>
-      <find>setup</find>
-      <find>void Setup</find>
-      <find>pass</find>
-      <find>stencil</find>
-      <find>clear</find>
-      <find>CameraTarget</find>
-      <find>camera</find>
-      <find>CameraData</find>
-      <find>linear</find>
-      <find>_EnableExternalAlpha</find>
-      <find>_AlphaTex</find>
-      <find>_Flip</find>
-      <find>_RendererColor</find>
-      <find>_MainTex</find>
-      <find>_normal</find>
-      <find>CombinedShapeLightShared</find>
-      <find>clip</find>
-      <find>colorAttachment</find>
-      <find>translate</find>
-      <find>Shadow</find>
-      <find>shadow</find>
       <find>id</find>
-      <find>rayOrigin</find>
       <find>drawLine</find>
       <find>m_ColorAttachment</find>
-      <find>worldToWallBuffer</find>
       <find>maxRayLength</find>
+      <find>directionColors</find>
+      <find>offset</find>
+      <find>round</find>
+      <find>rowStartPos</find>
+      <find>dur</find>
+      <find>EnqueuePass</find>
+      <find>tags</find>
+      <find>RenderTexture</find>
+      <find>quad</find>
+      <find>game</find>
+      <find>material</find>
+      <find>AverageIrradianceBuffer</find>
+      <find>raycast</find>
+      <find>rayOriginWS</find>
+      <find>world</find>
+      <find>rayOrigin</find>
+      <find>result</find>
+      <find>worldToWallBuffer</find>
+      <find>start</find>
+      <find>wallBufferToWorld</find>
+      <find>OriginOffset</find>
+      <find>probeStartPosition</find>
+      <find>saturate</find>
+      <find>SetComputeIntParams</find>
+      <find>IrradianceBuffer</find>
+      <find>todo</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -291,6 +306,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/14/c75d0d54/QualitySettings.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/18/29cbf375/Camera.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/70/eb27fe6b/CameraClearFlags.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Desktop/2dGame/Assets/Radiosity/SwapBuffer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/Passes/ScriptableRenderPass.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/RenderingUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TestLineAlgorithm.cs" root0="FORCE_HIGHLIGHTING" />
@@ -329,10 +345,10 @@
         <option value="$PROJECT_DIR$/Assets/TooD/Pipeline2d.cs" />
         <option value="$PROJECT_DIR$/Assets/TooD/TooDIrradianceCamera.cs" />
         <option value="$PROJECT_DIR$/Assets/scripts/BasicMovement.cs" />
-        <option value="$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader" />
         <option value="$PROJECT_DIR$/Assets/TestLineAlgorithm.cs" />
-        <option value="$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader" />
         <option value="$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute" />
       </list>
     </option>
@@ -349,15 +365,15 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="FileSystemExplorer" />
-      <pane id="SolutionExplorer">
-        <option name="show-all-files" value="false" />
-      </pane>
       <pane id="AssemblyExplorer" />
       <pane id="UnityExplorer">
         <option name="show-hidden-items" value="false" />
         <option name="show-project-names" value="true" />
       </pane>
+      <pane id="SolutionExplorer">
+        <option name="show-all-files" value="false" />
+      </pane>
+      <pane id="FileSystemExplorer" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -413,12 +429,15 @@
       <workItem from="1582644958368" duration="5322000" />
       <workItem from="1582658838117" duration="4868000" />
       <workItem from="1582740816434" duration="5557000" />
-      <workItem from="1582763594013" duration="6181000" />
+      <workItem from="1582763594013" duration="6579000" />
+      <workItem from="1583017037775" duration="1554000" />
+      <workItem from="1589648317999" duration="46000" />
+      <workItem from="1589822563087" duration="8489000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31599000" />
+    <option name="totallyTimeSpent" value="42086000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -433,7 +452,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26318595" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2711774" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -451,8 +470,8 @@
       <window_info anchor="bottom" id="Tool Output" order="12" />
       <window_info anchor="bottom" id="Database Changes" order="13" />
       <window_info anchor="bottom" id="Unit Tests" order="14" />
-      <window_info anchor="bottom" id="Terminal" order="15" sideWeight="0.49920085" visible="true" weight="0.32870865" />
-      <window_info anchor="bottom" id="Event Log" order="16" sideWeight="0.5007991" side_tool="true" visible="true" weight="0.32870865" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="15" sideWeight="0.49760255" visible="true" weight="0.32870865" />
+      <window_info anchor="bottom" id="Event Log" order="16" sideWeight="0.5023974" side_tool="true" visible="true" weight="0.32870865" />
       <window_info anchor="bottom" id="ANTLR Preview" order="17" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -478,13 +497,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/32/0d317ea7/ScriptableCullingParameters.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94C5F4C3-8CDC-42D2-B006-F8BADEF04394/b7/ad62fc17/RenderPipelineAsset.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
@@ -1624,135 +1636,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.1.0/Unity.Mathematics/matrix.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16698">
-          <caret line="727" column="40" selection-start-line="727" selection-start-column="31" selection-end-line="727" selection-end-column="40" />
-          <folding>
-            <marker date="1562582530000" expanded="true" signature="104:47716" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="141:1236" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="315:472" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="626:724" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="889:987" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="1174:1230" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="1272:20866" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="1400:2015" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="2025:2271" ph="/// Returns a float3x3 matrix representing a rotation around a unit axis by an angle in radians. ... " />
-            <marker date="1562582530000" expanded="true" signature="2338:3582" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="3102:3572" ph="/* return float3x3( ... */" />
-            <marker date="1562582530000" expanded="true" signature="3592:4030" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the x-axis, then the y-a ... " />
-            <marker date="1562582530000" expanded="true" signature="4082:4542" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="4552:4990" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the x-axis, then the z-a ... " />
-            <marker date="1562582530000" expanded="true" signature="5042:5505" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="5515:5953" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the y-axis, then the x-a ... " />
-            <marker date="1562582530000" expanded="true" signature="6005:6465" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="6475:6913" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the y-axis, then the z-a ... " />
-            <marker date="1562582530000" expanded="true" signature="6965:7425" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="7435:7936" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the z-axis, then the x-a ... " />
-            <marker date="1562582530000" expanded="true" signature="7988:8467" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="8477:8915" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the z-axis, then the y-a ... " />
-            <marker date="1562582530000" expanded="true" signature="8967:9446" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="9456:10014" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the x-axis, then the y-a ... " />
-            <marker date="1562582530000" expanded="true" signature="10188:10746" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the x-axis, then the z-a ... " />
-            <marker date="1562582530000" expanded="true" signature="10920:11478" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the y-axis, then the x-a ... " />
-            <marker date="1562582530000" expanded="true" signature="11652:12210" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the y-axis, then the z-a ... " />
-            <marker date="1562582530000" expanded="true" signature="12384:13005" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the z-axis, then the x-a ... " />
-            <marker date="1562582530000" expanded="true" signature="13179:13737" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the z-axis, then the y-a ... " />
-            <marker date="1562582530000" expanded="true" signature="13911:14604" ph="/// Returns a float3x3 rotation matrix constructed by first performing 3 rotations around the principal axes in a ... " />
-            <marker date="1562582530000" expanded="true" signature="14698:15336" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="14735:15326" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="15346:16159" ph="/// Returns a float3x3 rotation matrix constructed by first performing 3 rotations around the principal axes in a ... " />
-            <marker date="1562582530000" expanded="true" signature="16327:16397" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="16407:16646" ph="///Returns a float4x4 matrix that rotates around the x-axis by a given number of radians. ... " />
-            <marker date="1562582530000" expanded="true" signature="16698:16975" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="16985:17224" ph="///Returns a float4x4 matrix that rotates around the y-axis by a given number of radians. ... " />
-            <marker date="1562582530000" expanded="true" signature="17276:17552" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="17562:17801" ph="///Returns a float4x4 matrix that rotates around the z-axis by a given number of radians. ... " />
-            <marker date="1562582530000" expanded="true" signature="17853:18135" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="18286:18442" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="18619:18775" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="18962:19023" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="19033:19352" ph="/// Returns a float3x3 view rotation matrix given a unit length forward vector and a unit length up vector. ... " />
-            <marker date="1562582530000" expanded="true" signature="19423:19557" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="19567:19966" ph="/// Returns a float3x3 view rotation matrix given a forward vector and an up vector. ... " />
-            <marker date="1562582530000" expanded="true" signature="20041:20860" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="20902:46088" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="21089:21285" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="21455:21683" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="21810:22045" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="22055:22301" ph="/// Returns a float4x4 matrix representing a rotation around a unit axis by an angle in radians. ... " />
-            <marker date="1562582530000" expanded="true" signature="22368:23350" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="23360:23798" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the x-axis, then the y-a ... " />
-            <marker date="1562582530000" expanded="true" signature="23850:24453" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="24463:24901" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the x-axis, then the z-a ... " />
-            <marker date="1562582530000" expanded="true" signature="24953:25558" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="25568:26006" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the y-axis, then the x-a ... " />
-            <marker date="1562582530000" expanded="true" signature="26058:26661" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="26671:27109" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the y-axis, then the z-a ... " />
-            <marker date="1562582530000" expanded="true" signature="27161:27764" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="27774:28275" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the z-axis, then the x-a ... " />
-            <marker date="1562582530000" expanded="true" signature="28327:28930" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="28940:29378" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the z-axis, then the y-a ... " />
-            <marker date="1562582530000" expanded="true" signature="29430:30033" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="30043:30601" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the x-axis, then the y-a ... " />
-            <marker date="1562582530000" expanded="true" signature="30775:31333" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the x-axis, then the z-a ... " />
-            <marker date="1562582530000" expanded="true" signature="31507:32065" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the y-axis, then the x-a ... " />
-            <marker date="1562582530000" expanded="true" signature="32239:32797" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the y-axis, then the z-a ... " />
-            <marker date="1562582530000" expanded="true" signature="32971:33592" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the z-axis, then the x-a ... " />
-            <marker date="1562582530000" expanded="true" signature="33766:34324" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the z-axis, then the y-a ... " />
-            <marker date="1562582530000" expanded="true" signature="34583:35221" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="34620:35211" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="35231:36044" ph="/// Returns a float4x4 rotation matrix constructed by first performing 3 rotations around the principal axes in a ... " />
-            <marker date="1562582530000" expanded="true" signature="36212:36282" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="36292:36531" ph="///Returns a float4x4 matrix that rotates around the x-axis by a given number of radians. ... " />
-            <marker date="1562582530000" expanded="true" signature="36583:36936" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="36946:37185" ph="///Returns a float4x4 matrix that rotates around the y-axis by a given number of radians. ... " />
-            <marker date="1562582530000" expanded="true" signature="37237:37590" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="37600:37839" ph="///Returns a float4x4 matrix that rotates around the z-axis by a given number of radians. ... " />
-            <marker date="1562582530000" expanded="true" signature="37891:38244" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="38375:38604" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="38784:39013" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="39181:39257" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="39418:39691" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="39701:40127" ph="/// Returns a float4x4 view matrix given an eye position, a target point and a unit length up vector. ... " />
-            <marker date="1562582530000" expanded="true" signature="40203:40540" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="40550:40940" ph="/// Returns a float4x4 centered orthographic projection matrix. ... " />
-            <marker date="1562582530000" expanded="true" signature="41027:41523" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="41533:42121" ph="/// Returns a float4x4 off-center orthographic projection matrix. ... " />
-            <marker date="1562582530000" expanded="true" signature="42240:42805" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="42815:43254" ph="/// Returns a float4x4 perspective projection matrix based on field of view. ... " />
-            <marker date="1562582530000" expanded="true" signature="43356:43866" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="43876:44639" ph="/// Returns a float4x4 off-center perspective projection matrix. ... " />
-            <marker date="1562582530000" expanded="true" signature="44764:45443" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="45453:45689" ph="/// Returns a float4x4 matrix representing a combined scale-, rotation- and translation transform. ... " />
-            <marker date="1562582530000" expanded="true" signature="45779:46082" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="46112:47714" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="46267:46330" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="46537:46613" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="46808:46884" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="47036:47100" ph="{...}" />
-            <marker date="1562582530000" expanded="true" signature="47247:47708" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/TestLineAlgorithm.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
-          <folding>
-            <marker date="1582746728157" expanded="false" signature="6:103" ph="..." />
-            <marker date="1582746728157" expanded="true" signature="151:1470" ph="{...}" />
-            <marker date="1582746728157" expanded="true" signature="320:540" ph="{...}" />
-            <marker date="1582746728157" expanded="true" signature="366:415" ph="{...}" />
-            <marker date="1582746728157" expanded="true" signature="575:691" ph="{...}" />
-            <marker date="1582746728157" expanded="true" signature="737:1468" ph="{...}" />
-            <marker date="1582746728157" expanded="true" signature="1038:1184" ph="{...}" />
-            <marker date="1582746728157" expanded="true" signature="1286:1462" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/UniversalRenderPipelineCore.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="214">
@@ -1914,23 +1797,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-          <folding>
-            <marker date="1582666002291" expanded="true" signature="21:5231" ph="{...}" />
-            <marker date="1582666002291" expanded="true" signature="42:299" ph="{...}" />
-            <marker date="1582666002291" expanded="true" signature="316:406" ph="{...}" />
-            <marker date="1582666002291" expanded="true" signature="433:5197" ph="{...}" />
-            <marker date="1582666002291" expanded="true" signature="642:3135" ph="{...}" />
-            <marker date="1582666002291" expanded="true" signature="716:3118" ph="{...}" />
-            <marker date="1582666002291" expanded="true" signature="3166:5191" ph="{...}" />
-            <marker date="1582666002291" expanded="true" signature="3241:5174" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@7.1.8/Runtime/ScriptableRenderer.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
@@ -2047,57 +1913,215 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs">
+    <entry file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.1.0/Unity.Mathematics/matrix.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+        <state relative-caret-position="16698">
+          <caret line="727" column="40" selection-start-line="727" selection-start-column="31" selection-end-line="727" selection-end-column="40" />
           <folding>
-            <marker date="1582769405157" expanded="true" signature="6:117" ph="..." />
-            <marker date="1582769405157" expanded="true" signature="170:5187" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="800:973" ph="/* irradiance buffer is directionCount pixels wide, one for each direction, ... */" />
-            <marker date="1582769405157" expanded="true" signature="1394:2118" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="1430:1497" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="2148:2226" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="2245:3490" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="2650:2777" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="3539:3646" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="3670:3800" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="3852:3958" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="3998:4109" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="4152:4298" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="4334:4446" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="4487:5185" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="4541:4806" ph="{...}" />
-            <marker date="1582769405157" expanded="true" signature="4603:4796" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="104:47716" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="141:1236" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="315:472" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="626:724" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="889:987" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="1174:1230" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="1272:20866" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="1400:2015" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="2025:2271" ph="/// Returns a float3x3 matrix representing a rotation around a unit axis by an angle in radians. ... " />
+            <marker date="1562582530000" expanded="true" signature="2338:3582" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="3102:3572" ph="/* return float3x3( ... */" />
+            <marker date="1562582530000" expanded="true" signature="3592:4030" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the x-axis, then the y-a ... " />
+            <marker date="1562582530000" expanded="true" signature="4082:4542" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="4552:4990" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the x-axis, then the z-a ... " />
+            <marker date="1562582530000" expanded="true" signature="5042:5505" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="5515:5953" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the y-axis, then the x-a ... " />
+            <marker date="1562582530000" expanded="true" signature="6005:6465" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="6475:6913" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the y-axis, then the z-a ... " />
+            <marker date="1562582530000" expanded="true" signature="6965:7425" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="7435:7936" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the z-axis, then the x-a ... " />
+            <marker date="1562582530000" expanded="true" signature="7988:8467" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="8477:8915" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the z-axis, then the y-a ... " />
+            <marker date="1562582530000" expanded="true" signature="8967:9446" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="9456:10014" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the x-axis, then the y-a ... " />
+            <marker date="1562582530000" expanded="true" signature="10188:10746" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the x-axis, then the z-a ... " />
+            <marker date="1562582530000" expanded="true" signature="10920:11478" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the y-axis, then the x-a ... " />
+            <marker date="1562582530000" expanded="true" signature="11652:12210" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the y-axis, then the z-a ... " />
+            <marker date="1562582530000" expanded="true" signature="12384:13005" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the z-axis, then the x-a ... " />
+            <marker date="1562582530000" expanded="true" signature="13179:13737" ph="/// Returns a float3x3 rotation matrix constructed by first performing a rotation around the z-axis, then the y-a ... " />
+            <marker date="1562582530000" expanded="true" signature="13911:14604" ph="/// Returns a float3x3 rotation matrix constructed by first performing 3 rotations around the principal axes in a ... " />
+            <marker date="1562582530000" expanded="true" signature="14698:15336" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="14735:15326" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="15346:16159" ph="/// Returns a float3x3 rotation matrix constructed by first performing 3 rotations around the principal axes in a ... " />
+            <marker date="1562582530000" expanded="true" signature="16327:16397" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="16407:16646" ph="///Returns a float4x4 matrix that rotates around the x-axis by a given number of radians. ... " />
+            <marker date="1562582530000" expanded="true" signature="16698:16975" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="16985:17224" ph="///Returns a float4x4 matrix that rotates around the y-axis by a given number of radians. ... " />
+            <marker date="1562582530000" expanded="true" signature="17276:17552" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="17562:17801" ph="///Returns a float4x4 matrix that rotates around the z-axis by a given number of radians. ... " />
+            <marker date="1562582530000" expanded="true" signature="17853:18135" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="18286:18442" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="18619:18775" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="18962:19023" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="19033:19352" ph="/// Returns a float3x3 view rotation matrix given a unit length forward vector and a unit length up vector. ... " />
+            <marker date="1562582530000" expanded="true" signature="19423:19557" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="19567:19966" ph="/// Returns a float3x3 view rotation matrix given a forward vector and an up vector. ... " />
+            <marker date="1562582530000" expanded="true" signature="20041:20860" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="20902:46088" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="21089:21285" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="21455:21683" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="21810:22045" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="22055:22301" ph="/// Returns a float4x4 matrix representing a rotation around a unit axis by an angle in radians. ... " />
+            <marker date="1562582530000" expanded="true" signature="22368:23350" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="23360:23798" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the x-axis, then the y-a ... " />
+            <marker date="1562582530000" expanded="true" signature="23850:24453" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="24463:24901" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the x-axis, then the z-a ... " />
+            <marker date="1562582530000" expanded="true" signature="24953:25558" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="25568:26006" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the y-axis, then the x-a ... " />
+            <marker date="1562582530000" expanded="true" signature="26058:26661" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="26671:27109" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the y-axis, then the z-a ... " />
+            <marker date="1562582530000" expanded="true" signature="27161:27764" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="27774:28275" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the z-axis, then the x-a ... " />
+            <marker date="1562582530000" expanded="true" signature="28327:28930" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="28940:29378" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the z-axis, then the y-a ... " />
+            <marker date="1562582530000" expanded="true" signature="29430:30033" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="30043:30601" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the x-axis, then the y-a ... " />
+            <marker date="1562582530000" expanded="true" signature="30775:31333" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the x-axis, then the z-a ... " />
+            <marker date="1562582530000" expanded="true" signature="31507:32065" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the y-axis, then the x-a ... " />
+            <marker date="1562582530000" expanded="true" signature="32239:32797" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the y-axis, then the z-a ... " />
+            <marker date="1562582530000" expanded="true" signature="32971:33592" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the z-axis, then the x-a ... " />
+            <marker date="1562582530000" expanded="true" signature="33766:34324" ph="/// Returns a float4x4 rotation matrix constructed by first performing a rotation around the z-axis, then the y-a ... " />
+            <marker date="1562582530000" expanded="true" signature="34583:35221" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="34620:35211" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="35231:36044" ph="/// Returns a float4x4 rotation matrix constructed by first performing 3 rotations around the principal axes in a ... " />
+            <marker date="1562582530000" expanded="true" signature="36212:36282" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="36292:36531" ph="///Returns a float4x4 matrix that rotates around the x-axis by a given number of radians. ... " />
+            <marker date="1562582530000" expanded="true" signature="36583:36936" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="36946:37185" ph="///Returns a float4x4 matrix that rotates around the y-axis by a given number of radians. ... " />
+            <marker date="1562582530000" expanded="true" signature="37237:37590" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="37600:37839" ph="///Returns a float4x4 matrix that rotates around the z-axis by a given number of radians. ... " />
+            <marker date="1562582530000" expanded="true" signature="37891:38244" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="38375:38604" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="38784:39013" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="39181:39257" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="39418:39691" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="39701:40127" ph="/// Returns a float4x4 view matrix given an eye position, a target point and a unit length up vector. ... " />
+            <marker date="1562582530000" expanded="true" signature="40203:40540" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="40550:40940" ph="/// Returns a float4x4 centered orthographic projection matrix. ... " />
+            <marker date="1562582530000" expanded="true" signature="41027:41523" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="41533:42121" ph="/// Returns a float4x4 off-center orthographic projection matrix. ... " />
+            <marker date="1562582530000" expanded="true" signature="42240:42805" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="42815:43254" ph="/// Returns a float4x4 perspective projection matrix based on field of view. ... " />
+            <marker date="1562582530000" expanded="true" signature="43356:43866" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="43876:44639" ph="/// Returns a float4x4 off-center perspective projection matrix. ... " />
+            <marker date="1562582530000" expanded="true" signature="44764:45443" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="45453:45689" ph="/// Returns a float4x4 matrix representing a combined scale-, rotation- and translation transform. ... " />
+            <marker date="1562582530000" expanded="true" signature="45779:46082" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="46112:47714" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="46267:46330" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="46537:46613" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="46808:46884" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="47036:47100" ph="{...}" />
+            <marker date="1562582530000" expanded="true" signature="47247:47708" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/TestLineAlgorithm.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
+          <folding>
+            <marker date="1582746728157" expanded="false" signature="6:103" ph="..." />
+            <marker date="1582746728157" expanded="true" signature="151:1470" ph="{...}" />
+            <marker date="1582746728157" expanded="true" signature="320:540" ph="{...}" />
+            <marker date="1582746728157" expanded="true" signature="366:415" ph="{...}" />
+            <marker date="1582746728157" expanded="true" signature="575:691" ph="{...}" />
+            <marker date="1582746728157" expanded="true" signature="737:1468" ph="{...}" />
+            <marker date="1582746728157" expanded="true" signature="1038:1184" ph="{...}" />
+            <marker date="1582746728157" expanded="true" signature="1286:1462" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/2dGame/Assets/Radiosity/SwapBuffer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#104#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="117" column="22" lean-forward="true" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="100" />
+          <folding>
+            <marker date="1589837761752" expanded="true" signature="21:6626" ph="{...}" />
+            <marker date="1589837761752" expanded="true" signature="42:313" ph="{...}" />
+            <marker date="1589837761752" expanded="true" signature="330:420" ph="{...}" />
+            <marker date="1589837761752" expanded="true" signature="447:6592" ph="{...}" />
+            <marker date="1589837761752" expanded="true" signature="656:4530" ph="{...}" />
+            <marker date="1589837761752" expanded="true" signature="730:4513" ph="{...}" />
+            <marker date="1589837761752" expanded="true" signature="4561:6586" ph="{...}" />
+            <marker date="1589837761752" expanded="true" signature="4636:6569" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="50" column="62" lean-forward="true" selection-start-line="50" selection-start-column="62" selection-end-line="50" selection-end-column="62" />
+        <state relative-caret-position="375">
+          <caret line="63" column="110" lean-forward="true" selection-start-line="63" selection-start-column="110" selection-end-line="63" selection-end-column="110" />
           <folding>
-            <marker date="1582769431726" expanded="true" signature="6:171" ph="..." />
-            <marker date="1582769431726" expanded="true" signature="219:3313" ph="{...}" />
-            <marker date="1582769431726" expanded="true" signature="423:775" ph="{...}" />
-            <marker date="1582769431726" expanded="true" signature="605:683" ph="{...}" />
-            <marker date="1582769431726" expanded="true" signature="873:3311" ph="{...}" />
-            <marker date="1582769431726" expanded="true" signature="1221:3305" ph="{...}" />
-            <marker date="1582769431726" expanded="true" signature="3371:5756" ph="{...}" />
-            <marker date="1582769431726" expanded="true" signature="3682:3778" ph="{...}" />
-            <marker date="1582769431726" expanded="true" signature="3878:5754" ph="{...}" />
-            <marker date="1582769431726" expanded="true" signature="4243:4498" ph="{...}" />
-            <marker date="1582769431726" expanded="true" signature="4331:4488" ph="{...}" />
-            <marker date="1582769431726" expanded="true" signature="4991:5703" ph="{...}" />
+            <marker date="1589839294345" expanded="true" signature="6:171" ph="..." />
+            <marker date="1589839294345" expanded="true" signature="219:3867" ph="{...}" />
+            <marker date="1589839294345" expanded="true" signature="423:775" ph="{...}" />
+            <marker date="1589839294345" expanded="true" signature="605:683" ph="{...}" />
+            <marker date="1589839294345" expanded="true" signature="873:3865" ph="{...}" />
+            <marker date="1589839294345" expanded="true" signature="1221:3859" ph="{...}" />
+            <marker date="1589839294345" expanded="true" signature="3189:3359" ph="/* command.SetComputeMatrixParam(probeRaycastShader, &quot;worldDirectionToBufferDirection&quot;, ... */" />
+            <marker date="1589839294345" expanded="true" signature="3925:6310" ph="{...}" />
+            <marker date="1589839294345" expanded="true" signature="4236:4332" ph="{...}" />
+            <marker date="1589839294345" expanded="true" signature="4432:6308" ph="{...}" />
+            <marker date="1589839294345" expanded="true" signature="4797:5052" ph="{...}" />
+            <marker date="1589839294345" expanded="true" signature="4885:5042" ph="{...}" />
+            <marker date="1589839294345" expanded="true" signature="5545:6257" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="103" column="46" lean-forward="true" selection-start-line="103" selection-start-column="46" selection-end-line="103" selection-end-column="46" />
+          <folding>
+            <marker date="1589839615758" expanded="true" signature="6:117" ph="..." />
+            <marker date="1589839615758" expanded="true" signature="170:7135" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="802:975" ph="/* irradiance buffer is directionCount pixels wide, one for each direction, ... */" />
+            <marker date="1589839615758" expanded="true" signature="2251:3229" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="2287:2354" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="3259:3380" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="3399:5279" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="3800:3973" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="3871:3963" ph="/* TODO: Transfer valid probe data to new area ... */" />
+            <marker date="1589839615758" expanded="true" signature="5328:5437" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="5461:5591" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="5643:5749" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="5800:5914" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="5955:6066" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="6105:6251" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="6287:6399" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="6440:7133" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="6494:6760" ph="{...}" />
+            <marker date="1589839615758" expanded="true" signature="6556:6750" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="123" column="1" lean-forward="true" selection-start-line="123" selection-start-column="1" selection-end-line="123" selection-end-column="1" />
+        <state relative-caret-position="513">
+          <caret line="151" column="52" lean-forward="true" selection-start-line="151" selection-start-column="52" selection-end-line="151" selection-end-column="52" />
         </state>
       </provider>
     </entry>

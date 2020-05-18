@@ -1,0 +1,176 @@
+Texture2D<float4> WallBuffer;
+RWTexture2D<float4> IrradianceBuffer;
+RWTexture2D<float4> AverageIrradianceBuffer;
+float probeSeparation;
+float2 probeStartPosition;//GetProbeAreaOrigin() + OriginOffset
+int directionCount;
+float maxRayLength;
+uint2 wallBufferSize;
+uint2 probeCount;
+int gutterSize;
+
+float4x4 worldToWallBuffer;
+float4x4 wallBufferToWorld;
+float4x4 worldDirectionToBufferDirection;
+
+#define MAX_DIRECTION_COUNT 128
+#define PI 3.14159
+#define HYSTERESIS 0.05
+
+#pragma kernel GenerateProbeData
+
+struct PixelResults
+{
+    bool hit;
+    float3 color;
+    bool outOfBounds;
+};
+
+PixelResults testPixel(float2 pos) 
+{
+    uint2 p = uint2(pos);
+    PixelResults o = (PixelResults)0;
+    if(any(bool4(pos.xy < 0, pos.xy >= float2(wallBufferSize))))
+    {
+        o.outOfBounds = true;
+    }
+    else
+    {
+        float4 color = WallBuffer[pos];
+        if(color.a > 0)
+        {
+            o.hit = true;
+            o.color = color.rgb;
+        }
+    }
+    return o;
+}
+struct RaycastResult
+{
+    float3 color;
+    float2 endPosition;
+};
+
+RaycastResult raycast(float2 start, float2 end) 
+{
+    RaycastResult result;
+    result.color = 0;
+    result.endPosition = start;
+    float w = end.x - start.x;
+    float h = end.y - start.y;
+    
+    float2 d1 = float2(sign(w),sign(h));
+
+    float2 d2 = float2(sign(w),0);
+
+    float longest = abs(w);
+    float shortest = abs(h);
+    if (longest <= shortest) 
+    {
+        longest = abs(h);
+        shortest = abs(w);
+        d2.y = sign(h);
+        d2.x = 0;
+    }
+    float numerator = longest / 2.;
+    for (int i = 0; i <= int(ceil(longest)); i++) 
+    {
+        PixelResults o = testPixel(start);
+        if(o.outOfBounds)
+        {
+            return result;
+        }
+        if(o.hit)
+        {
+            result.color = o.color;
+            return result;
+        }
+        numerator += shortest - (numerator >= longest ? longest : 0);
+        start += numerator >= longest ? d1 : d2;
+        result.endPosition = start;
+    }
+    return result;
+}
+
+float4 GetFromBufferClamped(uint2 pos)
+{
+    float4 col = AverageIrradianceBuffer[pos];
+    if(any(bool4(pos > probeCount, pos < 0)))
+    {
+        return 0;
+    }
+    return col;
+}
+
+[numthreads(1,1,1)]
+void GenerateProbeData (uint3 groupID : SV_GroupID, 
+   uint3 groupThreadID : SV_GroupThreadID, 
+   uint groupIndex : SV_GroupIndex, 
+   uint3 id : SV_DispatchThreadID) 
+{
+    float2 rayOriginWS = probeStartPosition + float2(id.xy) * probeSeparation;
+    float3 directionColors[MAX_DIRECTION_COUNT];
+    
+    for(int l = 0; l < directionCount; l++)
+    {
+        directionColors[l] = 0;//May or may not need to initialize
+    }
+    
+ 
+    for(int i = 0; i < directionCount; i++)
+    {
+        float percent = float(i)/float(directionCount);
+        float2 dirI = float2(cos(2*PI*percent), sin(2*PI*percent));
+        float2 rayDir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;//Dir in buffer space
+        float2 rayOrigin = mul(worldToWallBuffer, float4(rayOriginWS, 0, 1)).xy;
+        float2 rayEndPos = rayOrigin + rayDir * maxRayLength;
+        //do raycast
+        RaycastResult result = raycast(rayOrigin, rayEndPos);
+        float2 wsEndPos = mul(wallBufferToWorld, float4(result.endPosition, 0, 1)).xy;
+        //HERE
+        //Result needs to pull in the color from the IrradianceBuffer
+        //sample the 4 nearby probes
+        //Bilinear and dot falloff?
+        //Could also just try bilinear
+        //add to result?
+        //We could also later use normals from SDF and try that instead
+        /*float2 localPos = (wsEndPos - probeStartPosition)/ probeSeparation;
+        uint2 BLProbe = (uint2)floor(localPos);
+        //convert probe local to world
+        //Get dir from wsPos to endPos
+        //Sample buffer in that direction
+        //bilinear
+        float2 f = frac(localPos);
+        float4 BL = GetFromBufferClamped(BLProbe);
+        float4 BR = GetFromBufferClamped(BLProbe + uint2(1,0));
+        float4 TL = GetFromBufferClamped(BLProbe + uint2(0,1));
+        float4 TR = GetFromBufferClamped(BLProbe + uint2(1,1));
+        float4 bottom = lerp(BL, BR, f.x);
+        float4 top = lerp(TL, TR, f.x);
+        float4 combined = lerp(bottom, top, f.y);*/
+        //TODO: Probably come back with normals from SDF
+        float3 col = result.color;// + combined.rgb;
+        
+        
+        for(int j = 0; j < directionCount; j++)
+        {
+            float percentJ = float(j)/float(directionCount);
+            float2 dirJ = float2(cos(2*PI*percentJ), sin(2*PI*percentJ));
+            directionColors[j] += col * max(0, dot(dirI, dirJ));
+        }
+    }
+    
+   
+    
+    uint2 rowStartPos = id.xy * uint2(directionCount + gutterSize * 2, 1);
+    
+    float4 sum = 0;
+    for(uint k = 0; k < uint(directionCount); k++)
+    {
+        uint2 offset = rowStartPos + uint2(gutterSize + k, 0);
+        float4 col = float4(lerp(IrradianceBuffer[offset].xyz, directionColors[k], HYSTERESIS), 1);
+        IrradianceBuffer[offset] = col;
+        sum += col;
+    }
+    AverageIrradianceBuffer[id.xy] = sum / float(directionCount);
+}
