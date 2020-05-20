@@ -26,7 +26,7 @@ public class IrradianceProbeManager : MonoBehaviour
     private int pixelsPerUnit = 32;
 
     [SerializeField]
-    private Material dataTransferMaterial;
+    private Material dataTransferMaterial = null;
 
     public int2 BufferSize => math.int2(math.float2(probeCounts) * probeSeparation * pixelsPerUnit);
 
@@ -44,7 +44,6 @@ public class IrradianceProbeManager : MonoBehaviour
     private int SingleProbePixelWidth => (directionCount + GutterSize * 2);
 
     public float4x4 worldToWallBuffer;
-    public float4x4 wallBufferToWorld;
     public float4x4 worldDirectionToBufferDirection;
     private static readonly int ProbeAreaOriginId = Shader.PropertyToID("_ProbeAreaOrigin");
     private static readonly int ProbeSeparationId = Shader.PropertyToID("_ProbeSeparation");
@@ -57,7 +56,6 @@ public class IrradianceProbeManager : MonoBehaviour
     private static readonly int OffsetID = Shader.PropertyToID("_Offset");
 
     public int MaxRayLength => 250;
-    //(int) math.sqrt(wallBuffer.width * wallBuffer.width + wallBuffer.height * wallBuffer.height);
 
     void Start()
     {
@@ -70,18 +68,18 @@ public class IrradianceProbeManager : MonoBehaviour
         Instance = this;
 
         var size = BufferSize;
-        wallBuffer = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+        wallBuffer = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
         wallBuffer.wrapMode = TextureWrapMode.Clamp;
         wallBuffer.Create();
 
         irradianceBuffer = new RenderTexture(probeCounts.x * SingleProbePixelWidth, probeCounts.y,
-                0, RenderTextureFormat.ARGB64, RenderTextureReadWrite.Linear)
+                0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
             .ToDoubleBuffer();
         irradianceBuffer.enableRandomWrite = true;
         irradianceBuffer.Create();
 
         averageIrradianceBuffer = new RenderTexture(probeCounts.x, probeCounts.y,
-                0, RenderTextureFormat.ARGB64, RenderTextureReadWrite.Linear)
+                0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
             .ToDoubleBuffer();
         averageIrradianceBuffer.enableRandomWrite = true;
         averageIrradianceBuffer.Create();
@@ -125,7 +123,6 @@ public class IrradianceProbeManager : MonoBehaviour
         //Scale afterwards to buffersize
         float4x4 step2 = float4x4.Scale(pixelsPerUnit);
         worldToWallBuffer = math.mul(step2, step1);
-        wallBufferToWorld = math.inverse(worldToWallBuffer);
 
         float2 bufferSize = BufferSize;
         worldDirectionToBufferDirection = float4x4.Scale(1f / bufferSize.y, 1f / bufferSize.x, 0);
@@ -149,6 +146,11 @@ public class IrradianceProbeManager : MonoBehaviour
             irradianceBuffer.Swap();
         }
     }
+    
+    //TODO: Random directions
+    //We probably just need to have a global random offset between 0, 2pi/directionCount
+    //Then when we want to sample a direction we probably need to add that random direction before sampling?
+    //Probably leave this to the end once bounces work
 
     void SetCenter(Transform trs, float2 value)
     {

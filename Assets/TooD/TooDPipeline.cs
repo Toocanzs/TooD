@@ -57,9 +57,7 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeIntParam(probeRaycastShader, "gutterSize", IrradianceProbeManager.GutterSize);
             command.SetComputeMatrixParam(probeRaycastShader, "worldToWallBuffer",
                 IrradianceProbeManager.Instance.worldToWallBuffer);
-            command.SetComputeMatrixParam(probeRaycastShader, "wallBufferToWorld", IrradianceProbeManager.Instance.wallBufferToWorld);
-            /*command.SetComputeMatrixParam(probeRaycastShader, "worldDirectionToBufferDirection",
-                IrradianceProbeManager.Instance.worldDirectionToBufferDirection);*/
+            command.SetComputeMatrixParam(probeRaycastShader, "wallBufferToWorld", math.fastinverse(IrradianceProbeManager.Instance.worldToWallBuffer));
             command.SetComputeIntParams(probeRaycastShader, "probeCount", 
                 IrradianceProbeManager.Instance.probeCounts.x, IrradianceProbeManager.Instance.probeCounts.y);
 
@@ -68,7 +66,7 @@ public class TooDRenderer : ScriptableRenderer
                 IrradianceProbeManager.Instance.probeCounts.x, IrradianceProbeManager.Instance.probeCounts.y, 1);
             context.ExecuteCommandBuffer(command);
             command.Clear();
-            //TODO: gutter?
+            //TODO: gutter? We only need it once we start sampling directions instead of averages
         }
     }
 }

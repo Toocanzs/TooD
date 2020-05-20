@@ -115,6 +115,7 @@
             
             float2 GetIrradianceUv(float2 worldPos)
             {
+                worldPos += 0.5;//Maybe remove this later? Makes it look right atm
                 return ((worldPos - _ProbeAreaOrigin - OriginOffset)/ _ProbeSeparation)/ProbeCounts;
             }
 

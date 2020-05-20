@@ -15,7 +15,7 @@ float4x4 worldDirectionToBufferDirection;
 
 #define MAX_DIRECTION_COUNT 128
 #define PI 3.14159
-#define HYSTERESIS 0.05
+#define HYSTERESIS 0.005
 
 #pragma kernel GenerateProbeData
 
@@ -116,7 +116,8 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         directionColors[l] = 0;//May or may not need to initialize
     }
     
- 
+    float denominator = (0.5/directionCount);
+    //only half the rays contribute to a particular direction, so average acoss all those is sum/directionCount/2
     for(int i = 0; i < directionCount; i++)
     {
         float percent = float(i)/float(directionCount);
@@ -156,7 +157,7 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         {
             float percentJ = float(j)/float(directionCount);
             float2 dirJ = float2(cos(2*PI*percentJ), sin(2*PI*percentJ));
-            directionColors[j] += col * max(0, dot(dirI, dirJ));
+            directionColors[j] += col * max(0, dot(dirI, dirJ)) * denominator;
         }
     }
     
@@ -168,6 +169,10 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
     for(uint k = 0; k < uint(directionCount); k++)
     {
         uint2 offset = rowStartPos + uint2(gutterSize + k, 0);
+        //TODO: When we add random directions IrradianceBuffer[offset] needs to be sampled with that random value
+        //Also maybe the set needs to be 
+        //But also maybe none of that is the case. Look at it first
+        //Could also do the lerp at the average level, but then bounces will be more sparse(?)
         float4 col = float4(lerp(IrradianceBuffer[offset].xyz, directionColors[k], HYSTERESIS), 1);
         IrradianceBuffer[offset] = col;
         sum += col;
