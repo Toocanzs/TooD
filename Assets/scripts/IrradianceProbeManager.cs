@@ -25,6 +25,9 @@ public class IrradianceProbeManager : MonoBehaviour
     [SerializeField]
     private int pixelsPerUnit = 32;
 
+    [SerializeField]
+    private Material dataTransferMaterial;
+
     public int2 BufferSize => math.int2(math.float2(probeCounts) * probeSeparation * pixelsPerUnit);
 
     public RenderTexture wallBuffer;
@@ -33,10 +36,10 @@ public class IrradianceProbeManager : MonoBehaviour
 
     //irradiance buffer is directionCount pixels wide, one for each direction,
     //then GutterSize pixels on each side so the side pixels can bilinearly sample across the seam
-    public RenderTexture irradianceBuffer;
+    public DoubleBuffer irradianceBuffer;
     public const int GutterSize = 1; //each side
 
-    public RenderTexture averageIrradianceBuffer;
+    public DoubleBuffer averageIrradianceBuffer;
 
     private int SingleProbePixelWidth => (directionCount + GutterSize * 2);
 
@@ -51,6 +54,7 @@ public class IrradianceProbeManager : MonoBehaviour
     private static readonly int GutterSizeID = Shader.PropertyToID("gutterSize");
     private static readonly int AverageIrradienceBufferId = Shader.PropertyToID("_AverageIrradienceBuffer");
     private static readonly int ProbeCountsId = Shader.PropertyToID("ProbeCounts");
+    private static readonly int OffsetID = Shader.PropertyToID("_Offset");
 
     public int MaxRayLength => 250;
     //(int) math.sqrt(wallBuffer.width * wallBuffer.width + wallBuffer.height * wallBuffer.height);
@@ -70,14 +74,18 @@ public class IrradianceProbeManager : MonoBehaviour
         wallBuffer.wrapMode = TextureWrapMode.Clamp;
         wallBuffer.Create();
 
-        irradianceBuffer = new RenderTexture(probeCounts.x * SingleProbePixelWidth, probeCounts.y, 0, RenderTextureFormat.ARGB64, RenderTextureReadWrite.Linear);
+        irradianceBuffer = new RenderTexture(probeCounts.x * SingleProbePixelWidth, probeCounts.y,
+                0, RenderTextureFormat.ARGB64, RenderTextureReadWrite.Linear)
+            .ToDoubleBuffer();
         irradianceBuffer.enableRandomWrite = true;
         irradianceBuffer.Create();
 
-        averageIrradianceBuffer = new RenderTexture(probeCounts.x, probeCounts.y, 0, RenderTextureFormat.ARGB64, RenderTextureReadWrite.Linear);
+        averageIrradianceBuffer = new RenderTexture(probeCounts.x, probeCounts.y,
+                0, RenderTextureFormat.ARGB64, RenderTextureReadWrite.Linear)
+            .ToDoubleBuffer();
         averageIrradianceBuffer.enableRandomWrite = true;
         averageIrradianceBuffer.Create();
-        
+
         transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = averageIrradianceBuffer;
     }
 
@@ -97,11 +105,12 @@ public class IrradianceProbeManager : MonoBehaviour
 
         float2 cameraPos = math.float3(Camera.main.transform.position).xy;
 
+        float2 oldPos = GetProbeAreaOrigin();
+        bool moved = false;
         if (math.any(math.bool4(cameraPos.xy < resetBounds.xy, cameraPos.xy > resetBounds.zw)))
         {
             SetCenter(transform, cameraPos.xy);
-            //TODO: Transfer valid probe data to new area
-            //TODO: also transfer average data
+            moved = true;
         }
 
         var transform1 = lightingCamera.transform;
@@ -127,8 +136,18 @@ public class IrradianceProbeManager : MonoBehaviour
         Shader.SetGlobalTexture(AverageIrradienceBufferId, averageIrradianceBuffer);
         Shader.SetGlobalInt(DirectionCountId, directionCount);
         Shader.SetGlobalInt(GutterSizeID, GutterSize);
-        
-        Shader.SetGlobalVector(ProbeCountsId, (float4)probeCounts.xyxy);
+
+        Shader.SetGlobalVector(ProbeCountsId, (float4) probeCounts.xyxy);
+
+        if (moved)
+        {
+            float2 probeOffset = (GetProbeAreaOrigin() - oldPos).xy  / probeSeparation;
+            float2 pixelOffset = probeOffset * new float2(directionCount + GutterSize * 2, 1);
+            float2 uvOffset = pixelOffset / irradianceBuffer.Dimensions;
+            dataTransferMaterial.SetVector(OffsetID, uvOffset.xyxy);
+            Graphics.Blit(irradianceBuffer.Current, irradianceBuffer.Other, dataTransferMaterial);
+            irradianceBuffer.Swap();
+        }
     }
 
     void SetCenter(Transform trs, float2 value)

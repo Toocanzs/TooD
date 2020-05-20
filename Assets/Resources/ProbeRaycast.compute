@@ -87,7 +87,7 @@ RaycastResult raycast(float2 start, float2 end)
         }
         numerator += shortest - (numerator >= longest ? longest : 0);
         start += numerator >= longest ? d1 : d2;
-        result.endPosition = start;
+        result.endPosition = start;//Move after if hit so we get the last end position not inside the wall
     }
     return result;
 }

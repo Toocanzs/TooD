@@ -13,14 +13,17 @@
         <e p="scripts" t="Include">
           <e p="BasicMovement.cs" t="Include" />
           <e p="DontDestroy.cs" t="Include" />
+          <e p="DoubleBuffer.cs" t="Include" />
           <e p="IrradianceProbeManager.cs" t="Include" />
         </e>
         <e p="TestLineAlgorithm.cs" t="Include" />
         <e p="TooD" t="Include">
           <e p="TooD Sprite.shader" t="Include" />
+          <e p="TooD Unlit.shader" t="Include" />
           <e p="TooDIrradianceCamera.cs" t="Include" />
           <e p="TooDPipeline.cs" t="Include" />
           <e p="TooDRendererData.cs" t="Include" />
+          <e p="TransferData.shader" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />

@@ -40,7 +40,7 @@ public class TooDRenderer : ScriptableRenderer
                 IrradianceProbeManager.Instance.irradianceBuffer);
             command.SetComputeTextureParam(probeRaycastShader, probeRaycastMainKernel, "AverageIrradianceBuffer",
                 IrradianceProbeManager.Instance.averageIrradianceBuffer);
-            
+
             command.SetComputeFloatParam(probeRaycastShader, "probeSeparation",
                 IrradianceProbeManager.Instance.probeSeparation);
 
