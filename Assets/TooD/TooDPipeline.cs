@@ -54,7 +54,7 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeIntParam(computeShader, "gutterSize", IrradianceProbeManager.GutterSize);
             command.SetComputeMatrixParam(computeShader, "worldToWallBuffer", i.worldToWallBuffer);
             command.SetComputeIntParams(computeShader, "probeCount", i.probeCounts.x, i.probeCounts.y);
-            command.SetComputeFloatParam(computeShader, "HYSTERESIS", Time.deltaTime);
+            command.SetComputeFloatParam(computeShader, "HYSTERESIS", Time.deltaTime * 5);
             command.SetComputeIntParam(computeShader, "pixelsPerUnit", i.pixelsPerUnit);
 
             
@@ -86,13 +86,16 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeTextureParam(computeShader, JFA_distKernel, "JFA_Dest", i.sdfBuffer.Other);
             command.DispatchCompute(computeShader, JFA_distKernel, (i.wallBuffer.width + 63) / 64, i.wallBuffer.height, 1);
 
+            
+            command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "SDF_Buffer", i.sdfBuffer.Other);
+            
             command.DispatchCompute(computeShader, probeRaycastMainKernel,
                 (i.probeCounts.x + 63)/64, i.probeCounts.y, 1);
             //TODO: look at using 3d thread group, 3rd paramter for each direction? idk
             context.ExecuteCommandBuffer(command);
             command.Clear();
             
-            i.sdfBuffer.Swap();
+            i.sdfBuffer.Swap();//Swap after so current is other cause we did a blit for calculating sdf distance
             //TODO: gutter? We only need it once we start sampling directions instead of averages
         }
     }

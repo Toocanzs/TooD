@@ -25,6 +25,15 @@ public class DoubleBuffer
         }
     }
 
+    public TextureWrapMode wrapMode
+    {
+        set
+        {
+            a.wrapMode = value;
+            b.wrapMode = value;
+        }
+    }
+
     public DoubleBuffer(RenderTexture source)
     {
         a = source;

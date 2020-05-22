@@ -87,6 +87,7 @@ public class IrradianceProbeManager : MonoBehaviour
         
         sdfBuffer = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear).ToDoubleBuffer();
         sdfBuffer.enableRandomWrite = true;
+        sdfBuffer.wrapMode = TextureWrapMode.Clamp;
         sdfBuffer.Create();
 
         transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = sdfBuffer.Current;

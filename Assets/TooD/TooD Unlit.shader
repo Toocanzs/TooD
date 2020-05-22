@@ -116,12 +116,8 @@
             {
                 return ((worldPos - _ProbeAreaOrigin - OriginOffset)/ _ProbeSeparation)/ProbeCounts;
             }
-            
-            //TODO:RREMOVE;
-            /*TEXTURE2D(_SDF);
-            SAMPLER(sampler_SDF);
-            
-            float4 getCol(float d)
+
+            /*float4 getCol(float d)
             {
                 float3 col = 1.0 - sign(d)*float3(0.1,0.4,0.7);
                 col *= 1.0 - exp(-3.0*abs(d));

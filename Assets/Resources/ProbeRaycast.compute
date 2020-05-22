@@ -1,6 +1,7 @@
 Texture2D<float4> WallBuffer;
 RWTexture2D<float4> IrradianceBuffer;
 RWTexture2D<float4> AverageIrradianceBuffer;
+RWTexture2D<float4> SDF_Buffer;
 float probeSeparation;
 float2 probeStartPosition;//GetProbeAreaOrigin() + OriginOffset
 int directionCount;
@@ -45,36 +46,36 @@ RWTexture2D<float4> JFA_Dest;
 uint stepWidth;
 
 #pragma kernel JFA_flood
- [numthreads(64,1,1)]
- void JFA_flood (uint3 groupID : SV_GroupID, 
-    uint3 groupThreadID : SV_GroupThreadID, 
-    uint groupIndex : SV_GroupIndex, 
-    uint3 id : SV_DispatchThreadID) 
- {
-     float2 worldPos = float2(id.xy) / pixelsPerUnit + _ProbeAreaOrigin;
-     float bestDistance = 9999;
-     float4 bestCoordinate = 0;
-     for(int y = -1; y <= 1; y++)
-     {
-         for(int x = -1; x <= 1; x ++)
-         {
-             uint2 sample = id.xy + uint2(x,y) * stepWidth;
-             if(any(bool4(sample > wallBufferSize, sample < 0)))
-                 continue;
-             float4 data = JFA_Source[sample];
-             if(data.a < 1)//Invalid data
-                 continue;
-             float currentDistance = distance(data.xy, worldPos);
-             if(currentDistance < bestDistance)
-             {
-                 bestDistance = currentDistance;
-                 bestCoordinate = float4(data.xy, 0, 1);
-             }
-         }
-     }
-     
-     JFA_Dest[id.xy] = bestCoordinate;
- }
+[numthreads(64,1,1)]
+void JFA_flood (uint3 groupID : SV_GroupID, 
+uint3 groupThreadID : SV_GroupThreadID, 
+uint groupIndex : SV_GroupIndex, 
+uint3 id : SV_DispatchThreadID) 
+{
+    float2 worldPos = float2(id.xy) / pixelsPerUnit + _ProbeAreaOrigin;
+    float bestDistance = 9999;
+    float4 bestCoordinate = 0;
+    for(int y = -1; y <= 1; y++)
+    {
+        for(int x = -1; x <= 1; x ++)
+        {
+            uint2 sample = id.xy + uint2(x,y) * stepWidth;
+            if(any(bool4(sample < 0, sample > wallBufferSize)))
+                continue;
+            float4 data = JFA_Source[sample];
+            if(data.a < 1)//Invalid data
+                continue;
+            float currentDistance = distance(data.xy, worldPos);
+            if(currentDistance < bestDistance)
+            {
+                bestDistance = currentDistance;
+                bestCoordinate = float4(data.xy, 0, 1);
+            }
+        }
+    }
+    
+    JFA_Dest[id.xy] = bestCoordinate;
+}
  
  #pragma kernel JFA_dist
 [numthreads(64,1,1)]
@@ -172,6 +173,40 @@ float4 GetFromBufferClamped(uint2 pos)
     return col;
 }
 
+struct PixelGroup
+{
+    uint2 BL;
+    uint2 BR;
+    uint2 TL;
+    uint2 TR;
+};
+
+float map(PixelGroup pixels, float2 p)
+{
+    float bottom = lerp(SDF_Buffer[pixels.BL].x, SDF_Buffer[pixels.BR].x, p.x);
+    float top = lerp(SDF_Buffer[pixels.TL].x, SDF_Buffer[pixels.TR].x, p.x);
+    return lerp(bottom, top, p.y);
+}
+
+float2 get2DNormal(PixelGroup pixels) 
+{
+    float EPSILON = 0.25;
+    return normalize(float2(
+        map(pixels, float2(EPSILON, 0)) - map(pixels, float2(-EPSILON, 0)),
+        map(pixels, float2(0, EPSILON)) - map(pixels, float2(0, -EPSILON))
+    ));
+}
+
+float4 sampleIrradianceDirection(float2 normal, uint2 probe)
+{
+    float angle = atan2(normal.y, normal.x);
+    int directionIndex = (angle /(2*PI))*directionCount;
+    uint2 st = (probe) * uint2(directionCount + gutterSize * 2, 1);
+    uint2 directionUV = st + uint2(gutterSize + directionIndex, 0);
+    //TODO: needs to get rid of data that is inside walls or not visible from the probe?
+    return IrradianceBuffer[directionUV];
+}
+
 #pragma kernel GenerateProbeData
 [numthreads(64,1,1)]
 void GenerateProbeData (uint3 groupID : SV_GroupID, 
@@ -181,6 +216,7 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
 {
     float2 rayOriginWS = probeStartPosition + float2(id.xy) * probeSeparation;
     float3 directionColors[MAX_DIRECTION_COUNT];
+    uint2 rowStartPos = id.xy * uint2(directionCount + gutterSize * 2, 1);
     
     for(int l = 0; l < directionCount; l++)
     {
@@ -198,31 +234,30 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         float2 rayEndPos = rayOrigin + rayDir * maxRayLength;
         //do raycast
         RaycastResult result = raycast(rayOrigin, rayEndPos);
+
+        //TODO: if result actually hit something
+        PixelGroup pixelGroup;
+        pixelGroup.BL = result.endPosition;
+        pixelGroup.BR = result.endPosition + uint2(1,0);
+        pixelGroup.TL = result.endPosition + uint2(0,1);
+        pixelGroup.TR = result.endPosition + uint2(1,1);
+        float2 normal = get2DNormal(pixelGroup);
         float2 wsEndPos = result.endPosition.xy / pixelsPerUnit + _ProbeAreaOrigin;
-        //size = math.float2(probeCounts) * probeSeparation * pixelsPerUnit;
-        //HERE
-        //Result needs to pull in the color from the IrradianceBuffer
-        //sample the 4 nearby probes
-        //Bilinear and dot falloff?
-        //Could also just try bilinear
-        //add to result?
-        //We could also later use normals from SDF and try that instead
-        /*float2 localPos = (wsEndPos - probeStartPosition)/ probeSeparation;
+        float2 localPos = (wsEndPos - probeStartPosition)/ probeSeparation;
+        
         uint2 BLProbe = (uint2)(localPos);
-        //convert probe local to world
-        //Get dir from wsPos to endPos
-        //Sample buffer in that direction
-        //bilinear
+        
         float2 f = frac(localPos);
-        float4 BL = GetFromBufferClamped(BLProbe);
-        float4 BR = GetFromBufferClamped(BLProbe + uint2(1,0));
-        float4 TL = GetFromBufferClamped(BLProbe + uint2(0,1));
-        float4 TR = GetFromBufferClamped(BLProbe + uint2(1,1));
-        float4 bottom = lerp(BL, BR, f.x);
-        float4 top = lerp(TL, TR, f.x);
-        float4 combined = lerp(bottom, top, f.y);*/
-        //TODO: Probably come back with normals from SDF
-        float3 col = result.color;// + combined.rgb*6;
+        float4 BL = sampleIrradianceDirection(normal, BLProbe);
+        float4 BR = sampleIrradianceDirection(normal, BLProbe + uint2(1,0));
+        float4 TL = sampleIrradianceDirection(normal, BLProbe + uint2(0,1));
+        float4 TR = sampleIrradianceDirection(normal, BLProbe + uint2(1,1));
+        //float4 bottom = lerp(BL, BR, f.x);
+        //float4 top = lerp(TL, TR, f.x);
+        float4 combined = BL + BR + TL + TR;
+        
+        
+        float3 col = result.color + combined.rgb;
         
         
         for(int j = 0; j < directionCount; j++)
@@ -232,11 +267,7 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
             directionColors[j] += col * max(0, dot(dirI, dirJ)) * denominator;
         }
     }
-    
    
-    
-    uint2 rowStartPos = id.xy * uint2(directionCount + gutterSize * 2, 1);
-    
     float4 sum = 0;
     for(uint k = 0; k < uint(directionCount); k++)
     {
