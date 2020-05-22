@@ -26,9 +26,8 @@ public class IrradianceProbeManager : MonoBehaviour
     public float2 OriginOffset => 0.5f * probeSeparation;
     
     public int pixelsPerUnit = 32;
-
-    [SerializeField]
-    private Material dataTransferMaterial = null;
+    
+    public Material dataTransferMaterial = null;
 
     public int2 BufferSize => math.int2(math.float2(probeCounts) * probeSeparation * pixelsPerUnit);
     
@@ -41,7 +40,7 @@ public class IrradianceProbeManager : MonoBehaviour
 
     public int directionCount = 32;
     public const int GutterSize = 1; //each side
-    private int SingleProbePixelWidth => (directionCount + GutterSize * 2);
+    public int SingleProbePixelWidth => (directionCount + GutterSize * 2);
 
     public float4x4 worldToWallBuffer;
     public float4x4 worldDirectionToBufferDirection;
@@ -53,7 +52,7 @@ public class IrradianceProbeManager : MonoBehaviour
     private static readonly int GutterSizeID = Shader.PropertyToID("gutterSize");
     private static readonly int AverageIrradienceBufferId = Shader.PropertyToID("_AverageIrradienceBuffer");
     private static readonly int ProbeCountsId = Shader.PropertyToID("ProbeCounts");
-    private static readonly int OffsetID = Shader.PropertyToID("_Offset");
+    public static readonly int OffsetID = Shader.PropertyToID("_Offset");
 
     public int MaxRayLength => 250;
     void Start()
@@ -82,8 +81,7 @@ public class IrradianceProbeManager : MonoBehaviour
             .ToDoubleBuffer();
         averageIrradianceBuffer.enableRandomWrite = true;
         averageIrradianceBuffer.Create();
-
-        transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = irradianceBuffer.Current;
+        
         //TODO: Maybe have a color buffer for diffuse walls
         //TODO: Then multiply bounce color by that diffuse color
     }
@@ -103,13 +101,10 @@ public class IrradianceProbeManager : MonoBehaviour
         float4 resetBounds = new float4(center - resetScale / 2, center + resetScale / 2);
 
         float2 cameraPos = math.float3(Camera.main.transform.position).xy;
-
-        float2 oldPos = GetProbeAreaOrigin();
-        bool moved = false;
+        
         if (math.any(math.bool4(cameraPos.xy < resetBounds.xy, cameraPos.xy > resetBounds.zw)))
         {
             SetCenter(transform, cameraPos.xy);
-            moved = true;
         }
 
         var transform1 = lightingCamera.transform;
@@ -137,15 +132,8 @@ public class IrradianceProbeManager : MonoBehaviour
 
         Shader.SetGlobalVector(ProbeCountsId, (float4) probeCounts.xyxy);
 
-        if (moved)
-        {
-            float2 probesPerUnit = (GetProbeAreaOrigin() - oldPos).xy / probeSeparation;
-            float2 pixelOffset = probesPerUnit * new float2(SingleProbePixelWidth, 1);
-            float2 uvOffset = pixelOffset / irradianceBuffer.Dimensions;
-            dataTransferMaterial.SetVector(OffsetID, uvOffset.xyxy);
-            Graphics.Blit(irradianceBuffer.Current, irradianceBuffer.Other, dataTransferMaterial);
-            irradianceBuffer.Swap();
-        }
+        //TODO: REMOVE DEBUG
+        //transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = averageIrradianceBuffer.Current;
     }
 
     void SetCenter(Transform trs, float2 value)

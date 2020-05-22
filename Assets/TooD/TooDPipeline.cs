@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -9,13 +10,18 @@ using Random = UnityEngine.Random;
 public class TooDRenderer : ScriptableRenderer
 {
     private TooDSpriteRenderPass tooDSpriteRenderPass;
+
     private ComputeShader computeShader;
     private int probeRaycastMainKernel;
     private int FillGutterKernel;
 
+    private float2 oldPos;
+
+
     public TooDRenderer(TooDRendererData data) : base(data)
     {
         tooDSpriteRenderPass = new TooDSpriteRenderPass();
+
         computeShader = (ComputeShader) Resources.Load("ProbeRaycast");
         if (computeShader == null)
         {
@@ -24,16 +30,28 @@ public class TooDRenderer : ScriptableRenderer
 
         probeRaycastMainKernel = computeShader.FindKernel("GenerateProbeData");
         FillGutterKernel = computeShader.FindKernel("FillGutter");
+
+        RenderPipelineManager.endCameraRendering += OnEndRenderingCamera;
+        RenderPipelineManager.beginCameraRendering += OnBeginRenderingCamera;
     }
 
-    public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)
+    private void OnBeginRenderingCamera(ScriptableRenderContext context, Camera camera)
     {
-        var colorTargetHandle = RenderTargetHandle.CameraTarget;
-        ConfigureCameraTarget(colorTargetHandle.Identifier(), BuiltinRenderTextureType.CameraTarget);
+        if (IrradianceProbeManager.Instance != null && camera.TryGetComponent(out TooDIrradianceCamera _))
+        {
+            var i = IrradianceProbeManager.Instance;
+            float2 probesPerUnit = (i.GetProbeAreaOrigin() - oldPos).xy / i.probeSeparation;
+            float2 pixelOffset = probesPerUnit * new float2(i.SingleProbePixelWidth, 1);
+            float2 uvOffset = pixelOffset / i.irradianceBuffer.Dimensions;
+            i.dataTransferMaterial.SetVector(IrradianceProbeManager.OffsetID, uvOffset.xyxy);
+            Graphics.Blit(i.irradianceBuffer.Current, i.irradianceBuffer.Other, i.dataTransferMaterial);
+            i.irradianceBuffer.Swap();
+        }
+    }
 
-        tooDSpriteRenderPass.ConfigureTarget(colorTargetHandle.Identifier());
-        EnqueuePass(tooDSpriteRenderPass);
-        if (IrradianceProbeManager.Instance != null)
+    private void OnEndRenderingCamera(ScriptableRenderContext context, Camera camera)
+    {
+        if (IrradianceProbeManager.Instance != null && camera.TryGetComponent(out TooDIrradianceCamera _))
         {
             var i = IrradianceProbeManager.Instance;
             CommandBuffer command = CommandBufferPool.Get("GenerateProbeData");
@@ -44,7 +62,7 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeFloatParam(computeShader, "probeSeparation", i.probeSeparation);
 
             float2 origin = i.GetProbeAreaOrigin() + i.OriginOffset;
-            command.SetComputeFloatParams(computeShader, "probeStartPosition", origin.x, origin.y);
+            command.SetComputeFloatParams(computeShader, "probeAreaStartPosition", origin.x, origin.y);
             command.SetComputeIntParam(computeShader, "directionCount", i.directionCount);
             command.SetComputeIntParam(computeShader, "maxRayLength", i.MaxRayLength);
             command.SetComputeIntParams(computeShader, "wallBufferSize", i.wallBuffer.width, i.wallBuffer.height);
@@ -53,17 +71,28 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeIntParams(computeShader, "probeCount", i.probeCounts.x, i.probeCounts.y);
             command.SetComputeFloatParam(computeShader, "HYSTERESIS", Time.deltaTime * i.hysteresis);
             command.SetComputeIntParam(computeShader, "pixelsPerUnit", i.pixelsPerUnit);
-            command.SetComputeFloatParam(computeShader, "randomRayOffset", Random.Range(0, (2 * math.PI)/i.directionCount));
+            command.SetComputeFloatParam(computeShader, "randomRayOffset", Random.Range(0, (2 * math.PI) / i.directionCount));
             command.DispatchCompute(computeShader, probeRaycastMainKernel,
-                (i.probeCounts.x + 63)/64, i.probeCounts.y, 1);
-            
+                (i.probeCounts.x + 63) / 64, i.probeCounts.y, 1);
+
             command.SetComputeTextureParam(computeShader, FillGutterKernel, "IrradianceBuffer", i.irradianceBuffer);
-            command.DispatchCompute(computeShader, FillGutterKernel, (i.probeCounts.x + 63)/64, i.probeCounts.y, 1);
-            
+            command.DispatchCompute(computeShader, FillGutterKernel, (i.probeCounts.x + 63) / 64, i.probeCounts.y, 1);
+
             //TODO: look at using 3d thread group, 3rd paramter for each direction? idk
             context.ExecuteCommandBuffer(command);
             command.Clear();
+            CommandBufferPool.Release(command);
+            
+            oldPos = i.GetProbeAreaOrigin();
         }
+    }
+
+    public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)
+    {
+        var colorTargetHandle = RenderTargetHandle.CameraTarget;
+        ConfigureCameraTarget(colorTargetHandle.Identifier(), BuiltinRenderTextureType.CameraTarget);
+        tooDSpriteRenderPass.ConfigureTarget(colorTargetHandle.Identifier());
+        EnqueuePass(tooDSpriteRenderPass);
     }
 }
 

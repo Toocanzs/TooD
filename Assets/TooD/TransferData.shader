@@ -30,7 +30,6 @@
             };
 
             sampler2D _MainTex;
-            float4 _MainTex_ST;
             
             float2 _Offset;
 
@@ -38,8 +37,7 @@
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.uv += _Offset;
+                o.uv = v.uv + _Offset;
                 return o;
             }
 
@@ -47,7 +45,7 @@
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
                 if(any(bool4(i.uv > 1, i.uv < 0)))
-                    return float4(0,0,0,1);
+                    return float4(0,0,0,0);
                 return col;
             }
             ENDCG

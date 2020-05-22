@@ -2,7 +2,7 @@ Texture2D<float4> WallBuffer;
 RWTexture2D<float4> IrradianceBuffer;
 RWTexture2D<float4> AverageIrradianceBuffer;
 float probeSeparation;
-float2 probeStartPosition;//GetProbeAreaOrigin() + OriginOffset
+float2 probeAreaStartPosition;//GetProbeAreaOrigin() + OriginOffset
 int directionCount;
 int maxRayLength;
 uint2 wallBufferSize;
@@ -55,27 +55,11 @@ RaycastResult raycast(float2 start, float2 dir)
     return result;
 }
 
-struct PixelGroup
+float2 get2DNormal(uint2 pixel) 
 {
-    uint2 BL;
-    uint2 BR;
-    uint2 TL;
-    uint2 TR;
-};
-
-float map(PixelGroup pixels, float2 p)
-{
-    float bottom = lerp(WallBuffer[pixels.BL].a, WallBuffer[pixels.BR].a, p.x);
-    float top = lerp(WallBuffer[pixels.TL].a, WallBuffer[pixels.TR].a, p.x);
-    return lerp(bottom, top, p.y);
-}
-
-float2 get2DNormal(PixelGroup pixels) 
-{
-    float EPSILON = 0.25;
     return normalize(float2(
-        map(pixels, float2(EPSILON, 0)) - map(pixels, float2(-EPSILON, 0)),
-        map(pixels, float2(0, EPSILON)) - map(pixels, float2(0, -EPSILON))
+        WallBuffer[pixel + int2(1, 0)].a - WallBuffer[pixel + int2(-1, 0)].a,
+        WallBuffer[pixel + int2(0, 1)].a - WallBuffer[pixel + int2(0, -1)].a
     ));
     //TODO: maybe sample 8 directions since we're not using an sdf anymore
 }
@@ -97,7 +81,7 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
    uint groupIndex : SV_GroupIndex, 
    uint3 id : SV_DispatchThreadID) 
 {
-    float2 rayOriginWS = probeStartPosition + float2(id.xy) * probeSeparation;
+    float2 rayOriginWS = probeAreaStartPosition + float2(id.xy) * probeSeparation;
     float3 directionColors[MAX_DIRECTION_COUNT];
     uint2 rowStartPos = id.xy * uint2(directionCount + gutterSize * 2, 1);
     
@@ -123,14 +107,9 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         float4 combined = 0;
         if(result.hit)
         {
-            PixelGroup pixelGroup;
-            pixelGroup.BL = result.endPosition;
-            pixelGroup.BR = result.endPosition + uint2(1,0);
-            pixelGroup.TL = result.endPosition + uint2(0,1);
-            pixelGroup.TR = result.endPosition + uint2(1,1);
-            float2 normal = get2DNormal(pixelGroup);
+            float2 normal = get2DNormal(result.endPosition);
             float2 wsEndPos = result.endPosition.xy / pixelsPerUnit + _ProbeAreaOrigin;
-            float2 localPos = (wsEndPos - probeStartPosition)/ probeSeparation;
+            float2 localPos = (wsEndPos - probeAreaStartPosition)/ probeSeparation;
             
             uint2 BLProbe = (uint2)(localPos);
             
