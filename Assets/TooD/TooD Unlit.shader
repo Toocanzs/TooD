@@ -128,7 +128,7 @@
 
             half4 CombinedShapeLightFragment(Varyings i) : SV_Target
             {
-                float4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
+                float4 col = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 return col;
             }
             ENDHLSL

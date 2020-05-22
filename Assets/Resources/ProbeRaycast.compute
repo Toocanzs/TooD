@@ -12,6 +12,7 @@ int gutterSize;
 float2 _ProbeAreaOrigin;
 float HYSTERESIS;
 int pixelsPerUnit;
+float randomRayOffset;
 
 float4x4 worldToWallBuffer;
 float4x4 worldDirectionToBufferDirection;
@@ -228,7 +229,10 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
     for(int i = 0; i < directionCount; i++)
     {
         float percent = float(i)/float(directionCount);
-        float2 dirI = float2(cos(2*PI*percent), sin(2*PI*percent));
+        float angle = 2*PI*percent + randomRayOffset;
+        float c, s;
+        sincos(angle, c, s);
+        float2 dirI = float2(c, s);
         float2 rayDir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;//Dir in buffer space
         float2 rayOrigin = mul(worldToWallBuffer, float4(rayOriginWS, 0, 1)).xy;
         float2 rayEndPos = rayOrigin + rayDir * maxRayLength;
@@ -281,4 +285,18 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         sum += col;
     }
     AverageIrradianceBuffer[id.xy] = sum / float(directionCount);
+}
+
+#pragma kernel FillGutter
+[numthreads(64,1,1)]
+void FillGutter (uint3 groupID : SV_GroupID, 
+   uint3 groupThreadID : SV_GroupThreadID, 
+   uint groupIndex : SV_GroupIndex, 
+   uint3 id : SV_DispatchThreadID) 
+{
+    uint2 rowStartPos = id.xy * uint2(directionCount + gutterSize * 2, 1);
+    uint2 gutterSpotOne = rowStartPos;
+    uint2 gutterSpotTwo = rowStartPos + uint2(gutterSize + directionCount, 0);
+    IrradianceBuffer[gutterSpotOne] = IrradianceBuffer[gutterSpotTwo - uint2(1,0)];
+    IrradianceBuffer[gutterSpotTwo] = IrradianceBuffer[gutterSpotOne + uint2(1,0)];
 }

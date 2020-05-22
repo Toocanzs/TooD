@@ -7,6 +7,9 @@ using Unity.Mathematics;
 public class IrradianceProbeManager : MonoBehaviour
 {
     public static IrradianceProbeManager Instance;
+    
+    [Range(0,10)]
+    public float hysteresis = 1;
 
     [SerializeField]
     public int2 probeCounts = new int2(10, 10);
@@ -55,7 +58,7 @@ public class IrradianceProbeManager : MonoBehaviour
     private static readonly int ProbeCountsId = Shader.PropertyToID("ProbeCounts");
     private static readonly int OffsetID = Shader.PropertyToID("_Offset");
 
-    public int MaxRayLength => 250;
+    public int MaxRayLength => 250;//TODO: When we change to sdf usage, switch this out
     
     public DoubleBuffer sdfBuffer;
     void Start()
@@ -91,6 +94,8 @@ public class IrradianceProbeManager : MonoBehaviour
         sdfBuffer.Create();
 
         transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = sdfBuffer.Current;
+        //TODO: Maybe have a color buffer for diffuse walls
+        //TODO: Then multiply bounce color by that diffuse color
     }
 
     private void OnDestroy()
@@ -153,11 +158,6 @@ public class IrradianceProbeManager : MonoBehaviour
             irradianceBuffer.Swap();
         }
     }
-    
-    //TODO: Random directions
-    //We probably just need to have a global random offset between 0, 2pi/directionCount
-    //Then when we want to sample a direction we probably need to add that random direction before sampling?
-    //Probably leave this to the end once bounces work
 
     void SetCenter(Transform trs, float2 value)
     {

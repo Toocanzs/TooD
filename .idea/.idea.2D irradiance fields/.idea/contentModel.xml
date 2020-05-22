@@ -16,6 +16,9 @@
           <e p="DoubleBuffer.cs" t="Include" />
           <e p="IrradianceProbeManager.cs" t="Include" />
         </e>
+        <e p="test" t="Include">
+          <e p="SDF_Raycast_test.cs" t="Include" />
+        </e>
         <e p="TestLineAlgorithm.cs" t="Include" />
         <e p="TooD" t="Include">
           <e p="TooD Sprite.shader" t="Include" />

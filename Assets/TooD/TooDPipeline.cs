@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Random = UnityEngine.Random;
 
 public class TooDRenderer : ScriptableRenderer
 {
@@ -13,6 +14,7 @@ public class TooDRenderer : ScriptableRenderer
     private int JFA_set_seedKernel;
     private int JFA_floodKernel;
     private int JFA_distKernel;
+    private int FillGutterKernel;
 
     public TooDRenderer(TooDRendererData data) : base(data)
     {
@@ -27,6 +29,7 @@ public class TooDRenderer : ScriptableRenderer
         JFA_set_seedKernel = computeShader.FindKernel("JFA_set_seed");
         JFA_floodKernel = computeShader.FindKernel("JFA_flood");
         JFA_distKernel = computeShader.FindKernel("JFA_dist");
+        FillGutterKernel = computeShader.FindKernel("FillGutter");
     }
 
     public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -54,8 +57,9 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeIntParam(computeShader, "gutterSize", IrradianceProbeManager.GutterSize);
             command.SetComputeMatrixParam(computeShader, "worldToWallBuffer", i.worldToWallBuffer);
             command.SetComputeIntParams(computeShader, "probeCount", i.probeCounts.x, i.probeCounts.y);
-            command.SetComputeFloatParam(computeShader, "HYSTERESIS", Time.deltaTime * 5);
+            command.SetComputeFloatParam(computeShader, "HYSTERESIS", Time.deltaTime * i.hysteresis);
             command.SetComputeIntParam(computeShader, "pixelsPerUnit", i.pixelsPerUnit);
+            command.SetComputeFloatParam(computeShader, "randomRayOffset", Random.Range(0, (2 * math.PI)/i.directionCount));
 
             
             command.SetComputeTextureParam(computeShader, JFA_set_seedKernel, "WallBuffer", i.wallBuffer);
@@ -91,12 +95,15 @@ public class TooDRenderer : ScriptableRenderer
             
             command.DispatchCompute(computeShader, probeRaycastMainKernel,
                 (i.probeCounts.x + 63)/64, i.probeCounts.y, 1);
+            
+            command.SetComputeTextureParam(computeShader, FillGutterKernel, "IrradianceBuffer", i.irradianceBuffer);
+            command.DispatchCompute(computeShader, FillGutterKernel, (i.probeCounts.x + 63)/64, i.probeCounts.y, 1);
+            
             //TODO: look at using 3d thread group, 3rd paramter for each direction? idk
             context.ExecuteCommandBuffer(command);
             command.Clear();
             
             i.sdfBuffer.Swap();//Swap after so current is other cause we did a blit for calculating sdf distance
-            //TODO: gutter? We only need it once we start sampling directions instead of averages
         }
     }
 }
