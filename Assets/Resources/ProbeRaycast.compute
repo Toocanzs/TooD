@@ -1,11 +1,10 @@
 Texture2D<float4> WallBuffer;
 RWTexture2D<float4> IrradianceBuffer;
 RWTexture2D<float4> AverageIrradianceBuffer;
-RWTexture2D<float4> SDF_Buffer;
 float probeSeparation;
 float2 probeStartPosition;//GetProbeAreaOrigin() + OriginOffset
 int directionCount;
-float maxRayLength;
+int maxRayLength;
 uint2 wallBufferSize;
 uint2 probeCount;
 int gutterSize;
@@ -20,158 +19,40 @@ float4x4 worldDirectionToBufferDirection;
 #define MAX_DIRECTION_COUNT 128
 #define PI 3.14159
 
-
-
-RWTexture2D<float4> ExteriorDistanceBuffer;//Maybe add interior later
-
-#pragma kernel JFA_set_seed
-[numthreads(64,1,1)]
-void JFA_set_seed (uint3 groupID : SV_GroupID, 
-   uint3 groupThreadID : SV_GroupThreadID, 
-   uint groupIndex : SV_GroupIndex, 
-   uint3 id : SV_DispatchThreadID) 
-{
-    float4 col = 0;
-    
-    float2 worldPos = float2(id.xy) / pixelsPerUnit + _ProbeAreaOrigin;
-    if(WallBuffer[id.xy].a > 0)
-    {
-        col = float4(worldPos, 0, 1);
-    }
-    
-    ExteriorDistanceBuffer[id.xy] = col;
-}
-
-RWTexture2D<float4> JFA_Source;
-RWTexture2D<float4> JFA_Dest;
-uint stepWidth;
-
-#pragma kernel JFA_flood
-[numthreads(64,1,1)]
-void JFA_flood (uint3 groupID : SV_GroupID, 
-uint3 groupThreadID : SV_GroupThreadID, 
-uint groupIndex : SV_GroupIndex, 
-uint3 id : SV_DispatchThreadID) 
-{
-    float2 worldPos = float2(id.xy) / pixelsPerUnit + _ProbeAreaOrigin;
-    float bestDistance = 9999;
-    float4 bestCoordinate = 0;
-    for(int y = -1; y <= 1; y++)
-    {
-        for(int x = -1; x <= 1; x ++)
-        {
-            uint2 sample = id.xy + uint2(x,y) * stepWidth;
-            if(any(bool4(sample < 0, sample > wallBufferSize)))
-                continue;
-            float4 data = JFA_Source[sample];
-            if(data.a < 1)//Invalid data
-                continue;
-            float currentDistance = distance(data.xy, worldPos);
-            if(currentDistance < bestDistance)
-            {
-                bestDistance = currentDistance;
-                bestCoordinate = float4(data.xy, 0, 1);
-            }
-        }
-    }
-    
-    JFA_Dest[id.xy] = bestCoordinate;
-}
- 
- #pragma kernel JFA_dist
-[numthreads(64,1,1)]
-void JFA_dist (uint3 groupID : SV_GroupID, 
-   uint3 groupThreadID : SV_GroupThreadID, 
-   uint groupIndex : SV_GroupIndex, 
-   uint3 id : SV_DispatchThreadID) 
-{
-    float2 worldPos = float2(id.xy) / pixelsPerUnit + _ProbeAreaOrigin;
-    float4 data = JFA_Source[id.xy];
-    float d = distance(data.xy, worldPos);
-    JFA_Dest[id.xy] = float4(d,d,d,1);
-}
-
-struct PixelResults
-{
-    bool hit;
-    float3 color;
-    bool outOfBounds;
-};
-
-PixelResults testPixel(float2 pos) 
-{
-    uint2 p = uint2(pos);
-    PixelResults o = (PixelResults)0;
-    if(any(bool4(pos.xy < 0, pos.xy >= float2(wallBufferSize)))) //TODO: maybe move this out?
-    {
-        o.outOfBounds = true;
-    }
-    else
-    {
-        float4 color = WallBuffer[pos];
-        if(color.a > 0)
-        {
-            o.hit = true;
-            o.color = color.rgb;
-        }
-    }
-    return o;
-}
 struct RaycastResult
 {
     float3 color;
     float2 endPosition;
+    bool hit;
 };
 
-RaycastResult raycast(float2 start, float2 end) 
+RaycastResult raycast(float2 start, float2 dir) 
 {
+    
     RaycastResult result;
     result.color = 0;
     result.endPosition = start;
-    float w = end.x - start.x;
-    float h = end.y - start.y;
-    
-    float2 d1 = float2(sign(w),sign(h));
-
-    float2 d2 = float2(sign(w),0);
-
-    float longest = abs(w);
-    float shortest = abs(h);
-    if (longest <= shortest) 
+    result.hit = false;
+    dir /= max(abs(dir.x), abs(dir.y));
+    float2 xy = 0;
+    for(int i = 0; i < maxRayLength; i++)
     {
-        longest = abs(h);
-        shortest = abs(w);
-        d2.y = sign(h);
-        d2.x = 0;
-    }
-    float numerator = longest / 2.;
-    for (int i = 0; i <= int(ceil(longest)); i++) 
-    {
-        PixelResults o = testPixel(start);
-        if(o.outOfBounds)
+        float2 pos = start + xy;
+        if(any(bool4(pos.xy < 0, pos.xy >= float2(wallBufferSize))))
         {
             return result;
         }
-        if(o.hit)
+        float4 color = WallBuffer[int2(pos)];
+        if(color.a > 0)
         {
-            result.color = o.color;
+            result.color = color.rgb;
+            result.hit = true;
             return result;
         }
-        numerator += shortest - (numerator >= longest ? longest : 0);
-        start += numerator >= longest ? d1 : d2;
-        result.endPosition = start;//Move after if hit so we get the last end position not inside the wall
+        xy += dir;
+        result.endPosition = int2(pos);
     }
     return result;
-}
-
-float4 GetFromBufferClamped(uint2 pos)
-{
-    float4 col = AverageIrradianceBuffer[pos];
-    if(any(bool4(pos > probeCount, pos < 0)))
-    {
-        //return float4(0,0,0,1);
-    }
-    return col;
 }
 
 struct PixelGroup
@@ -184,8 +65,8 @@ struct PixelGroup
 
 float map(PixelGroup pixels, float2 p)
 {
-    float bottom = lerp(SDF_Buffer[pixels.BL].x, SDF_Buffer[pixels.BR].x, p.x);
-    float top = lerp(SDF_Buffer[pixels.TL].x, SDF_Buffer[pixels.TR].x, p.x);
+    float bottom = lerp(WallBuffer[pixels.BL].a, WallBuffer[pixels.BR].a, p.x);
+    float top = lerp(WallBuffer[pixels.TL].a, WallBuffer[pixels.TR].a, p.x);
     return lerp(bottom, top, p.y);
 }
 
@@ -196,6 +77,7 @@ float2 get2DNormal(PixelGroup pixels)
         map(pixels, float2(EPSILON, 0)) - map(pixels, float2(-EPSILON, 0)),
         map(pixels, float2(0, EPSILON)) - map(pixels, float2(0, -EPSILON))
     ));
+    //TODO: maybe sample 8 directions since we're not using an sdf anymore
 }
 
 float4 sampleIrradianceDirection(float2 normal, uint2 probe)
@@ -235,30 +117,32 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         float2 dirI = float2(c, s);
         float2 rayDir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;//Dir in buffer space
         float2 rayOrigin = mul(worldToWallBuffer, float4(rayOriginWS, 0, 1)).xy;
-        float2 rayEndPos = rayOrigin + rayDir * maxRayLength;
         //do raycast
-        RaycastResult result = raycast(rayOrigin, rayEndPos);
+        RaycastResult result = raycast(rayOrigin, rayDir);
 
-        //TODO: if result actually hit something
-        PixelGroup pixelGroup;
-        pixelGroup.BL = result.endPosition;
-        pixelGroup.BR = result.endPosition + uint2(1,0);
-        pixelGroup.TL = result.endPosition + uint2(0,1);
-        pixelGroup.TR = result.endPosition + uint2(1,1);
-        float2 normal = get2DNormal(pixelGroup);
-        float2 wsEndPos = result.endPosition.xy / pixelsPerUnit + _ProbeAreaOrigin;
-        float2 localPos = (wsEndPos - probeStartPosition)/ probeSeparation;
-        
-        uint2 BLProbe = (uint2)(localPos);
-        
-        float2 f = frac(localPos);
-        float4 BL = sampleIrradianceDirection(normal, BLProbe);
-        float4 BR = sampleIrradianceDirection(normal, BLProbe + uint2(1,0));
-        float4 TL = sampleIrradianceDirection(normal, BLProbe + uint2(0,1));
-        float4 TR = sampleIrradianceDirection(normal, BLProbe + uint2(1,1));
-        //float4 bottom = lerp(BL, BR, f.x);
-        //float4 top = lerp(TL, TR, f.x);
-        float4 combined = BL + BR + TL + TR;
+        float4 combined = 0;
+        if(result.hit)
+        {
+            PixelGroup pixelGroup;
+            pixelGroup.BL = result.endPosition;
+            pixelGroup.BR = result.endPosition + uint2(1,0);
+            pixelGroup.TL = result.endPosition + uint2(0,1);
+            pixelGroup.TR = result.endPosition + uint2(1,1);
+            float2 normal = get2DNormal(pixelGroup);
+            float2 wsEndPos = result.endPosition.xy / pixelsPerUnit + _ProbeAreaOrigin;
+            float2 localPos = (wsEndPos - probeStartPosition)/ probeSeparation;
+            
+            uint2 BLProbe = (uint2)(localPos);
+            
+            float2 f = frac(localPos);
+            float4 BL = sampleIrradianceDirection(normal, BLProbe);
+            float4 BR = sampleIrradianceDirection(normal, BLProbe + uint2(1,0));
+            float4 TL = sampleIrradianceDirection(normal, BLProbe + uint2(0,1));
+            float4 TR = sampleIrradianceDirection(normal, BLProbe + uint2(1,1));
+            float4 bottom = lerp(BL, BR, f.x);
+            float4 top = lerp(TL, TR, f.x);
+            combined = lerp(bottom, top, f.y) * 4;//fix with depth later
+        }
         
         
         float3 col = result.color + combined.rgb;
@@ -276,10 +160,6 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
     for(uint k = 0; k < uint(directionCount); k++)
     {
         uint2 offset = rowStartPos + uint2(gutterSize + k, 0);
-        //TODO: When we add random directions IrradianceBuffer[offset] needs to be sampled with that random value
-        //Also maybe the set needs to be 
-        //But also maybe none of that is the case. Look at it first
-        //Could also do the lerp at the average level, but then bounces will be more sparse(?)
         float4 col = float4(lerp(IrradianceBuffer[offset].xyz, directionColors[k], HYSTERESIS), 1);
         IrradianceBuffer[offset] = col;
         sum += col;

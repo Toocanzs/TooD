@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad3ec9c0-88bd-4840-883e-9d906858d72e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TooD/TooD Unlit.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TooD/TooD Unlit.shader" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/test.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/test.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/test/SDF_Raycast_test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/test/SDF_Raycast_test.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,44 +16,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-46">
-              <caret line="68" column="29" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="29" />
+            <state relative-caret-position="1449">
+              <caret line="63" column="50" lean-forward="true" selection-start-line="63" selection-start-column="50" selection-end-line="63" selection-end-column="50" />
               <folding>
-                <marker date="1590172005082" expanded="true" signature="6:206" ph="..." />
-                <marker date="1590172005082" expanded="true" signature="254:6212" ph="{...}" />
-                <marker date="1590172005082" expanded="true" signature="588:1191" ph="{...}" />
-                <marker date="1590172005082" expanded="true" signature="760:838" ph="{...}" />
-                <marker date="1590172005082" expanded="true" signature="1289:6210" ph="{...}" />
-                <marker date="1590172005082" expanded="true" signature="1637:6204" ph="{...}" />
-                <marker date="1590172005082" expanded="true" signature="3821:3953" ph="/* 2^maxOffsetPower = how far it will jump maximum ... */" />
-                <marker date="1590172005082" expanded="true" signature="4033:5005" ph="{...}" />
-                <marker date="1590172005082" expanded="true" signature="4171:4360" ph="/* Grab the source and current from an index rather than executing the command buffer at each iteration of the lo ... */" />
-                <marker date="1590172005082" expanded="true" signature="6270:8655" ph="{...}" />
-                <marker date="1590172005082" expanded="true" signature="6581:6677" ph="{...}" />
-                <marker date="1590172005082" expanded="true" signature="6777:8653" ph="{...}" />
-                <marker date="1590172005082" expanded="true" signature="7142:7397" ph="{...}" />
-                <marker date="1590172005082" expanded="true" signature="7230:7387" ph="{...}" />
-                <marker date="1590172005082" expanded="true" signature="7890:8602" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/test/SDF_Raycast_test.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-              <folding>
-                <marker date="1590173262430" expanded="false" signature="6:103" ph="..." />
-                <marker date="1590173262430" expanded="true" signature="150:885" ph="{...}" />
-                <marker date="1590173262430" expanded="true" signature="197:883" ph="{...}" />
-                <marker date="1590173262430" expanded="true" signature="412:877" ph="{...}" />
-                <marker date="1590173262430" expanded="true" signature="482:645" ph="{...}" />
-                <marker date="1590173262430" expanded="true" signature="682:845" ph="{...}" />
+                <marker date="1590176637635" expanded="true" signature="6:206" ph="..." />
+                <marker date="1590176637635" expanded="true" signature="254:3649" ph="{...}" />
+                <marker date="1590176637635" expanded="true" signature="487:891" ph="{...}" />
+                <marker date="1590176637635" expanded="true" signature="659:737" ph="{...}" />
+                <marker date="1590176637635" expanded="true" signature="989:3647" ph="{...}" />
+                <marker date="1590176637635" expanded="true" signature="1337:3641" ph="{...}" />
+                <marker date="1590176637635" expanded="true" signature="3707:6092" ph="{...}" />
+                <marker date="1590176637635" expanded="true" signature="4018:4114" ph="{...}" />
+                <marker date="1590176637635" expanded="true" signature="4214:6090" ph="{...}" />
+                <marker date="1590176637635" expanded="true" signature="4579:4834" ph="{...}" />
+                <marker date="1590176637635" expanded="true" signature="4667:4824" ph="{...}" />
+                <marker date="1590176637635" expanded="true" signature="5327:6039" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -64,33 +42,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="62" column="57" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/scripts/DoubleBuffer.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="27" column="11" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
-              <folding>
-                <marker date="1590112164622" expanded="true" signature="6:146" ph="..." />
-                <marker date="1590112164622" expanded="true" signature="173:1353" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="466:592" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="484:586" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="629:737" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="647:731" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="784:855" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="879:925" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="952:1006" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="1078:1121" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="1202:1273" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="1299:1351" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="1398:1542" ph="{...}" />
-                <marker date="1590112164622" expanded="true" signature="1480:1540" ph="{...}" />
-              </folding>
+            <state relative-caret-position="534">
+              <caret line="142" column="43" lean-forward="true" selection-start-line="142" selection-start-column="43" selection-end-line="142" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -98,35 +51,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="95" column="91" selection-start-line="95" selection-start-column="91" selection-end-line="95" selection-end-column="91" />
+            <state relative-caret-position="298">
+              <caret line="86" column="59" lean-forward="true" selection-start-line="86" selection-start-column="59" selection-end-line="86" selection-end-column="59" />
               <folding>
-                <marker date="1590171947818" expanded="true" signature="6:117" ph="..." />
-                <marker date="1590171947818" expanded="true" signature="170:8217" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="917:1090" ph="/* irradiance buffer is directionCount pixels wide, one for each direction, ... */" />
-                <marker date="1590171947818" expanded="true" signature="2391:3854" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="2427:2494" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="3732:3848" ph="/* TODO: Maybe have a color buffer for diffuse walls ... */" />
-                <marker date="1590171947818" expanded="true" signature="3884:4034" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="4053:6361" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="4528:4622" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="5874:6355" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="6410:6519" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="6543:6673" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="6725:6831" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="6882:6996" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="7037:7148" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="7187:7333" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="7369:7481" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="7522:8215" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="7576:7842" ph="{...}" />
-                <marker date="1590171947818" expanded="true" signature="7638:7832" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="6:117" ph="..." />
+                <marker date="1590176620300" expanded="true" signature="170:7823" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="842:1015" ph="/* irradiance buffer is directionCount pixels wide, one for each direction, ... */" />
+                <marker date="1590176620300" expanded="true" signature="2296:3496" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="2332:2399" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="3374:3490" ph="/* TODO: Maybe have a color buffer for diffuse walls ... */" />
+                <marker date="1590176620300" expanded="true" signature="3526:3647" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="3666:5967" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="4141:4235" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="5487:5961" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="6016:6125" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="6149:6279" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="6331:6437" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="6488:6602" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="6643:6754" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="6793:6939" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="6975:7087" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="7128:7821" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="7182:7448" ph="{...}" />
+                <marker date="1590176620300" expanded="true" signature="7244:7438" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/TooD/TooD Unlit.shader">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="437">
@@ -166,11 +119,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>probeStartPosition</find>
-      <find>GetProbeAreaOrigin</find>
-      <find>rayOriginWS</find>
-      <find>wallBufferToWorld</find>
-      <find>_ProbeAreaOrigin</find>
       <find>worldToWallBuffer</find>
       <find>texture</find>
       <find>vec3</find>
@@ -194,8 +142,13 @@
       <find>worldPos</find>
       <find>RaycastResult</find>
       <find>todo</find>
-      <find>pixelsper</find>
       <find>maxray</find>
+      <find>rayEndPos</find>
+      <find>raycast</find>
+      <find>GetFromBufferClamped</find>
+      <find>pixelsper</find>
+      <find>SingleProbePixelWidth</find>
+      <find>directionCount + GutterSize * 2</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -283,11 +236,11 @@
         <option value="$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader" />
         <option value="$PROJECT_DIR$/Assets/test/SDF.shader" />
         <option value="$PROJECT_DIR$/Assets/scripts/DoubleBuffer.cs" />
-        <option value="$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute" />
+        <option value="$PROJECT_DIR$/Assets/TooD/TooD Unlit.shader" />
+        <option value="$PROJECT_DIR$/Assets/test/SDF_Raycast_test.cs" />
         <option value="$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" />
         <option value="$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" />
-        <option value="$PROJECT_DIR$/Assets/test/SDF_Raycast_test.cs" />
-        <option value="$PROJECT_DIR$/Assets/TooD/TooD Unlit.shader" />
+        <option value="$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute" />
       </list>
     </option>
   </component>
@@ -376,12 +329,12 @@
       <workItem from="1589994646222" duration="8179000" />
       <workItem from="1590027042828" duration="1639000" />
       <workItem from="1590102769773" duration="14195000" />
-      <workItem from="1590171748859" duration="1549000" />
+      <workItem from="1590171748859" duration="5137000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76706000" />
+    <option name="totallyTimeSpent" value="80294000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -393,7 +346,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2898242" />
@@ -1905,9 +1858,44 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/test/SDF.shader" />
     <entry file="file://$PROJECT_DIR$/Temp/Compiled-ProbeRaycast-.shader" />
+    <entry file="file://$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4324">
+          <caret line="188" column="36" selection-start-line="188" selection-start-column="36" selection-end-line="188" selection-end-column="36" />
+          <folding>
+            <marker date="1589997996207" expanded="true" signature="21:6709" ph="{...}" />
+            <marker date="1589997996207" expanded="true" signature="42:313" ph="{...}" />
+            <marker date="1589997996207" expanded="true" signature="330:420" ph="{...}" />
+            <marker date="1589997996207" expanded="true" signature="447:6675" ph="{...}" />
+            <marker date="1589997996207" expanded="true" signature="656:4613" ph="{...}" />
+            <marker date="1589997996207" expanded="true" signature="730:4596" ph="{...}" />
+            <marker date="1589997996207" expanded="true" signature="4644:6669" ph="{...}" />
+            <marker date="1589997996207" expanded="true" signature="4719:6652" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/SDF_Raycast_test.cs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/TooD/TooD Unlit.shader">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="130" column="39" selection-start-line="130" selection-start-column="39" selection-end-line="130" selection-end-column="39" />
+          <folding>
+            <marker date="1590173298914" expanded="true" signature="20:4493" ph="{...}" />
+            <marker date="1590173298914" expanded="true" signature="41:270" ph="{...}" />
+            <marker date="1590173298914" expanded="true" signature="287:377" ph="{...}" />
+            <marker date="1590173298914" expanded="true" signature="404:4459" ph="{...}" />
+            <marker date="1590173298914" expanded="true" signature="613:4453" ph="{...}" />
+            <marker date="1590173298914" expanded="true" signature="687:4436" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/scripts/DoubleBuffer.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
+        <state relative-caret-position="-115">
           <caret line="27" column="11" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
           <folding>
             <marker date="1590112164622" expanded="true" signature="6:146" ph="..." />
@@ -1928,112 +1916,75 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader">
+    <entry file="file://$PROJECT_DIR$/Assets/test/SDF_Raycast_test.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4324">
-          <caret line="188" column="36" selection-start-line="188" selection-start-column="36" selection-end-line="188" selection-end-column="36" />
+        <state relative-caret-position="-753">
           <folding>
-            <marker date="1589997996207" expanded="true" signature="21:6709" ph="{...}" />
-            <marker date="1589997996207" expanded="true" signature="42:313" ph="{...}" />
-            <marker date="1589997996207" expanded="true" signature="330:420" ph="{...}" />
-            <marker date="1589997996207" expanded="true" signature="447:6675" ph="{...}" />
-            <marker date="1589997996207" expanded="true" signature="656:4613" ph="{...}" />
-            <marker date="1589997996207" expanded="true" signature="730:4596" ph="{...}" />
-            <marker date="1589997996207" expanded="true" signature="4644:6669" ph="{...}" />
-            <marker date="1589997996207" expanded="true" signature="4719:6652" ph="{...}" />
+            <marker date="1590176208629" expanded="true" signature="6:117" ph="..." />
+            <marker date="1590176208629" expanded="true" signature="164:1212" ph="{...}" />
+            <marker date="1590176208629" expanded="true" signature="319:412" ph="{...}" />
+            <marker date="1590176208629" expanded="true" signature="439:510" ph="{...}" />
+            <marker date="1590176208629" expanded="true" signature="537:1090" ph="{...}" />
+            <marker date="1590176208629" expanded="true" signature="575:651" ph="{...}" />
+            <marker date="1590176208629" expanded="true" signature="877:1084" ph="{...}" />
+            <marker date="1590176208629" expanded="true" signature="1123:1210" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="95" column="91" selection-start-line="95" selection-start-column="91" selection-end-line="95" selection-end-column="91" />
+        <state relative-caret-position="298">
+          <caret line="86" column="59" lean-forward="true" selection-start-line="86" selection-start-column="59" selection-end-line="86" selection-end-column="59" />
           <folding>
-            <marker date="1590171947818" expanded="true" signature="6:117" ph="..." />
-            <marker date="1590171947818" expanded="true" signature="170:8217" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="917:1090" ph="/* irradiance buffer is directionCount pixels wide, one for each direction, ... */" />
-            <marker date="1590171947818" expanded="true" signature="2391:3854" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="2427:2494" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="3732:3848" ph="/* TODO: Maybe have a color buffer for diffuse walls ... */" />
-            <marker date="1590171947818" expanded="true" signature="3884:4034" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="4053:6361" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="4528:4622" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="5874:6355" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="6410:6519" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="6543:6673" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="6725:6831" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="6882:6996" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="7037:7148" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="7187:7333" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="7369:7481" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="7522:8215" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="7576:7842" ph="{...}" />
-            <marker date="1590171947818" expanded="true" signature="7638:7832" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="6:117" ph="..." />
+            <marker date="1590176620300" expanded="true" signature="170:7823" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="842:1015" ph="/* irradiance buffer is directionCount pixels wide, one for each direction, ... */" />
+            <marker date="1590176620300" expanded="true" signature="2296:3496" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="2332:2399" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="3374:3490" ph="/* TODO: Maybe have a color buffer for diffuse walls ... */" />
+            <marker date="1590176620300" expanded="true" signature="3526:3647" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="3666:5967" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="4141:4235" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="5487:5961" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="6016:6125" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="6149:6279" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="6331:6437" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="6488:6602" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="6643:6754" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="6793:6939" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="6975:7087" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="7128:7821" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="7182:7448" ph="{...}" />
+            <marker date="1590176620300" expanded="true" signature="7244:7438" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="62" column="57" selection-start-line="62" selection-start-column="48" selection-end-line="62" selection-end-column="57" />
+        <state relative-caret-position="534">
+          <caret line="142" column="43" lean-forward="true" selection-start-line="142" selection-start-column="43" selection-end-line="142" selection-end-column="43" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/SDF_Raycast_test.cs">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-46">
-          <caret line="68" column="29" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="29" />
+        <state relative-caret-position="1449">
+          <caret line="63" column="50" lean-forward="true" selection-start-line="63" selection-start-column="50" selection-end-line="63" selection-end-column="50" />
           <folding>
-            <marker date="1590172005082" expanded="true" signature="6:206" ph="..." />
-            <marker date="1590172005082" expanded="true" signature="254:6212" ph="{...}" />
-            <marker date="1590172005082" expanded="true" signature="588:1191" ph="{...}" />
-            <marker date="1590172005082" expanded="true" signature="760:838" ph="{...}" />
-            <marker date="1590172005082" expanded="true" signature="1289:6210" ph="{...}" />
-            <marker date="1590172005082" expanded="true" signature="1637:6204" ph="{...}" />
-            <marker date="1590172005082" expanded="true" signature="3821:3953" ph="/* 2^maxOffsetPower = how far it will jump maximum ... */" />
-            <marker date="1590172005082" expanded="true" signature="4033:5005" ph="{...}" />
-            <marker date="1590172005082" expanded="true" signature="4171:4360" ph="/* Grab the source and current from an index rather than executing the command buffer at each iteration of the lo ... */" />
-            <marker date="1590172005082" expanded="true" signature="6270:8655" ph="{...}" />
-            <marker date="1590172005082" expanded="true" signature="6581:6677" ph="{...}" />
-            <marker date="1590172005082" expanded="true" signature="6777:8653" ph="{...}" />
-            <marker date="1590172005082" expanded="true" signature="7142:7397" ph="{...}" />
-            <marker date="1590172005082" expanded="true" signature="7230:7387" ph="{...}" />
-            <marker date="1590172005082" expanded="true" signature="7890:8602" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/test/SDF_Raycast_test.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-          <folding>
-            <marker date="1590173262430" expanded="false" signature="6:103" ph="..." />
-            <marker date="1590173262430" expanded="true" signature="150:885" ph="{...}" />
-            <marker date="1590173262430" expanded="true" signature="197:883" ph="{...}" />
-            <marker date="1590173262430" expanded="true" signature="412:877" ph="{...}" />
-            <marker date="1590173262430" expanded="true" signature="482:645" ph="{...}" />
-            <marker date="1590173262430" expanded="true" signature="682:845" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/TooD/TooD Unlit.shader">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="130" column="39" selection-start-line="130" selection-start-column="39" selection-end-line="130" selection-end-column="39" />
-          <folding>
-            <marker date="1590173298914" expanded="true" signature="20:4493" ph="{...}" />
-            <marker date="1590173298914" expanded="true" signature="41:270" ph="{...}" />
-            <marker date="1590173298914" expanded="true" signature="287:377" ph="{...}" />
-            <marker date="1590173298914" expanded="true" signature="404:4459" ph="{...}" />
-            <marker date="1590173298914" expanded="true" signature="613:4453" ph="{...}" />
-            <marker date="1590173298914" expanded="true" signature="687:4436" ph="{...}" />
+            <marker date="1590176637635" expanded="true" signature="6:206" ph="..." />
+            <marker date="1590176637635" expanded="true" signature="254:3649" ph="{...}" />
+            <marker date="1590176637635" expanded="true" signature="487:891" ph="{...}" />
+            <marker date="1590176637635" expanded="true" signature="659:737" ph="{...}" />
+            <marker date="1590176637635" expanded="true" signature="989:3647" ph="{...}" />
+            <marker date="1590176637635" expanded="true" signature="1337:3641" ph="{...}" />
+            <marker date="1590176637635" expanded="true" signature="3707:6092" ph="{...}" />
+            <marker date="1590176637635" expanded="true" signature="4018:4114" ph="{...}" />
+            <marker date="1590176637635" expanded="true" signature="4214:6090" ph="{...}" />
+            <marker date="1590176637635" expanded="true" signature="4579:4834" ph="{...}" />
+            <marker date="1590176637635" expanded="true" signature="4667:4824" ph="{...}" />
+            <marker date="1590176637635" expanded="true" signature="5327:6039" ph="{...}" />
           </folding>
         </state>
       </provider>

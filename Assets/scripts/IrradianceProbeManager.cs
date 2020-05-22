@@ -33,17 +33,14 @@ public class IrradianceProbeManager : MonoBehaviour
     public int2 BufferSize => math.int2(math.float2(probeCounts) * probeSeparation * pixelsPerUnit);
     
 
-    public RenderTexture wallBuffer;
-
-    public int directionCount = 32;
-
     //irradiance buffer is directionCount pixels wide, one for each direction,
     //then GutterSize pixels on each side so the side pixels can bilinearly sample across the seam
     public DoubleBuffer irradianceBuffer;
-    public const int GutterSize = 1; //each side
-
+    public RenderTexture wallBuffer;
     public DoubleBuffer averageIrradianceBuffer;
 
+    public int directionCount = 32;
+    public const int GutterSize = 1; //each side
     private int SingleProbePixelWidth => (directionCount + GutterSize * 2);
 
     public float4x4 worldToWallBuffer;
@@ -58,9 +55,7 @@ public class IrradianceProbeManager : MonoBehaviour
     private static readonly int ProbeCountsId = Shader.PropertyToID("ProbeCounts");
     private static readonly int OffsetID = Shader.PropertyToID("_Offset");
 
-    public int MaxRayLength => 250;//TODO: When we change to sdf usage, switch this out
-    
-    public DoubleBuffer sdfBuffer;
+    public int MaxRayLength => 250;
     void Start()
     {
         if (Instance != null)
@@ -87,13 +82,8 @@ public class IrradianceProbeManager : MonoBehaviour
             .ToDoubleBuffer();
         averageIrradianceBuffer.enableRandomWrite = true;
         averageIrradianceBuffer.Create();
-        
-        sdfBuffer = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear).ToDoubleBuffer();
-        sdfBuffer.enableRandomWrite = true;
-        sdfBuffer.wrapMode = TextureWrapMode.Clamp;
-        sdfBuffer.Create();
 
-        transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = sdfBuffer.Current;
+        transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = irradianceBuffer.Current;
         //TODO: Maybe have a color buffer for diffuse walls
         //TODO: Then multiply bounce color by that diffuse color
     }
@@ -103,7 +93,6 @@ public class IrradianceProbeManager : MonoBehaviour
         wallBuffer.Release();
         irradianceBuffer.Release();
         averageIrradianceBuffer.Release();
-        sdfBuffer.Release();
     }
 
     void Update()
@@ -150,8 +139,8 @@ public class IrradianceProbeManager : MonoBehaviour
 
         if (moved)
         {
-            float2 probeOffset = (GetProbeAreaOrigin() - oldPos).xy  / probeSeparation;
-            float2 pixelOffset = probeOffset * new float2(directionCount + GutterSize * 2, 1);
+            float2 probesPerUnit = (GetProbeAreaOrigin() - oldPos).xy / probeSeparation;
+            float2 pixelOffset = probesPerUnit * new float2(SingleProbePixelWidth, 1);
             float2 uvOffset = pixelOffset / irradianceBuffer.Dimensions;
             dataTransferMaterial.SetVector(OffsetID, uvOffset.xyxy);
             Graphics.Blit(irradianceBuffer.Current, irradianceBuffer.Other, dataTransferMaterial);

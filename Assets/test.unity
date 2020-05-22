@@ -296,7 +296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
---- !u!1 &553774818
+--- !u!1 &681671027
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -304,37 +304,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 553774820}
-  - component: {fileID: 553774819}
+  - component: {fileID: 681671029}
+  - component: {fileID: 681671028}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: test raycast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &553774819
+  m_IsActive: 0
+--- !u!114 &681671028
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553774818}
+  m_GameObject: {fileID: 681671027}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80e2f8adc46006442bff3456b7148283, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 7616978821999090365, guid: 628242ce76a544a4d89496c94371004f, type: 3}
---- !u!4 &553774820
+  angle: 0
+--- !u!4 &681671029
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553774818}
+  m_GameObject: {fileID: 681671027}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22, y: -3, z: -1}
+  m_LocalPosition: {x: 17, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

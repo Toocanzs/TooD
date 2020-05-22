@@ -11,9 +11,6 @@ public class TooDRenderer : ScriptableRenderer
     private TooDSpriteRenderPass tooDSpriteRenderPass;
     private ComputeShader computeShader;
     private int probeRaycastMainKernel;
-    private int JFA_set_seedKernel;
-    private int JFA_floodKernel;
-    private int JFA_distKernel;
     private int FillGutterKernel;
 
     public TooDRenderer(TooDRendererData data) : base(data)
@@ -26,9 +23,6 @@ public class TooDRenderer : ScriptableRenderer
         }
 
         probeRaycastMainKernel = computeShader.FindKernel("GenerateProbeData");
-        JFA_set_seedKernel = computeShader.FindKernel("JFA_set_seed");
-        JFA_floodKernel = computeShader.FindKernel("JFA_flood");
-        JFA_distKernel = computeShader.FindKernel("JFA_dist");
         FillGutterKernel = computeShader.FindKernel("FillGutter");
     }
 
@@ -52,7 +46,7 @@ public class TooDRenderer : ScriptableRenderer
             float2 origin = i.GetProbeAreaOrigin() + i.OriginOffset;
             command.SetComputeFloatParams(computeShader, "probeStartPosition", origin.x, origin.y);
             command.SetComputeIntParam(computeShader, "directionCount", i.directionCount);
-            command.SetComputeFloatParam(computeShader, "maxRayLength", i.MaxRayLength);
+            command.SetComputeIntParam(computeShader, "maxRayLength", i.MaxRayLength);
             command.SetComputeIntParams(computeShader, "wallBufferSize", i.wallBuffer.width, i.wallBuffer.height);
             command.SetComputeIntParam(computeShader, "gutterSize", IrradianceProbeManager.GutterSize);
             command.SetComputeMatrixParam(computeShader, "worldToWallBuffer", i.worldToWallBuffer);
@@ -60,39 +54,6 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeFloatParam(computeShader, "HYSTERESIS", Time.deltaTime * i.hysteresis);
             command.SetComputeIntParam(computeShader, "pixelsPerUnit", i.pixelsPerUnit);
             command.SetComputeFloatParam(computeShader, "randomRayOffset", Random.Range(0, (2 * math.PI)/i.directionCount));
-
-            
-            command.SetComputeTextureParam(computeShader, JFA_set_seedKernel, "WallBuffer", i.wallBuffer);
-            command.SetComputeTextureParam(computeShader, JFA_set_seedKernel, "ExteriorDistanceBuffer", i.sdfBuffer.Current);
-            command.DispatchCompute(computeShader, JFA_set_seedKernel, (i.wallBuffer.width + 63) / 64, i.wallBuffer.height, 1);
-
-            int maxSteps = 10;
-            int maxOffsetPower = 10;
-            //2^maxOffsetPower = how far it will jump maximum
-            //ie: 2^8 means 256 pixels away is the max the jump value will ever be
-            for (int jfaStepIndex = 0; jfaStepIndex < maxSteps; jfaStepIndex++)
-            {
-                int pow = math.max(0, maxOffsetPower - jfaStepIndex);
-                int level = 1<<pow;
-
-                //Grab the source and current from an index rather than executing the command buffer at each iteration of the loop
-                //as long as maxSteps is even, current will remain current
-                RenderTexture source = jfaStepIndex % 2 == 0 ? i.sdfBuffer.Current : i.sdfBuffer.Other;
-                RenderTexture dest = jfaStepIndex % 2 == 0 ? i.sdfBuffer.Other : i.sdfBuffer.Current;
-                command.SetComputeIntParam(computeShader, "stepWidth", level);
-                command.SetComputeTextureParam(computeShader, JFA_floodKernel, "JFA_Source", source);
-                command.SetComputeTextureParam(computeShader, JFA_floodKernel, "JFA_Dest", dest);
-                
-                command.DispatchCompute(computeShader, JFA_floodKernel, (i.wallBuffer.width + 63) / 64, i.wallBuffer.height, 1);
-            }
-            
-            command.SetComputeTextureParam(computeShader, JFA_distKernel, "JFA_Source", i.sdfBuffer.Current);
-            command.SetComputeTextureParam(computeShader, JFA_distKernel, "JFA_Dest", i.sdfBuffer.Other);
-            command.DispatchCompute(computeShader, JFA_distKernel, (i.wallBuffer.width + 63) / 64, i.wallBuffer.height, 1);
-
-            
-            command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "SDF_Buffer", i.sdfBuffer.Other);
-            
             command.DispatchCompute(computeShader, probeRaycastMainKernel,
                 (i.probeCounts.x + 63)/64, i.probeCounts.y, 1);
             
@@ -102,8 +63,6 @@ public class TooDRenderer : ScriptableRenderer
             //TODO: look at using 3d thread group, 3rd paramter for each direction? idk
             context.ExecuteCommandBuffer(command);
             command.Clear();
-            
-            i.sdfBuffer.Swap();//Swap after so current is other cause we did a blit for calculating sdf distance
         }
     }
 }
