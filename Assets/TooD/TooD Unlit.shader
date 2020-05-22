@@ -3,7 +3,6 @@
     Properties
     {
         _MainTex("Diffuse", 2D) = "white" {}
-        _MaskTex("Mask", 2D) = "white" {}
         [HDr]
         _EmissionColor("Emission Color", Color) = (0,0,0,1)
         [Toggle]
@@ -117,13 +116,23 @@
             {
                 return ((worldPos - _ProbeAreaOrigin - OriginOffset)/ _ProbeSeparation)/ProbeCounts;
             }
+            
+            //TODO:RREMOVE;
+            /*TEXTURE2D(_SDF);
+            SAMPLER(sampler_SDF);
+            
+            float4 getCol(float d)
+            {
+                float3 col = 1.0 - sign(d)*float3(0.1,0.4,0.7);
+                col *= 1.0 - exp(-3.0*abs(d));
+                col *= 0.8 + 0.2*cos(150.0*d);
+                col = lerp( col, 1.0, 1.0-smoothstep(0.0,0.01,abs(d)) );
+                return float4(col,1.0);
+            }*/
 
             half4 CombinedShapeLightFragment(Varyings i) : SV_Target
             {
-                half4 main = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
-                half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
-                
-                float4 col = CombinedShapeLightShared(main, mask, i.lightingUV);
+                float4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 return col;
             }
             ENDHLSL

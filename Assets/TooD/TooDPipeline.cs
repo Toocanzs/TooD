@@ -8,19 +8,25 @@ using UnityEngine.Rendering.Universal;
 public class TooDRenderer : ScriptableRenderer
 {
     private TooDSpriteRenderPass tooDSpriteRenderPass;
-    private ComputeShader probeRaycastShader;
+    private ComputeShader computeShader;
     private int probeRaycastMainKernel;
+    private int JFA_set_seedKernel;
+    private int JFA_floodKernel;
+    private int JFA_distKernel;
 
     public TooDRenderer(TooDRendererData data) : base(data)
     {
         tooDSpriteRenderPass = new TooDSpriteRenderPass();
-        probeRaycastShader = (ComputeShader) Resources.Load("ProbeRaycast");
-        if (probeRaycastShader == null)
+        computeShader = (ComputeShader) Resources.Load("ProbeRaycast");
+        if (computeShader == null)
         {
             Debug.LogError("Cannot find raycast shader");
         }
 
-        probeRaycastMainKernel = probeRaycastShader.FindKernel("GenerateProbeData");
+        probeRaycastMainKernel = computeShader.FindKernel("GenerateProbeData");
+        JFA_set_seedKernel = computeShader.FindKernel("JFA_set_seed");
+        JFA_floodKernel = computeShader.FindKernel("JFA_flood");
+        JFA_distKernel = computeShader.FindKernel("JFA_dist");
     }
 
     public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -32,40 +38,61 @@ public class TooDRenderer : ScriptableRenderer
         EnqueuePass(tooDSpriteRenderPass);
         if (IrradianceProbeManager.Instance != null)
         {
-            CommandBuffer command = CommandBufferPool.Get($"GenerateProbeData");
+            var i = IrradianceProbeManager.Instance;
+            CommandBuffer command = CommandBufferPool.Get("GenerateProbeData");
             command.Clear();
-            command.SetComputeTextureParam(probeRaycastShader, probeRaycastMainKernel, "WallBuffer",
-                IrradianceProbeManager.Instance.wallBuffer);
-            command.SetComputeTextureParam(probeRaycastShader, probeRaycastMainKernel, "IrradianceBuffer",
-                IrradianceProbeManager.Instance.irradianceBuffer);
-            command.SetComputeTextureParam(probeRaycastShader, probeRaycastMainKernel, "AverageIrradianceBuffer",
-                IrradianceProbeManager.Instance.averageIrradianceBuffer);
+            command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "WallBuffer", i.wallBuffer);
+            command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "IrradianceBuffer", i.irradianceBuffer);
+            command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "AverageIrradianceBuffer", i.averageIrradianceBuffer);
+            command.SetComputeFloatParam(computeShader, "probeSeparation", i.probeSeparation);
 
-            command.SetComputeFloatParam(probeRaycastShader, "probeSeparation",
-                IrradianceProbeManager.Instance.probeSeparation);
+            float2 origin = i.GetProbeAreaOrigin() + i.OriginOffset;
+            command.SetComputeFloatParams(computeShader, "probeStartPosition", origin.x, origin.y);
+            command.SetComputeIntParam(computeShader, "directionCount", i.directionCount);
+            command.SetComputeFloatParam(computeShader, "maxRayLength", i.MaxRayLength);
+            command.SetComputeIntParams(computeShader, "wallBufferSize", i.wallBuffer.width, i.wallBuffer.height);
+            command.SetComputeIntParam(computeShader, "gutterSize", IrradianceProbeManager.GutterSize);
+            command.SetComputeMatrixParam(computeShader, "worldToWallBuffer", i.worldToWallBuffer);
+            command.SetComputeIntParams(computeShader, "probeCount", i.probeCounts.x, i.probeCounts.y);
+            command.SetComputeFloatParam(computeShader, "HYSTERESIS", Time.deltaTime);
+            command.SetComputeIntParam(computeShader, "pixelsPerUnit", i.pixelsPerUnit);
 
-            float2 origin = IrradianceProbeManager.Instance.GetProbeAreaOrigin() +
-                            IrradianceProbeManager.Instance.OriginOffset;
-            command.SetComputeFloatParams(probeRaycastShader, "probeStartPosition",
-                origin.x, origin.y);
-            command.SetComputeIntParam(probeRaycastShader, "directionCount",
-                IrradianceProbeManager.Instance.directionCount);
-            command.SetComputeFloatParam(probeRaycastShader, "maxRayLength",
-                IrradianceProbeManager.Instance.MaxRayLength);
-            command.SetComputeIntParams(probeRaycastShader, "wallBufferSize",
-                IrradianceProbeManager.Instance.wallBuffer.width, IrradianceProbeManager.Instance.wallBuffer.height);
-            command.SetComputeIntParam(probeRaycastShader, "gutterSize", IrradianceProbeManager.GutterSize);
-            command.SetComputeMatrixParam(probeRaycastShader, "worldToWallBuffer",
-                IrradianceProbeManager.Instance.worldToWallBuffer);
-            command.SetComputeMatrixParam(probeRaycastShader, "wallBufferToWorld", math.fastinverse(IrradianceProbeManager.Instance.worldToWallBuffer));
-            command.SetComputeIntParams(probeRaycastShader, "probeCount", 
-                IrradianceProbeManager.Instance.probeCounts.x, IrradianceProbeManager.Instance.probeCounts.y);
+            
+            command.SetComputeTextureParam(computeShader, JFA_set_seedKernel, "WallBuffer", i.wallBuffer);
+            command.SetComputeTextureParam(computeShader, JFA_set_seedKernel, "ExteriorDistanceBuffer", i.sdfBuffer.Current);
+            command.DispatchCompute(computeShader, JFA_set_seedKernel, (i.wallBuffer.width + 63) / 64, i.wallBuffer.height, 1);
 
+            int maxSteps = 10;
+            int maxOffsetPower = 10;
+            //2^maxOffsetPower = how far it will jump maximum
+            //ie: 2^8 means 256 pixels away is the max the jump value will ever be
+            for (int jfaStepIndex = 0; jfaStepIndex < maxSteps; jfaStepIndex++)
+            {
+                int pow = math.max(0, maxOffsetPower - jfaStepIndex);
+                int level = 1<<pow;
 
-            command.DispatchCompute(probeRaycastShader, probeRaycastMainKernel,
-                IrradianceProbeManager.Instance.probeCounts.x, IrradianceProbeManager.Instance.probeCounts.y, 1);
+                //Grab the source and current from an index rather than executing the command buffer at each iteration of the loop
+                //as long as maxSteps is even, current will remain current
+                RenderTexture source = jfaStepIndex % 2 == 0 ? i.sdfBuffer.Current : i.sdfBuffer.Other;
+                RenderTexture dest = jfaStepIndex % 2 == 0 ? i.sdfBuffer.Other : i.sdfBuffer.Current;
+                command.SetComputeIntParam(computeShader, "stepWidth", level);
+                command.SetComputeTextureParam(computeShader, JFA_floodKernel, "JFA_Source", source);
+                command.SetComputeTextureParam(computeShader, JFA_floodKernel, "JFA_Dest", dest);
+                
+                command.DispatchCompute(computeShader, JFA_floodKernel, (i.wallBuffer.width + 63) / 64, i.wallBuffer.height, 1);
+            }
+            
+            command.SetComputeTextureParam(computeShader, JFA_distKernel, "JFA_Source", i.sdfBuffer.Current);
+            command.SetComputeTextureParam(computeShader, JFA_distKernel, "JFA_Dest", i.sdfBuffer.Other);
+            command.DispatchCompute(computeShader, JFA_distKernel, (i.wallBuffer.width + 63) / 64, i.wallBuffer.height, 1);
+
+            command.DispatchCompute(computeShader, probeRaycastMainKernel,
+                (i.probeCounts.x + 63)/64, i.probeCounts.y, 1);
+            //TODO: look at using 3d thread group, 3rd paramter for each direction? idk
             context.ExecuteCommandBuffer(command);
             command.Clear();
+            
+            i.sdfBuffer.Swap();
             //TODO: gutter? We only need it once we start sampling directions instead of averages
         }
     }

@@ -21,14 +21,14 @@ public class IrradianceProbeManager : MonoBehaviour
     private Camera lightingCamera = null;
 
     public float2 OriginOffset => 0.5f * probeSeparation;
-
-    [SerializeField]
-    private int pixelsPerUnit = 32;
+    
+    public int pixelsPerUnit = 32;
 
     [SerializeField]
     private Material dataTransferMaterial = null;
 
     public int2 BufferSize => math.int2(math.float2(probeCounts) * probeSeparation * pixelsPerUnit);
+    
 
     public RenderTexture wallBuffer;
 
@@ -56,7 +56,8 @@ public class IrradianceProbeManager : MonoBehaviour
     private static readonly int OffsetID = Shader.PropertyToID("_Offset");
 
     public int MaxRayLength => 250;
-
+    
+    public DoubleBuffer sdfBuffer;
     void Start()
     {
         if (Instance != null)
@@ -83,8 +84,12 @@ public class IrradianceProbeManager : MonoBehaviour
             .ToDoubleBuffer();
         averageIrradianceBuffer.enableRandomWrite = true;
         averageIrradianceBuffer.Create();
+        
+        sdfBuffer = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear).ToDoubleBuffer();
+        sdfBuffer.enableRandomWrite = true;
+        sdfBuffer.Create();
 
-        transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = averageIrradianceBuffer;
+        transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = sdfBuffer.Current;
     }
 
     private void OnDestroy()
@@ -92,6 +97,7 @@ public class IrradianceProbeManager : MonoBehaviour
         wallBuffer.Release();
         irradianceBuffer.Release();
         averageIrradianceBuffer.Release();
+        sdfBuffer.Release();
     }
 
     void Update()

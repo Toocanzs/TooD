@@ -8,16 +8,86 @@ float maxRayLength;
 uint2 wallBufferSize;
 uint2 probeCount;
 int gutterSize;
+float2 _ProbeAreaOrigin;
+float HYSTERESIS;
+int pixelsPerUnit;
 
 float4x4 worldToWallBuffer;
-float4x4 wallBufferToWorld;
 float4x4 worldDirectionToBufferDirection;
 
 #define MAX_DIRECTION_COUNT 128
 #define PI 3.14159
-#define HYSTERESIS 0.005
 
-#pragma kernel GenerateProbeData
+
+
+RWTexture2D<float4> ExteriorDistanceBuffer;//Maybe add interior later
+
+#pragma kernel JFA_set_seed
+[numthreads(64,1,1)]
+void JFA_set_seed (uint3 groupID : SV_GroupID, 
+   uint3 groupThreadID : SV_GroupThreadID, 
+   uint groupIndex : SV_GroupIndex, 
+   uint3 id : SV_DispatchThreadID) 
+{
+    float4 col = 0;
+    
+    float2 worldPos = float2(id.xy) / pixelsPerUnit + _ProbeAreaOrigin;
+    if(WallBuffer[id.xy].a > 0)
+    {
+        col = float4(worldPos, 0, 1);
+    }
+    
+    ExteriorDistanceBuffer[id.xy] = col;
+}
+
+RWTexture2D<float4> JFA_Source;
+RWTexture2D<float4> JFA_Dest;
+uint stepWidth;
+
+#pragma kernel JFA_flood
+ [numthreads(64,1,1)]
+ void JFA_flood (uint3 groupID : SV_GroupID, 
+    uint3 groupThreadID : SV_GroupThreadID, 
+    uint groupIndex : SV_GroupIndex, 
+    uint3 id : SV_DispatchThreadID) 
+ {
+     float2 worldPos = float2(id.xy) / pixelsPerUnit + _ProbeAreaOrigin;
+     float bestDistance = 9999;
+     float4 bestCoordinate = 0;
+     for(int y = -1; y <= 1; y++)
+     {
+         for(int x = -1; x <= 1; x ++)
+         {
+             uint2 sample = id.xy + uint2(x,y) * stepWidth;
+             if(any(bool4(sample > wallBufferSize, sample < 0)))
+                 continue;
+             float4 data = JFA_Source[sample];
+             if(data.a < 1)//Invalid data
+                 continue;
+             float currentDistance = distance(data.xy, worldPos);
+             if(currentDistance < bestDistance)
+             {
+                 bestDistance = currentDistance;
+                 bestCoordinate = float4(data.xy, 0, 1);
+             }
+         }
+     }
+     
+     JFA_Dest[id.xy] = bestCoordinate;
+ }
+ 
+ #pragma kernel JFA_dist
+[numthreads(64,1,1)]
+void JFA_dist (uint3 groupID : SV_GroupID, 
+   uint3 groupThreadID : SV_GroupThreadID, 
+   uint groupIndex : SV_GroupIndex, 
+   uint3 id : SV_DispatchThreadID) 
+{
+    float2 worldPos = float2(id.xy) / pixelsPerUnit + _ProbeAreaOrigin;
+    float4 data = JFA_Source[id.xy];
+    float d = distance(data.xy, worldPos);
+    JFA_Dest[id.xy] = float4(d,d,d,1);
+}
 
 struct PixelResults
 {
@@ -30,7 +100,7 @@ PixelResults testPixel(float2 pos)
 {
     uint2 p = uint2(pos);
     PixelResults o = (PixelResults)0;
-    if(any(bool4(pos.xy < 0, pos.xy >= float2(wallBufferSize))))
+    if(any(bool4(pos.xy < 0, pos.xy >= float2(wallBufferSize)))) //TODO: maybe move this out?
     {
         o.outOfBounds = true;
     }
@@ -97,12 +167,13 @@ float4 GetFromBufferClamped(uint2 pos)
     float4 col = AverageIrradianceBuffer[pos];
     if(any(bool4(pos > probeCount, pos < 0)))
     {
-        return 0;
+        //return float4(0,0,0,1);
     }
     return col;
 }
 
-[numthreads(1,1,1)]
+#pragma kernel GenerateProbeData
+[numthreads(64,1,1)]
 void GenerateProbeData (uint3 groupID : SV_GroupID, 
    uint3 groupThreadID : SV_GroupThreadID, 
    uint groupIndex : SV_GroupIndex, 
@@ -127,7 +198,8 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         float2 rayEndPos = rayOrigin + rayDir * maxRayLength;
         //do raycast
         RaycastResult result = raycast(rayOrigin, rayEndPos);
-        float2 wsEndPos = mul(wallBufferToWorld, float4(result.endPosition, 0, 1)).xy;
+        float2 wsEndPos = result.endPosition.xy / pixelsPerUnit + _ProbeAreaOrigin;
+        //size = math.float2(probeCounts) * probeSeparation * pixelsPerUnit;
         //HERE
         //Result needs to pull in the color from the IrradianceBuffer
         //sample the 4 nearby probes
@@ -136,7 +208,7 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         //add to result?
         //We could also later use normals from SDF and try that instead
         /*float2 localPos = (wsEndPos - probeStartPosition)/ probeSeparation;
-        uint2 BLProbe = (uint2)floor(localPos);
+        uint2 BLProbe = (uint2)(localPos);
         //convert probe local to world
         //Get dir from wsPos to endPos
         //Sample buffer in that direction
@@ -150,7 +222,7 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         float4 top = lerp(TL, TR, f.x);
         float4 combined = lerp(bottom, top, f.y);*/
         //TODO: Probably come back with normals from SDF
-        float3 col = result.color;// + combined.rgb;
+        float3 col = result.color;// + combined.rgb*6;
         
         
         for(int j = 0; j < directionCount; j++)
