@@ -55,6 +55,10 @@ public class IrradianceProbeManager : MonoBehaviour
     public static readonly int OffsetID = Shader.PropertyToID("_Offset");
 
     public int MaxRayLength => 250;
+    
+    //TODO: temporal accum average the actual lighting in each direction instead the cosine weighted sum
+    //TODO: then average can be average light instead of average cosine weighted
+    //TODO: then compute the cosine weighted ones in another pass
     void Start()
     {
         if (Instance != null)
