@@ -691,48 +691,6 @@ MonoBehaviour:
   dataTransferMaterial: {fileID: 2100000, guid: bc9a9e1629e1b7f478c7410901025ae2,
     type: 2}
   directionCount: 32
-  worldToWallBuffer:
-    c0:
-      x: 0
-      y: 0
-      z: 0
-      w: 0
-    c1:
-      x: 0
-      y: 0
-      z: 0
-      w: 0
-    c2:
-      x: 0
-      y: 0
-      z: 0
-      w: 0
-    c3:
-      x: 0
-      y: 0
-      z: 0
-      w: 0
-  worldDirectionToBufferDirection:
-    c0:
-      x: 0
-      y: 0
-      z: 0
-      w: 0
-    c1:
-      x: 0
-      y: 0
-      z: 0
-      w: 0
-    c2:
-      x: 0
-      y: 0
-      z: 0
-      w: 0
-    c3:
-      x: 0
-      y: 0
-      z: 0
-      w: 0
   cosineWeightedIrradianceBuffer: {fileID: 0}
   wallBuffer: {fileID: 0}
   averageIrradianceBuffer: {fileID: 0}

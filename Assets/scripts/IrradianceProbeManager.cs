@@ -17,11 +17,9 @@ public class IrradianceProbeManager : MonoBehaviour
     [SerializeField]
     public float probeSeparation = 1f;
 
-    [SerializeField]
-    private float2 resetAreaPercent = new float2(0.5f, 0.5f);
-
-    [SerializeField]
-    private Camera lightingCamera = null;
+    public float2 resetAreaPercent = new float2(0.5f, 0.5f);
+    
+    public Camera lightingCamera = null;
 
     public float2 OriginOffset => 0.5f * probeSeparation;
     
@@ -34,25 +32,12 @@ public class IrradianceProbeManager : MonoBehaviour
     public int directionCount = 32;
     public const int GutterSize = 1; //each side
     public int SingleProbePixelWidth => (directionCount + GutterSize * 2);
-
-    public float4x4 worldToWallBuffer;
-    public float4x4 worldDirectionToBufferDirection;
-    private static readonly int ProbeAreaOriginId = Shader.PropertyToID("_ProbeAreaOrigin");
-    private static readonly int ProbeSeparationId = Shader.PropertyToID("_ProbeSeparation");
-    private static readonly int WorldDirectionToBufferDirectionId = Shader.PropertyToID("worldDirectionToBufferDirection");
-    private static readonly int IrradianceBufferId = Shader.PropertyToID("IrradianceBuffer");
-    private static readonly int DirectionCountId = Shader.PropertyToID("directionCount");
-    private static readonly int GutterSizeID = Shader.PropertyToID("gutterSize");
-    private static readonly int AverageIrradienceBufferId = Shader.PropertyToID("_AverageIrradienceBuffer");
-    private static readonly int ProbeCountsId = Shader.PropertyToID("ProbeCounts");
-    public static readonly int OffsetID = Shader.PropertyToID("_Offset");
-
     public int MaxRayLength => 250;
     
     //irradiance buffer is directionCount pixels wide, one for each direction,
     //then GutterSize pixels on each side so the side pixels can bilinearly sample across the seam
     public DoubleBuffer irradianceBuffer;
-    public DoubleBuffer cosineWeightedIrradianceBuffer;
+    public RenderTexture cosineWeightedIrradianceBuffer;
     public RenderTexture wallBuffer;
     public RenderTexture averageIrradianceBuffer;
     
@@ -75,8 +60,7 @@ public class IrradianceProbeManager : MonoBehaviour
         wallBuffer.Create();
 
         cosineWeightedIrradianceBuffer = new RenderTexture(probeCounts.x * SingleProbePixelWidth, probeCounts.y,
-            0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
-            .ToDoubleBuffer();
+            0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
         cosineWeightedIrradianceBuffer.enableRandomWrite = true;
         cosineWeightedIrradianceBuffer.Create();
         
@@ -103,54 +87,16 @@ public class IrradianceProbeManager : MonoBehaviour
 
     void Update()
     {
-        float2 center = GetCenter();
-        float2 scale = GetWorldScale();
-        float2 resetScale = scale * resetAreaPercent;
-        float4 resetBounds = new float4(center - resetScale / 2, center + resetScale / 2);
-
-        float2 cameraPos = math.float3(Camera.main.transform.position).xy;
-        
-        if (math.any(math.bool4(cameraPos.xy < resetBounds.xy, cameraPos.xy > resetBounds.zw)))
-        {
-            SetCenter(transform, cameraPos.xy);
-        }
-
-        var transform1 = lightingCamera.transform;
-        transform1.position = new float3(center, transform1.position.z);
-        lightingCamera.orthographicSize = scale.y / 2;
-        lightingCamera.aspect = scale.x / scale.y;
-
-        float4 dims = GetProbeAreaDims();
-        float3 pos = new float3(dims.xy, 0);
-        //Translate so origin is at probe origin
-        float4x4 step1 = float4x4.Translate(-pos);
-        //Scale afterwards to buffersize
-        float4x4 step2 = float4x4.Scale(pixelsPerUnit);
-        worldToWallBuffer = math.mul(step2, step1);
-
-        float2 bufferSize = BufferSize;
-        worldDirectionToBufferDirection = float4x4.Scale(1f / bufferSize.y, 1f / bufferSize.x, 0);
-
-        Shader.SetGlobalVector(ProbeAreaOriginId, GetProbeAreaOrigin().xyxy);
-        Shader.SetGlobalFloat(ProbeSeparationId, probeSeparation);
-        Shader.SetGlobalMatrix(WorldDirectionToBufferDirectionId, worldDirectionToBufferDirection);
-        Shader.SetGlobalTexture(AverageIrradienceBufferId, averageIrradianceBuffer);
-        Shader.SetGlobalInt(DirectionCountId, directionCount);
-        Shader.SetGlobalInt(GutterSizeID, GutterSize);
-
-        Shader.SetGlobalVector(ProbeCountsId, (float4) probeCounts.xyxy);
-
-        //TODO: REMOVE DEBUG
         //transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = averageIrradianceBuffer.Current;
     }
 
-    void SetCenter(Transform trs, float2 value)
+    public void SetCenter(Transform trs, float2 value)
     {
         float2 scale = GetWorldScale();
         trs.position = new float3(value - scale / 2, 0);
     }
 
-    float2 GetCenter()
+    public float2 GetCenter()
     {
         float2 scale = GetWorldScale();
         float2 dims = GetProbeAreaDims().xy;
@@ -173,7 +119,7 @@ public class IrradianceProbeManager : MonoBehaviour
         return new float4(origin, origin + math.float2(probeCounts) * probeSeparation);
     }
 
-    private float2 GetWorldScale()
+    public float2 GetWorldScale()
     {
         var dims = GetProbeAreaDims();
         return new float2(dims.z - dims.x, dims.w - dims.y);

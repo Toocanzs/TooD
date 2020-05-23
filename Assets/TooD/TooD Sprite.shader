@@ -90,33 +90,21 @@
 
             #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/CombinedShapeLightShared.hlsl"
             
-            float2 _ProbeAreaOrigin;
-            float _ProbeSeparation;
-            float4x4 worldDirectionToBufferDirection;
+            float2 G_ProbeAreaOrigin;
+            float G_ProbeSeparation;
+            int G_directionCount;
+            int G_gutterSize;
+            float2 G_ProbeCounts;
             
-            #define OriginOffset (0.5*_ProbeSeparation)
+            #define OriginOffset (0.5*G_ProbeSeparation)
             
-            TEXTURE2D(_AverageIrradienceBuffer);
-            SAMPLER(sampler_AverageIrradienceBuffer);
-            
-            int directionCount;
-            int gutterSize;
-            float2 ProbeCounts;
-            
-            uint2 GetNearestProbe(float2 worldPos)
-            {
-                return (uint2)floor((worldPos - _ProbeAreaOrigin - OriginOffset)/ _ProbeSeparation);
-            }
-            
-            float2 GetProbeWorldPos(uint2 probePos)
-            {
-                return _ProbeAreaOrigin + OriginOffset + float2(probePos) * _ProbeSeparation;
-            }
+            TEXTURE2D(G_AverageIrradianceBuffer);
+            SAMPLER(samplerG_AverageIrradianceBuffer);
             
             float2 GetIrradianceUv(float2 worldPos)
             {
                 worldPos += 0.5;//Maybe remove this later? Makes it look right atm
-                return ((worldPos - _ProbeAreaOrigin - OriginOffset)/ _ProbeSeparation)/ProbeCounts;
+                return ((worldPos - G_ProbeAreaOrigin - OriginOffset)/ G_ProbeSeparation)/G_ProbeCounts;
             }
 
             half4 CombinedShapeLightFragment(Varyings i) : SV_Target
@@ -124,7 +112,7 @@
                 half4 main = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
                 
-                float4 irradianceColor = SAMPLE_TEXTURE2D(_AverageIrradienceBuffer, sampler_AverageIrradienceBuffer, GetIrradianceUv(i.worldPos));
+                float4 irradianceColor = SAMPLE_TEXTURE2D(G_AverageIrradianceBuffer, samplerG_AverageIrradianceBuffer, GetIrradianceUv(i.worldPos));
                 float4 col = CombinedShapeLightShared(main, mask, i.lightingUV);
                 col.rgb *= irradianceColor.rgb;
                 return col;

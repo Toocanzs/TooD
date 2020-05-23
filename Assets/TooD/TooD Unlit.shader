@@ -95,8 +95,8 @@
             
             #define OriginOffset (0.5*_ProbeSeparation)
             
-            TEXTURE2D(_AverageIrradienceBuffer);
-            SAMPLER(sampler_AverageIrradienceBuffer);
+            TEXTURE2D(_AverageIrradianceBuffer);
+            SAMPLER(sampler_AverageIrradianceBuffer);
             
             int directionCount;
             int gutterSize;

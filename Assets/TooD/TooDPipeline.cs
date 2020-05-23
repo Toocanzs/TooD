@@ -11,7 +11,7 @@ public class TooDRenderer : ScriptableRenderer
 {
     private TooDSpriteRenderPass tooDSpriteRenderPass;
 
-    private static ComputeShader computeShader = (ComputeShader) Resources.Load("ProbeRaycast"); 
+    private static ComputeShader computeShader = (ComputeShader) Resources.Load("ProbeRaycast");
     private int probeRaycastMainKernel = computeShader.FindKernel("GenerateProbeData");
     private int GenerateCosineWeightedKernel = computeShader.FindKernel("GenerateCosineWeighted");
     private int FillGutterKernel = computeShader.FindKernel("FillGutter");
@@ -23,22 +23,53 @@ public class TooDRenderer : ScriptableRenderer
     {
         tooDSpriteRenderPass = new TooDSpriteRenderPass();
         RenderPipelineManager.endCameraRendering += OnEndRenderingCamera;
-        RenderPipelineManager.beginCameraRendering += OnBeginRenderingCamera;
+        RenderPipelineManager.beginFrameRendering += OnBeginFrameRendering;
     }
 
-    private void OnBeginRenderingCamera(ScriptableRenderContext context, Camera camera)
+    private void OnBeginFrameRendering(ScriptableRenderContext context, Camera[] cameras)
     {
-        if (IrradianceProbeManager.Instance != null && camera.TryGetComponent(out TooDIrradianceCamera _))
+        if (IrradianceProbeManager.Instance != null)
         {
             var i = IrradianceProbeManager.Instance;
-            float2 probesPerUnit = (i.GetProbeAreaOrigin() - oldPos).xy / i.probeSeparation;
-            float2 pixelOffset = probesPerUnit * new float2(i.SingleProbePixelWidth, 1);
-            float2 uvOffset = pixelOffset / i.irradianceBuffer.Dimensions;
-            i.dataTransferMaterial.SetVector(IrradianceProbeManager.OffsetID, uvOffset.xyxy);
-            Graphics.Blit(i.irradianceBuffer.Current, i.irradianceBuffer.Other, i.dataTransferMaterial);
-            Graphics.Blit(i.cosineWeightedIrradianceBuffer.Current, i.cosineWeightedIrradianceBuffer.Other, i.dataTransferMaterial);
-            i.irradianceBuffer.Swap();
-            i.cosineWeightedIrradianceBuffer.Swap();
+            float2 center = i.GetCenter();
+            float2 scale = i.GetWorldScale();
+            float2 resetScale = scale * i.resetAreaPercent;
+            float4 resetBounds = new float4(center - resetScale / 2, center + resetScale / 2);
+
+            float2 cameraPos = math.float3(Camera.main.transform.position).xy;
+
+            oldPos = i.GetProbeAreaOrigin();
+            bool moved = false;
+            if (math.any(math.bool4(cameraPos.xy < resetBounds.xy, cameraPos.xy > resetBounds.zw)))
+            {
+                moved = true;
+                i.SetCenter(i.transform, cameraPos.xy);
+            }
+
+            var transform1 = i.lightingCamera.transform;
+            transform1.position = new float3(center, transform1.position.z);
+            i.lightingCamera.orthographicSize = scale.y / 2;
+            i.lightingCamera.aspect = scale.x / scale.y;
+            CommandBuffer command = CommandBufferPool.Get("setup");
+            command.Clear();
+            if (moved)
+            {
+                float2 probesPerUnit = (i.GetProbeAreaOrigin() - oldPos).xy / i.probeSeparation;
+                float2 pixelOffset = probesPerUnit * new float2(i.SingleProbePixelWidth, 1);
+                float2 uvOffset = pixelOffset / i.irradianceBuffer.Dimensions;
+                command.SetGlobalVector("_Offset", uvOffset.xyxy);
+                command.Blit(i.irradianceBuffer.Current, i.irradianceBuffer.Other, i.dataTransferMaterial);
+                command.Blit(i.irradianceBuffer.Other, i.irradianceBuffer.Current);
+            }
+
+            command.SetGlobalFloat("G_ProbeSeparation", i.probeSeparation);
+            command.SetGlobalTexture("G_AverageIrradianceBuffer", i.averageIrradianceBuffer);
+            command.SetGlobalInt("G_directionCount", i.directionCount);
+            command.SetGlobalInt("G_gutterSize", IrradianceProbeManager.GutterSize);
+            command.SetGlobalVector("G_ProbeCounts", (float4) i.probeCounts.xyxy);
+            command.SetGlobalVector("G_ProbeAreaOrigin", i.GetProbeAreaOrigin().xyxy);
+            context.ExecuteCommandBuffer(command);
+            CommandBufferPool.Release(command);
         }
     }
 
@@ -61,18 +92,34 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeIntParam(computeShader, "maxRayLength", i.MaxRayLength);
             command.SetComputeIntParams(computeShader, "wallBufferSize", i.wallBuffer.width, i.wallBuffer.height);
             command.SetComputeIntParam(computeShader, "gutterSize", IrradianceProbeManager.GutterSize);
-            command.SetComputeMatrixParam(computeShader, "worldToWallBuffer", i.worldToWallBuffer);
+
             command.SetComputeIntParams(computeShader, "probeCount", i.probeCounts.x, i.probeCounts.y);
             command.SetComputeFloatParam(computeShader, "HYSTERESIS", Time.deltaTime * i.hysteresis);
             command.SetComputeIntParam(computeShader, "pixelsPerUnit", i.pixelsPerUnit);
             command.SetComputeFloatParam(computeShader, "randomRayOffset", Random.Range(0, (2 * math.PI) / i.directionCount));
+
+
+            float3 pos = new float3(i.GetProbeAreaOrigin(), 0);
+            //Translate so origin is at probe origin
+            float4x4 step1 = float4x4.Translate(-pos);
+            //Scale afterwards to buffersize
+            float4x4 step2 = float4x4.Scale(i.pixelsPerUnit);
+            var worldToWallBuffer = math.mul(step2, step1);
+
+            command.SetComputeMatrixParam(computeShader, "worldToWallBuffer", worldToWallBuffer);
+
+            var worldDirectionToBufferDirection = float4x4.Scale(1f / i.BufferSize.y, 1f / i.BufferSize.x, 0);
+            command.SetComputeVectorParam(computeShader, "_ProbeAreaOrigin", i.GetProbeAreaOrigin().xyxy);
+            command.SetComputeMatrixParam(computeShader, "worldDirectionToBufferDirection", worldDirectionToBufferDirection);
+
+
             command.DispatchCompute(computeShader, probeRaycastMainKernel,
                 (i.probeCounts.x + 63) / 64, i.probeCounts.y, 1);
-            
+
             command.SetComputeTextureParam(computeShader, GenerateCosineWeightedKernel, "IrradianceBuffer", i.irradianceBuffer);
             command.SetComputeTextureParam(computeShader, GenerateCosineWeightedKernel, "CosineWeightedIrradianceBuffer", i.cosineWeightedIrradianceBuffer);
             command.DispatchCompute(computeShader, GenerateCosineWeightedKernel, (i.probeCounts.x + 63) / 64, i.probeCounts.y, 1);
-            
+
             command.SetComputeTextureParam(computeShader, FillGutterKernel, "CosineWeightedIrradianceBuffer", i.cosineWeightedIrradianceBuffer);
             command.DispatchCompute(computeShader, FillGutterKernel, (i.probeCounts.x + 63) / 64, i.probeCounts.y, 1);
 
@@ -80,8 +127,6 @@ public class TooDRenderer : ScriptableRenderer
             context.ExecuteCommandBuffer(command);
             command.Clear();
             CommandBufferPool.Release(command);
-            
-            oldPos = i.GetProbeAreaOrigin();
         }
     }
 
