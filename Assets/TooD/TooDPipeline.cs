@@ -143,6 +143,7 @@ public class TooDSpriteRenderPass : ScriptableRenderPass
 {
     static readonly List<ShaderTagId> normalShaderTags = new List<ShaderTagId>() {new ShaderTagId("Universal2D")};
     static readonly List<ShaderTagId> lightingShaderTags = new List<ShaderTagId>() {new ShaderTagId("TooDLighting")};
+    //TODO: separate into two passes. Delete the lighting camera and reuse the default one
     static SortingLayer[] sortingLayers;
 
     public TooDSpriteRenderPass()
