@@ -11,9 +11,10 @@ public class TooDRenderer : ScriptableRenderer
 {
     private TooDSpriteRenderPass tooDSpriteRenderPass;
 
-    private ComputeShader computeShader;
-    private int probeRaycastMainKernel;
-    private int FillGutterKernel;
+    private static ComputeShader computeShader = (ComputeShader) Resources.Load("ProbeRaycast"); 
+    private int probeRaycastMainKernel = computeShader.FindKernel("GenerateProbeData");
+    private int GenerateCosineWeightedKernel = computeShader.FindKernel("GenerateCosineWeighted");
+    private int FillGutterKernel = computeShader.FindKernel("FillGutter");
 
     private float2 oldPos;
 
@@ -21,16 +22,6 @@ public class TooDRenderer : ScriptableRenderer
     public TooDRenderer(TooDRendererData data) : base(data)
     {
         tooDSpriteRenderPass = new TooDSpriteRenderPass();
-
-        computeShader = (ComputeShader) Resources.Load("ProbeRaycast");
-        if (computeShader == null)
-        {
-            Debug.LogError("Cannot find raycast shader");
-        }
-
-        probeRaycastMainKernel = computeShader.FindKernel("GenerateProbeData");
-        FillGutterKernel = computeShader.FindKernel("FillGutter");
-
         RenderPipelineManager.endCameraRendering += OnEndRenderingCamera;
         RenderPipelineManager.beginCameraRendering += OnBeginRenderingCamera;
     }
@@ -45,7 +36,9 @@ public class TooDRenderer : ScriptableRenderer
             float2 uvOffset = pixelOffset / i.irradianceBuffer.Dimensions;
             i.dataTransferMaterial.SetVector(IrradianceProbeManager.OffsetID, uvOffset.xyxy);
             Graphics.Blit(i.irradianceBuffer.Current, i.irradianceBuffer.Other, i.dataTransferMaterial);
+            Graphics.Blit(i.cosineWeightedIrradianceBuffer.Current, i.cosineWeightedIrradianceBuffer.Other, i.dataTransferMaterial);
             i.irradianceBuffer.Swap();
+            i.cosineWeightedIrradianceBuffer.Swap();
         }
     }
 
@@ -59,6 +52,7 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "WallBuffer", i.wallBuffer);
             command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "IrradianceBuffer", i.irradianceBuffer);
             command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "AverageIrradianceBuffer", i.averageIrradianceBuffer);
+            command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "CosineWeightedIrradianceBuffer", i.cosineWeightedIrradianceBuffer);
             command.SetComputeFloatParam(computeShader, "probeSeparation", i.probeSeparation);
 
             float2 origin = i.GetProbeAreaOrigin() + i.OriginOffset;
@@ -74,8 +68,12 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeFloatParam(computeShader, "randomRayOffset", Random.Range(0, (2 * math.PI) / i.directionCount));
             command.DispatchCompute(computeShader, probeRaycastMainKernel,
                 (i.probeCounts.x + 63) / 64, i.probeCounts.y, 1);
-
-            command.SetComputeTextureParam(computeShader, FillGutterKernel, "IrradianceBuffer", i.irradianceBuffer);
+            
+            command.SetComputeTextureParam(computeShader, GenerateCosineWeightedKernel, "IrradianceBuffer", i.irradianceBuffer);
+            command.SetComputeTextureParam(computeShader, GenerateCosineWeightedKernel, "CosineWeightedIrradianceBuffer", i.cosineWeightedIrradianceBuffer);
+            command.DispatchCompute(computeShader, GenerateCosineWeightedKernel, (i.probeCounts.x + 63) / 64, i.probeCounts.y, 1);
+            
+            command.SetComputeTextureParam(computeShader, FillGutterKernel, "CosineWeightedIrradianceBuffer", i.cosineWeightedIrradianceBuffer);
             command.DispatchCompute(computeShader, FillGutterKernel, (i.probeCounts.x + 63) / 64, i.probeCounts.y, 1);
 
             //TODO: look at using 3d thread group, 3rd paramter for each direction? idk

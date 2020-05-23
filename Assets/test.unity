@@ -690,7 +690,6 @@ MonoBehaviour:
   pixelsPerUnit: 32
   dataTransferMaterial: {fileID: 2100000, guid: bc9a9e1629e1b7f478c7410901025ae2,
     type: 2}
-  wallBuffer: {fileID: 0}
   directionCount: 32
   worldToWallBuffer:
     c0:
@@ -734,6 +733,9 @@ MonoBehaviour:
       y: 0
       z: 0
       w: 0
+  cosineWeightedIrradianceBuffer: {fileID: 0}
+  wallBuffer: {fileID: 0}
+  averageIrradianceBuffer: {fileID: 0}
 --- !u!114 &1434275093
 MonoBehaviour:
   m_ObjectHideFlags: 0

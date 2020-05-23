@@ -30,13 +30,6 @@ public class IrradianceProbeManager : MonoBehaviour
     public Material dataTransferMaterial = null;
 
     public int2 BufferSize => math.int2(math.float2(probeCounts) * probeSeparation * pixelsPerUnit);
-    
-
-    //irradiance buffer is directionCount pixels wide, one for each direction,
-    //then GutterSize pixels on each side so the side pixels can bilinearly sample across the seam
-    public DoubleBuffer irradianceBuffer;
-    public RenderTexture wallBuffer;
-    public DoubleBuffer averageIrradianceBuffer;
 
     public int directionCount = 32;
     public const int GutterSize = 1; //each side
@@ -56,6 +49,13 @@ public class IrradianceProbeManager : MonoBehaviour
 
     public int MaxRayLength => 250;
     
+    //irradiance buffer is directionCount pixels wide, one for each direction,
+    //then GutterSize pixels on each side so the side pixels can bilinearly sample across the seam
+    public DoubleBuffer irradianceBuffer;
+    public DoubleBuffer cosineWeightedIrradianceBuffer;
+    public RenderTexture wallBuffer;
+    public RenderTexture averageIrradianceBuffer;
+    
     //TODO: temporal accum average the actual lighting in each direction instead the cosine weighted sum
     //TODO: then average can be average light instead of average cosine weighted
     //TODO: then compute the cosine weighted ones in another pass
@@ -74,15 +74,19 @@ public class IrradianceProbeManager : MonoBehaviour
         wallBuffer.wrapMode = TextureWrapMode.Clamp;
         wallBuffer.Create();
 
-        irradianceBuffer = new RenderTexture(probeCounts.x * SingleProbePixelWidth, probeCounts.y,
-                0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
+        cosineWeightedIrradianceBuffer = new RenderTexture(probeCounts.x * SingleProbePixelWidth, probeCounts.y,
+            0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
+            .ToDoubleBuffer();
+        cosineWeightedIrradianceBuffer.enableRandomWrite = true;
+        cosineWeightedIrradianceBuffer.Create();
+        
+        irradianceBuffer = new RenderTexture(cosineWeightedIrradianceBuffer)
             .ToDoubleBuffer();
         irradianceBuffer.enableRandomWrite = true;
         irradianceBuffer.Create();
 
         averageIrradianceBuffer = new RenderTexture(probeCounts.x, probeCounts.y,
-                0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
-            .ToDoubleBuffer();
+            0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
         averageIrradianceBuffer.enableRandomWrite = true;
         averageIrradianceBuffer.Create();
         
@@ -158,12 +162,6 @@ public class IrradianceProbeManager : MonoBehaviour
         return GetProbeAreaOrigin() + OriginOffset + math.float2(probePos) * probeSeparation;
     }
 
-    private int2 GetNearestProbe(float2 worldPos)
-    {
-        return (int2) math.floor((worldPos - GetProbeAreaOrigin() - OriginOffset) / probeSeparation);
-    }
-
-
     public float2 GetProbeAreaOrigin()
     {
         return math.round(math.float3(transform.position).xy / probeSeparation) * probeSeparation;
@@ -194,7 +192,7 @@ public class IrradianceProbeManager : MonoBehaviour
         }
 
         float2 scale = GetWorldScale();
-        float2 dims = GetProbeAreaDims().xy;
+        float2 dims = GetProbeAreaOrigin();
         float2 center = dims + scale / 2;
 
         Gizmos.color = Color.blue;

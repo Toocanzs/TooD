@@ -1,5 +1,6 @@
 Texture2D<float4> WallBuffer;
 RWTexture2D<float4> IrradianceBuffer;
+RWTexture2D<float4> CosineWeightedIrradianceBuffer;
 RWTexture2D<float4> AverageIrradianceBuffer;
 float probeSeparation;
 float2 probeAreaStartPosition;//GetProbeAreaOrigin() + OriginOffset
@@ -57,11 +58,21 @@ RaycastResult raycast(float2 start, float2 dir)
 
 float2 get2DNormal(uint2 pixel) 
 {
+    float R = WallBuffer[pixel + int2(1, 0)].a;
+    float L = WallBuffer[pixel + int2(-1, 0)].a;
+    float T = WallBuffer[pixel + int2(0, 1)].a;
+    float B = WallBuffer[pixel + int2(0, -1)].a;
+    float TL = WallBuffer[pixel + int2(-1, 1)].a;
+    float BL = WallBuffer[pixel + int2(-1, -1)].a;
+    float TR = WallBuffer[pixel + int2(1, 1)].a;
+    float BR = WallBuffer[pixel + int2(1, -1)].a;
+    
+    //Check for a walls in the 8 nearby pixels, the normal is in the opposite direction of the most walls
+
     return normalize(float2(
-        WallBuffer[pixel + int2(1, 0)].a - WallBuffer[pixel + int2(-1, 0)].a,
-        WallBuffer[pixel + int2(0, 1)].a - WallBuffer[pixel + int2(0, -1)].a
+        (BL + TL + L) - (BR + TR + R),
+        (BL + BR + B) - (TL + TR + T) 
     ));
-    //TODO: maybe sample 8 directions since we're not using an sdf anymore
 }
 
 float4 sampleIrradianceDirection(float2 normal, uint2 probe)
@@ -71,7 +82,7 @@ float4 sampleIrradianceDirection(float2 normal, uint2 probe)
     uint2 st = (probe) * uint2(directionCount + gutterSize * 2, 1);
     uint2 directionUV = st + uint2(gutterSize + directionIndex, 0);
     //TODO: needs to get rid of data that is inside walls or not visible from the probe?
-    return IrradianceBuffer[directionUV];
+    return CosineWeightedIrradianceBuffer[directionUV];
 }
 
 #pragma kernel GenerateProbeData
@@ -82,22 +93,16 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
    uint3 id : SV_DispatchThreadID) 
 {
     float2 rayOriginWS = probeAreaStartPosition + float2(id.xy) * probeSeparation;
-    float3 directionColors[MAX_DIRECTION_COUNT];
     uint2 rowStartPos = id.xy * uint2(directionCount + gutterSize * 2, 1);
-    
-    for(int l = 0; l < directionCount; l++)
-    {
-        directionColors[l] = 0;//May or may not need to initialize
-    }
     
     float denominator = (0.5/directionCount);
     //only half the rays contribute to a particular direction, so average acoss all those is sum/directionCount/2
+    float4 sum = 0;
     for(int i = 0; i < directionCount; i++)
     {
         float percent = float(i)/float(directionCount);
-        float angle = 2*PI*percent + randomRayOffset;
         float c, s;
-        sincos(angle, c, s);
+        sincos(2*PI*percent + randomRayOffset, c, s);
         float2 dirI = float2(c, s);
         float2 rayDir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;//Dir in buffer space
         float2 rayOrigin = mul(worldToWallBuffer, float4(rayOriginWS, 0, 1)).xy;
@@ -120,30 +125,52 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
             float4 TR = sampleIrradianceDirection(normal, BLProbe + uint2(1,1));
             float4 bottom = lerp(BL, BR, f.x);
             float4 top = lerp(TL, TR, f.x);
-            combined = lerp(bottom, top, f.y) * 4;//fix with depth later
+            combined = lerp(bottom, top, f.y);//fix with depth later
         }
         
         
-        float3 col = result.color + combined.rgb;
+        float3 col = result.color + combined.rgb * 4;
         
+        uint2 offset = rowStartPos + uint2(gutterSize + i, 0);
+        float4 newCol = float4(lerp(IrradianceBuffer[offset].xyz, col, HYSTERESIS), 1);
+        IrradianceBuffer[offset] = newCol;
+        sum += newCol;
+    }
+    AverageIrradianceBuffer[id.xy] = sum / float(directionCount);
+}
+
+#pragma kernel GenerateCosineWeighted
+[numthreads(64,1,1)]
+void GenerateCosineWeighted (uint3 groupID : SV_GroupID, 
+   uint3 groupThreadID : SV_GroupThreadID, 
+   uint groupIndex : SV_GroupIndex, 
+   uint3 id : SV_DispatchThreadID) 
+{
+    float2 rayOriginWS = probeAreaStartPosition + float2(id.xy) * probeSeparation;
+    uint2 rowStartPos = id.xy * uint2(directionCount + gutterSize * 2, 1);
+    
+    float denominator = (0.5/directionCount);
+    //only half the rays contribute to a particular direction, so average acoss all those is sum/directionCount/2
+    for(int i = 0; i < directionCount; i++)
+    {
+        uint2 inputDirectionOffset = rowStartPos + uint2(gutterSize + i, 0);
+        float percent = float(i)/float(directionCount);
+        float c, s;
+        sincos(2*PI*percent + randomRayOffset, c, s);
+        float2 dirI = float2(c, s);
         
+        float4 sum = 0;
         for(int j = 0; j < directionCount; j++)
         {
             float percentJ = float(j)/float(directionCount);
-            float2 dirJ = float2(cos(2*PI*percentJ), sin(2*PI*percentJ));
-            directionColors[j] += col * max(0, dot(dirI, dirJ)) * denominator;
+            sincos(2*PI*percentJ, c, s);
+            float2 dirJ = float2(c, s);
+            uint2 otherDirectionOffset = rowStartPos + uint2(gutterSize + j, 0);
+            float4 col = IrradianceBuffer[otherDirectionOffset];
+            sum += col * max(0, dot(dirI, dirJ)) * denominator;
         }
+        CosineWeightedIrradianceBuffer[inputDirectionOffset] = sum;
     }
-   
-    float4 sum = 0;
-    for(uint k = 0; k < uint(directionCount); k++)
-    {
-        uint2 offset = rowStartPos + uint2(gutterSize + k, 0);
-        float4 col = float4(lerp(IrradianceBuffer[offset].xyz, directionColors[k], HYSTERESIS), 1);
-        IrradianceBuffer[offset] = col;
-        sum += col;
-    }
-    AverageIrradianceBuffer[id.xy] = sum / float(directionCount);
 }
 
 #pragma kernel FillGutter
@@ -156,6 +183,6 @@ void FillGutter (uint3 groupID : SV_GroupID,
     uint2 rowStartPos = id.xy * uint2(directionCount + gutterSize * 2, 1);
     uint2 gutterSpotOne = rowStartPos;
     uint2 gutterSpotTwo = rowStartPos + uint2(gutterSize + directionCount, 0);
-    IrradianceBuffer[gutterSpotOne] = IrradianceBuffer[gutterSpotTwo - uint2(1,0)];
-    IrradianceBuffer[gutterSpotTwo] = IrradianceBuffer[gutterSpotOne + uint2(1,0)];
+    CosineWeightedIrradianceBuffer[gutterSpotOne] = CosineWeightedIrradianceBuffer[gutterSpotTwo - uint2(1,0)];
+    CosineWeightedIrradianceBuffer[gutterSpotTwo] = CosineWeightedIrradianceBuffer[gutterSpotOne + uint2(1,0)];
 }
