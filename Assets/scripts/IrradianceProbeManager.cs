@@ -36,10 +36,10 @@ public class IrradianceProbeManager : MonoBehaviour
     
     //irradiance buffer is directionCount pixels wide, one for each direction,
     //then GutterSize pixels on each side so the side pixels can bilinearly sample across the seam
-    public DoubleBuffer irradianceBuffer;
-    public RenderTexture cosineWeightedIrradianceBuffer;
+    public RenderTexture irradianceBuffer;
+    public DoubleBuffer cosineWeightedIrradianceBuffer;
     public RenderTexture wallBuffer;
-    public RenderTexture averageIrradianceBuffer;
+    public DoubleBuffer averageIrradiancePerProbeBuffer;
     
     void Start()
     {
@@ -58,19 +58,20 @@ public class IrradianceProbeManager : MonoBehaviour
         wallBuffer.Create();
 
         cosineWeightedIrradianceBuffer = new RenderTexture(probeCounts.x * SingleProbePixelWidth, probeCounts.y,
-            0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
+            0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
+            .ToDoubleBuffer();
         cosineWeightedIrradianceBuffer.enableRandomWrite = true;
         cosineWeightedIrradianceBuffer.Create();
-        
-        irradianceBuffer = new RenderTexture(cosineWeightedIrradianceBuffer)
-            .ToDoubleBuffer();
+
+        irradianceBuffer = new RenderTexture(cosineWeightedIrradianceBuffer);
         irradianceBuffer.enableRandomWrite = true;
         irradianceBuffer.Create();
 
-        averageIrradianceBuffer = new RenderTexture(probeCounts.x, probeCounts.y,
-            0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
-        averageIrradianceBuffer.enableRandomWrite = true;
-        averageIrradianceBuffer.Create();
+        averageIrradiancePerProbeBuffer = new RenderTexture(probeCounts.x, probeCounts.y,
+            0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
+            .ToDoubleBuffer();
+        averageIrradiancePerProbeBuffer.enableRandomWrite = true;
+        averageIrradiancePerProbeBuffer.Create();
         
         //TODO: Maybe have a color buffer for diffuse walls
         //TODO: Then multiply bounce color by that diffuse color
@@ -80,7 +81,7 @@ public class IrradianceProbeManager : MonoBehaviour
     {
         wallBuffer.Release();
         irradianceBuffer.Release();
-        averageIrradianceBuffer.Release();
+        averageIrradiancePerProbeBuffer.Release();
     }
 
     void Update()

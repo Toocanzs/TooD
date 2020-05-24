@@ -52,10 +52,14 @@ public class TooDRenderer : ScriptableRenderer
             {
                 float2 probesPerUnit = (i.GetProbeAreaOrigin() - oldPos).xy / i.probeSeparation;
                 float2 pixelOffset = probesPerUnit * new float2(i.SingleProbePixelWidth, 1);
-                float2 uvOffset = pixelOffset / i.irradianceBuffer.Dimensions;
+                float2 uvOffset = pixelOffset / i.cosineWeightedIrradianceBuffer.Dimensions;
                 command.SetGlobalVector("_Offset", uvOffset.xyxy);
-                command.Blit(i.irradianceBuffer.Current, i.irradianceBuffer.Other, i.dataTransferMaterial);
-                command.Blit(i.irradianceBuffer.Other, i.irradianceBuffer.Current);
+                command.Blit(i.cosineWeightedIrradianceBuffer.Current, i.cosineWeightedIrradianceBuffer.Other, i.dataTransferMaterial);
+                command.Blit(i.cosineWeightedIrradianceBuffer.Other, i.cosineWeightedIrradianceBuffer.Current);
+                
+                command.SetGlobalVector("_Offset", (probesPerUnit / i.averageIrradiancePerProbeBuffer.Dimensions).xyxy);
+                command.Blit(i.averageIrradiancePerProbeBuffer.Current, i.averageIrradiancePerProbeBuffer.Other, i.dataTransferMaterial);
+                command.Blit(i.averageIrradiancePerProbeBuffer.Other, i.averageIrradiancePerProbeBuffer.Current);
             }
             
             i.lightingCamera.transform.position = new float3(i.GetCenter(), i.lightingCamera.transform.position.z);
@@ -63,7 +67,7 @@ public class TooDRenderer : ScriptableRenderer
             i.lightingCamera.aspect = scale.x / scale.y;
 
             command.SetGlobalFloat("G_ProbeSeparation", i.probeSeparation);
-            command.SetGlobalTexture("G_AverageIrradianceBuffer", i.averageIrradianceBuffer);
+            command.SetGlobalTexture("G_AverageIrradianceBuffer", i.averageIrradiancePerProbeBuffer);
             command.SetGlobalVector("G_ProbeCounts", (float4) i.probeCounts.xyxy);
             command.SetGlobalVector("G_ProbeAreaOrigin", i.GetProbeAreaOrigin().xyxy);
             context.ExecuteCommandBuffer(command);
@@ -81,7 +85,7 @@ public class TooDRenderer : ScriptableRenderer
             command.Clear();
             command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "WallBuffer", i.wallBuffer);
             command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "IrradianceBuffer", i.irradianceBuffer);
-            command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "AverageIrradianceBuffer", i.averageIrradianceBuffer);
+            command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "AverageIrradianceBuffer", i.averageIrradiancePerProbeBuffer);
             command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "CosineWeightedIrradianceBuffer", i.cosineWeightedIrradianceBuffer);
             command.SetComputeFloatParam(computeShader, "probeSeparation", i.probeSeparation);
 
