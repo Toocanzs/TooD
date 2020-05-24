@@ -40,8 +40,6 @@ public class IrradianceProbeManager : MonoBehaviour
     public DoubleBuffer cosineWeightedIrradianceBuffer;
     public RenderTexture wallBuffer;
     public RenderTexture averageIrradiancePerProbeBuffer;
-    //TODO: Two averagePerProbe buffers. One offset one not. The one not offset will be used to gather bounce lighting info
-    //TODO: Both will be averaged into the fullscreen buffer
     public DoubleBuffer fullScreenAverageIrradianceBuffer;
     
     void Start()
@@ -91,11 +89,6 @@ public class IrradianceProbeManager : MonoBehaviour
         wallBuffer.Release();
         irradianceBuffer.Release();
         averageIrradiancePerProbeBuffer.Release();
-    }
-
-    void Update()
-    {
-        //transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = averageIrradianceBuffer.Current;
     }
 
     public void SetCenter(Transform trs, float2 value)

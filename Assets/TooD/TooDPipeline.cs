@@ -20,6 +20,7 @@ public class TooDRenderer : ScriptableRenderer
     private float2 oldPos;
     private float3 oldCamPos;
     private float goldenRatio = (1 + math.sqrt(5)) / 2;
+    private float2 lastRandomProbeOffset;
 
     public TooDRenderer(TooDRendererData data) : base(data)
     {
@@ -120,9 +121,10 @@ public class TooDRenderer : ScriptableRenderer
         noiseIndex += 4; //This works lol
         //float a = Random.Range(0, (2 * math.PI) / i.directionCount);
 
+        float2 randomProbeOffset = new float2(Random.Range(-i.probeSeparation / 2f, i.probeSeparation / 2f), Random.Range(-i.probeSeparation / 2f, i.probeSeparation / 2f));
         command.SetComputeFloatParam(computeShader, "randomRayOffset", rayOffset);
-        command.SetComputeVectorParam(computeShader, "randomProbeOffset",
-            new float2(Random.Range(-i.probeSeparation / 2f, i.probeSeparation / 2f), Random.Range(-i.probeSeparation / 2f, i.probeSeparation / 2f)).xyxy);
+        command.SetComputeVectorParam(computeShader, "randomProbeOffset", randomProbeOffset.xyxy);
+        command.SetComputeVectorParam(computeShader, "lastRandomProbeOffset", lastRandomProbeOffset.xyxy);
 
 
         float3 pos = new float3(i.GetProbeAreaOrigin(), 0);
@@ -153,6 +155,8 @@ public class TooDRenderer : ScriptableRenderer
 
         command.SetComputeTextureParam(computeShader, FillGutterKernel, "CosineWeightedIrradianceBuffer", i.cosineWeightedIrradianceBuffer);
         command.DispatchCompute(computeShader, FillGutterKernel, (i.probeCounts.x + 63) / 64, i.probeCounts.y, 1);
+
+        lastRandomProbeOffset = randomProbeOffset;
     }
 
     public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)

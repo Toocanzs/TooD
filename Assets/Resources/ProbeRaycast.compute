@@ -14,6 +14,7 @@ float HYSTERESIS;
 int pixelsPerUnit;
 float randomRayOffset;
 float2 randomProbeOffset;
+float2 lastRandomProbeOffset;
 
 float4x4 worldToWallBuffer;
 float4x4 worldDirectionToBufferDirection;
@@ -21,38 +22,79 @@ float4x4 worldDirectionToBufferDirection;
 #define MAX_DIRECTION_COUNT 128
 #define PI 3.14159
 
+#define RAY_COUNT 2
+
 struct RaycastResult
 {
-    float3 color;
-    float2 endPosition;
-    bool hit;
+    float3 color[2];
+    float2 endPosition[2];
+    bool hit[2];
+    bool stopped[2];
+};
+struct Ray
+{
+    float2 start;
+    float2 dir;
 };
 
-RaycastResult raycast(float2 start, float2 dir) 
+struct RayBundle
+{
+    Ray rays[2];
+};
+
+void stepRay(int rayIndex, inout RayBundle rayBundle, inout float2 offsetFromStart[2], inout RaycastResult result)
+{
+    float2 pos = rayBundle.rays[rayIndex].start + offsetFromStart[rayIndex];
+    if(any(bool4(pos.xy < 0, pos.xy >= float2(wallBufferSize))))
+    {
+        result.stopped[rayIndex] = true;
+        return;
+    }
+
+    float4 color = WallBuffer[int2(pos)];
+    if(color.a > 0)
+    {
+        result.color[rayIndex] = color.rgb;
+        result.hit[rayIndex] = true;
+        result.stopped[rayIndex] = true;
+        return;
+    }
+    offsetFromStart[rayIndex] += rayBundle.rays[rayIndex].dir;
+    result.endPosition[rayIndex] = int2(pos);
+}
+
+RaycastResult raycast(RayBundle rayBundle) 
 {
     
     RaycastResult result;
-    result.color = 0;
-    result.endPosition = start;
-    result.hit = false;
-    dir /= max(abs(dir.x), abs(dir.y));
-    float2 offsetFromStart = 0;
+    float2 offsetFromStart[2];
+    int rayIndex = 0;
+    
+    result.color[rayIndex] = 0;
+    result.endPosition[rayIndex] = rayBundle.rays[rayIndex].start;
+    result.hit[rayIndex] = false;
+    result.stopped[rayIndex] = false;
+    rayBundle.rays[rayIndex].dir /= max(abs(rayBundle.rays[rayIndex].dir.x), abs(rayBundle.rays[rayIndex].dir.y));
+    offsetFromStart[rayIndex] = 0;
+    
+    rayIndex = 1;
+    result.color[rayIndex] = 0;
+    result.endPosition[rayIndex] = rayBundle.rays[rayIndex].start;
+    result.hit[rayIndex] = false;
+    result.stopped[rayIndex] = false;
+    rayBundle.rays[rayIndex].dir /= max(abs(rayBundle.rays[rayIndex].dir.x), abs(rayBundle.rays[rayIndex].dir.y));
+    offsetFromStart[rayIndex] = 0;
+    
+    float4 color;
+    float2 pos;
     for(int i = 0; i < maxRayLength; i++)
     {
-        float2 pos = start + offsetFromStart;
-        if(any(bool4(pos.xy < 0, pos.xy >= float2(wallBufferSize))))
-        {
-            return result;
-        }
-        float4 color = WallBuffer[int2(pos)];
-        if(color.a > 0)
-        {
-            result.color = color.rgb;
-            result.hit = true;
-            return result;
-        }
-        offsetFromStart += dir;
-        result.endPosition = int2(pos);
+        if(!result.stopped[0])
+            stepRay(0, rayBundle, offsetFromStart, result);
+        if(!result.stopped[1])
+            stepRay(1, rayBundle, offsetFromStart, result);
+        if(result.stopped[0] && result.stopped[1])
+            break;
     }
     return result;
 }
@@ -86,6 +128,8 @@ float4 sampleIrradianceDirection(float2 normal, uint2 probe)
     return CosineWeightedIrradianceBuffer[directionUV];
 }
 
+#define DIST_FUDGE 0.2
+
 #pragma kernel GenerateProbeData
 [numthreads(64,1,1)]
 void GenerateProbeData (uint3 groupID : SV_GroupID, 
@@ -94,7 +138,7 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
    uint3 id : SV_DispatchThreadID) 
 {
     float2 rayOriginWS = probeAreaStartPosition + float2(id.xy) * probeSeparation;
-    rayOriginWS += randomProbeOffset;
+    float2 offsetWSRayOrigin = rayOriginWS + randomProbeOffset;
     uint2 rowStartPos = id.xy * uint2(directionCount + gutterSize * 2, 1);
     
     float denominator = (0.5/directionCount);
@@ -107,16 +151,26 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         float c, s;
         sincos(2*PI*percent + randomRayOffset, c, s);
         float2 dirI = float2(c, s);
-        float2 rayDir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;//Dir in buffer space
-        float2 rayOrigin = mul(worldToWallBuffer, float4(rayOriginWS, 0, 1)).xy;
-        //do raycast
-        RaycastResult result = raycast(rayOrigin, rayDir);
-        float2 wsEndPos = result.endPosition.xy / pixelsPerUnit + _ProbeAreaOrigin;
-
-        float3 col = 0;
-        if(result.hit)
+        RayBundle bundle;
         {
-            float2 normal = get2DNormal(result.endPosition);
+            Ray normalRay;
+            normalRay.dir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;
+            normalRay.start = mul(worldToWallBuffer, float4(rayOriginWS, 0, 1)).xy;
+            bundle.rays[0] = normalRay;
+            
+            Ray offsetRay;
+            offsetRay.dir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;
+            offsetRay.start = mul(worldToWallBuffer, float4(offsetWSRayOrigin, 0, 1)).xy;
+            bundle.rays[1] = offsetRay;
+        }
+        
+        RaycastResult result = raycast(bundle);
+        
+        float3 col = 0;
+        if(result.hit[0])
+        {
+            float2 wsEndPos = result.endPosition[0].xy / pixelsPerUnit + _ProbeAreaOrigin;
+            float2 normal = get2DNormal(result.endPosition[0]);
             float2 localPos = (wsEndPos - probeAreaStartPosition)/ probeSeparation;
             
             uint2 BLProbe = (uint2)(localPos);
@@ -130,12 +184,17 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
             float4 top = lerp(TL, TR, f.x);
             float4 combined = lerp(bottom, top, f.y);//fix with depth later
             
-            float dist = distance(wsEndPos, rayOriginWS) * 0.2;
+            float dist = distance(wsEndPos, rayOriginWS) * DIST_FUDGE;
         
-            float3 bounceColor = combined.rgb * 4 * 0;
-            float3 rayColor = result.color;
-            col = rayColor + bounceColor;
-            col /= 1+dist;
+            float3 bounceColor = combined.rgb * 4;
+            
+            col += bounceColor / (1 + dist);
+        }
+        if(result.hit[1])
+        {
+            float2 wsEndPos = result.endPosition[1].xy / pixelsPerUnit + _ProbeAreaOrigin;
+            float dist = distance(wsEndPos, offsetWSRayOrigin) * DIST_FUDGE;
+            col += result.color[1] / (1 + dist);
         }
 
         uint2 offset = rowStartPos + uint2(gutterSize + i, 0);
