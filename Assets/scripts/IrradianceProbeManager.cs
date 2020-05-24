@@ -39,7 +39,10 @@ public class IrradianceProbeManager : MonoBehaviour
     public RenderTexture irradianceBuffer;
     public DoubleBuffer cosineWeightedIrradianceBuffer;
     public RenderTexture wallBuffer;
-    public DoubleBuffer averageIrradiancePerProbeBuffer;
+    public RenderTexture averageIrradiancePerProbeBuffer;
+    //TODO: Two averagePerProbe buffers. One offset one not. The one not offset will be used to gather bounce lighting info
+    //TODO: Both will be averaged into the fullscreen buffer
+    public DoubleBuffer fullScreenAverageIrradianceBuffer;
     
     void Start()
     {
@@ -68,10 +71,16 @@ public class IrradianceProbeManager : MonoBehaviour
         irradianceBuffer.Create();
 
         averageIrradiancePerProbeBuffer = new RenderTexture(probeCounts.x, probeCounts.y,
-            0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
-            .ToDoubleBuffer();
+            0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
+        averageIrradiancePerProbeBuffer.wrapMode = TextureWrapMode.Clamp;
         averageIrradiancePerProbeBuffer.enableRandomWrite = true;
         averageIrradiancePerProbeBuffer.Create();
+        
+        fullScreenAverageIrradianceBuffer = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
+            .ToDoubleBuffer();
+        fullScreenAverageIrradianceBuffer.wrapMode = TextureWrapMode.Clamp;
+        fullScreenAverageIrradianceBuffer.enableRandomWrite = true;
+        fullScreenAverageIrradianceBuffer.Create();
         
         //TODO: Maybe have a color buffer for diffuse walls
         //TODO: Then multiply bounce color by that diffuse color

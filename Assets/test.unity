@@ -680,7 +680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hysteresis: 4
   probeCounts:
-    x: 30
+    x: 50
     y: 30
   probeSeparation: 1
   resetAreaPercent:
@@ -691,9 +691,9 @@ MonoBehaviour:
   dataTransferMaterial: {fileID: 2100000, guid: bc9a9e1629e1b7f478c7410901025ae2,
     type: 2}
   directionCount: 32
-  cosineWeightedIrradianceBuffer: {fileID: 0}
+  irradianceBuffer: {fileID: 0}
   wallBuffer: {fileID: 0}
-  averageIrradianceBuffer: {fileID: 0}
+  averageIrradiancePerProbeBuffer: {fileID: 0}
 --- !u!114 &1434275093
 MonoBehaviour:
   m_ObjectHideFlags: 0

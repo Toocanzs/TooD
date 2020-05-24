@@ -13,6 +13,7 @@ float2 _ProbeAreaOrigin;
 float HYSTERESIS;
 int pixelsPerUnit;
 float randomRayOffset;
+float2 randomProbeOffset;
 
 float4x4 worldToWallBuffer;
 float4x4 worldDirectionToBufferDirection;
@@ -35,10 +36,10 @@ RaycastResult raycast(float2 start, float2 dir)
     result.endPosition = start;
     result.hit = false;
     dir /= max(abs(dir.x), abs(dir.y));
-    float2 xy = 0;
+    float2 offsetFromStart = 0;
     for(int i = 0; i < maxRayLength; i++)
     {
-        float2 pos = start + xy;
+        float2 pos = start + offsetFromStart;
         if(any(bool4(pos.xy < 0, pos.xy >= float2(wallBufferSize))))
         {
             return result;
@@ -50,7 +51,7 @@ RaycastResult raycast(float2 start, float2 dir)
             result.hit = true;
             return result;
         }
-        xy += dir;
+        offsetFromStart += dir;
         result.endPosition = int2(pos);
     }
     return result;
@@ -93,10 +94,12 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
    uint3 id : SV_DispatchThreadID) 
 {
     float2 rayOriginWS = probeAreaStartPosition + float2(id.xy) * probeSeparation;
+    rayOriginWS += randomProbeOffset;
     uint2 rowStartPos = id.xy * uint2(directionCount + gutterSize * 2, 1);
     
     float denominator = (0.5/directionCount);
     //only half the rays contribute to a particular direction, so average acoss all those is sum/directionCount/2
+    
     float4 sum = 0;
     for(int i = 0; i < directionCount; i++)
     {
@@ -129,19 +132,19 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
             
             float dist = distance(wsEndPos, rayOriginWS) * 0.2;
         
-            float3 bounceColor = combined.rgb * 4;
+            float3 bounceColor = combined.rgb * 4 * 0;
             float3 rayColor = result.color;
             col = rayColor + bounceColor;
             col /= 1+dist;
         }
 
         uint2 offset = rowStartPos + uint2(gutterSize + i, 0);
-        float4 newCol = float4(col,1);//float4(lerp(IrradianceBuffer[offset].xyz, col, HYSTERESIS), 1);
+        float4 newCol = float4(col,1);
         IrradianceBuffer[offset] = newCol;
         sum += newCol;
     }
-    AverageIrradianceBuffer[id.xy] = lerp(AverageIrradianceBuffer[id.xy], sum / float(directionCount), HYSTERESIS);
-}
+    AverageIrradianceBuffer[id.xy] = sum / float(directionCount);
+ }
 
 #pragma kernel GenerateCosineWeighted
 [numthreads(64,1,1)]
@@ -190,4 +193,32 @@ void FillGutter (uint3 groupID : SV_GroupID,
     uint2 gutterSpotTwo = rowStartPos + uint2(gutterSize + directionCount, 0);
     CosineWeightedIrradianceBuffer[gutterSpotOne] = CosineWeightedIrradianceBuffer[gutterSpotTwo - uint2(1,0)];
     CosineWeightedIrradianceBuffer[gutterSpotTwo] = CosineWeightedIrradianceBuffer[gutterSpotOne + uint2(1,0)];
+}
+
+RWTexture2D<float4> FullScreenAverage;
+
+#pragma kernel CopyToFullscreen
+[numthreads(64,1,1)]
+void CopyToFullscreen (uint3 groupID : SV_GroupID, 
+   uint3 groupThreadID : SV_GroupThreadID, 
+   uint groupIndex : SV_GroupIndex, 
+   uint3 id : SV_DispatchThreadID) 
+{
+    float probeOver2 = probeSeparation/2;
+    float2 probeOffset = randomProbeOffset;
+    
+    float2 idOffset = float2(id.xy) - randomProbeOffset * pixelsPerUnit * probeSeparation;
+    
+    uint2 BL = ((float2(idOffset)) / float(probeSeparation * pixelsPerUnit)) - probeOver2;
+    uint2 BR = BL + uint2(1,0);
+    uint2 TL = BL + uint2(0,1);
+    uint2 TR = BL + uint2(1,1);
+    
+    float2 f = float2(idOffset - ((float2(BL) + probeOver2) * (probeSeparation * pixelsPerUnit))) / (probeSeparation * pixelsPerUnit);
+    
+    float4 top = lerp(AverageIrradianceBuffer[TL], AverageIrradianceBuffer[TR], f.x);
+    float4 bottom = lerp(AverageIrradianceBuffer[BL], AverageIrradianceBuffer[BR], f.x);
+    float4 combined = lerp(bottom, top, f.y);
+    
+    FullScreenAverage[id.xy] = lerp(FullScreenAverage[id.xy], combined, HYSTERESIS);
 }
