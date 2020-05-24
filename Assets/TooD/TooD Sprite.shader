@@ -92,8 +92,6 @@
             
             float2 G_ProbeAreaOrigin;
             float G_ProbeSeparation;
-            int G_directionCount;
-            int G_gutterSize;
             float2 G_ProbeCounts;
             
             #define OriginOffset (0.5*G_ProbeSeparation)
@@ -101,10 +99,18 @@
             TEXTURE2D(G_AverageIrradianceBuffer);
             SAMPLER(samplerG_AverageIrradianceBuffer);
             
+            TEXTURE2D(G_CosineIrradianceBuffer);
+            SAMPLER(samplerG_CosineIrradianceBuffer);
+            
+            float2 WorldToProbe(float2 worldPos)
+            {
+                worldPos += G_ProbeSeparation/2;//Maybe remove this later? Makes it look right atm
+                return ((worldPos - G_ProbeAreaOrigin - OriginOffset)/ G_ProbeSeparation);
+            }
+            
             float2 GetIrradianceUv(float2 worldPos)
             {
-                worldPos += 0.5;//Maybe remove this later? Makes it look right atm
-                return ((worldPos - G_ProbeAreaOrigin - OriginOffset)/ G_ProbeSeparation)/G_ProbeCounts;
+                return WorldToProbe(worldPos)/G_ProbeCounts;
             }
 
             half4 CombinedShapeLightFragment(Varyings i) : SV_Target

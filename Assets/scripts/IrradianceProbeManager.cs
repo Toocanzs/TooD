@@ -32,7 +32,7 @@ public class IrradianceProbeManager : MonoBehaviour
     public int directionCount = 32;
     public const int GutterSize = 1; //each side
     public int SingleProbePixelWidth => (directionCount + GutterSize * 2);
-    public int MaxRayLength => 250;
+    public int MaxRayLength => 512;
     
     //irradiance buffer is directionCount pixels wide, one for each direction,
     //then GutterSize pixels on each side so the side pixels can bilinearly sample across the seam
@@ -41,9 +41,6 @@ public class IrradianceProbeManager : MonoBehaviour
     public RenderTexture wallBuffer;
     public RenderTexture averageIrradianceBuffer;
     
-    //TODO: temporal accum average the actual lighting in each direction instead the cosine weighted sum
-    //TODO: then average can be average light instead of average cosine weighted
-    //TODO: then compute the cosine weighted ones in another pass
     void Start()
     {
         if (Instance != null)
@@ -51,8 +48,9 @@ public class IrradianceProbeManager : MonoBehaviour
             Destroy(this);
             return;
         }
-
         Instance = this;
+        
+        //TODO: Randomize the locations of the probes too so that the average buffer represents the average light over that area?
 
         var size = BufferSize;
         wallBuffer = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);

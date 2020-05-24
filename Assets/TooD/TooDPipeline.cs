@@ -17,7 +17,7 @@ public class TooDRenderer : ScriptableRenderer
     private int FillGutterKernel = computeShader.FindKernel("FillGutter");
 
     private float2 oldPos;
-
+    private float goldenRatio = (1 + math.sqrt(5)) / 2;
 
     public TooDRenderer(TooDRendererData data) : base(data)
     {
@@ -45,11 +45,7 @@ public class TooDRenderer : ScriptableRenderer
                 moved = true;
                 i.SetCenter(i.transform, cameraPos.xy);
             }
-
-            var transform1 = i.lightingCamera.transform;
-            transform1.position = new float3(center, transform1.position.z);
-            i.lightingCamera.orthographicSize = scale.y / 2;
-            i.lightingCamera.aspect = scale.x / scale.y;
+            
             CommandBuffer command = CommandBufferPool.Get("setup");
             command.Clear();
             if (moved)
@@ -61,11 +57,13 @@ public class TooDRenderer : ScriptableRenderer
                 command.Blit(i.irradianceBuffer.Current, i.irradianceBuffer.Other, i.dataTransferMaterial);
                 command.Blit(i.irradianceBuffer.Other, i.irradianceBuffer.Current);
             }
+            
+            i.lightingCamera.transform.position = new float3(i.GetCenter(), i.lightingCamera.transform.position.z);
+            i.lightingCamera.orthographicSize = scale.y / 2;
+            i.lightingCamera.aspect = scale.x / scale.y;
 
             command.SetGlobalFloat("G_ProbeSeparation", i.probeSeparation);
             command.SetGlobalTexture("G_AverageIrradianceBuffer", i.averageIrradianceBuffer);
-            command.SetGlobalInt("G_directionCount", i.directionCount);
-            command.SetGlobalInt("G_gutterSize", IrradianceProbeManager.GutterSize);
             command.SetGlobalVector("G_ProbeCounts", (float4) i.probeCounts.xyxy);
             command.SetGlobalVector("G_ProbeAreaOrigin", i.GetProbeAreaOrigin().xyxy);
             context.ExecuteCommandBuffer(command);
@@ -73,6 +71,7 @@ public class TooDRenderer : ScriptableRenderer
         }
     }
 
+    private int noiseIndex = 0;
     private void OnEndRenderingCamera(ScriptableRenderContext context, Camera camera)
     {
         if (IrradianceProbeManager.Instance != null && camera.TryGetComponent(out TooDIrradianceCamera _))
@@ -96,7 +95,14 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeIntParams(computeShader, "probeCount", i.probeCounts.x, i.probeCounts.y);
             command.SetComputeFloatParam(computeShader, "HYSTERESIS", Time.deltaTime * i.hysteresis);
             command.SetComputeIntParam(computeShader, "pixelsPerUnit", i.pixelsPerUnit);
-            command.SetComputeFloatParam(computeShader, "randomRayOffset", Random.Range(0, (2 * math.PI) / i.directionCount));
+            
+            float rayOffset = (2 * math.PI * noiseIndex) * (goldenRatio - 1);
+            
+            rayOffset = math.frac(rayOffset) * ((2 * math.PI) / i.directionCount);
+            noiseIndex+=4;//This works lol
+            //float a = Random.Range(0, (2 * math.PI) / i.directionCount);
+                
+            command.SetComputeFloatParam(computeShader, "randomRayOffset", rayOffset);
 
 
             float3 pos = new float3(i.GetProbeAreaOrigin(), 0);
@@ -112,7 +118,6 @@ public class TooDRenderer : ScriptableRenderer
             command.SetComputeVectorParam(computeShader, "_ProbeAreaOrigin", i.GetProbeAreaOrigin().xyxy);
             command.SetComputeMatrixParam(computeShader, "worldDirectionToBufferDirection", worldDirectionToBufferDirection);
 
-
             command.DispatchCompute(computeShader, probeRaycastMainKernel,
                 (i.probeCounts.x + 63) / 64, i.probeCounts.y, 1);
 
@@ -126,6 +131,7 @@ public class TooDRenderer : ScriptableRenderer
             //TODO: look at using 3d thread group, 3rd paramter for each direction? idk
             context.ExecuteCommandBuffer(command);
             command.Clear();
+
             CommandBufferPool.Release(command);
         }
     }
@@ -142,7 +148,9 @@ public class TooDRenderer : ScriptableRenderer
 public class TooDSpriteRenderPass : ScriptableRenderPass
 {
     static readonly List<ShaderTagId> normalShaderTags = new List<ShaderTagId>() {new ShaderTagId("Universal2D")};
+
     static readonly List<ShaderTagId> lightingShaderTags = new List<ShaderTagId>() {new ShaderTagId("TooDLighting")};
+
     //TODO: separate into two passes. Delete the lighting camera and reuse the default one
     static SortingLayer[] sortingLayers;
 
