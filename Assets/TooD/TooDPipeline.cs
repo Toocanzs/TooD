@@ -18,6 +18,7 @@ public class TooDRenderer : ScriptableRenderer
     private int FillGutterKernel = computeShader.FindKernel("FillGutter");
 
     private float2 oldPos;
+    private int noiseIndex = 0;
     private float goldenRatio = (1 + math.sqrt(5)) / 2;
 
     public TooDRenderer(TooDRendererData data) : base(data)
@@ -76,8 +77,6 @@ public class TooDRenderer : ScriptableRenderer
             CommandBufferPool.Release(command);
         }
     }
-
-    private int noiseIndex = 0;
     private void OnEndRenderingCamera(ScriptableRenderContext context, Camera camera)
     {
         if (IrradianceProbeManager.Instance != null && camera.TryGetComponent(out TooDIrradianceCamera _))
@@ -116,9 +115,8 @@ public class TooDRenderer : ScriptableRenderer
 
         rayOffset = math.frac(rayOffset) * ((2 * math.PI) / i.directionCount);
         noiseIndex += 4; //This works lol
-        //float a = Random.Range(0, (2 * math.PI) / i.directionCount);
-        
-        float2 randomProbeOffset = new float2(Random.Range(-i.probeSeparation / 2f, i.probeSeparation / 2f), Random.Range(-i.probeSeparation / 2f, i.probeSeparation / 2f));
+
+        float2 randomProbeOffset = new float2(Random.Range(-i.probeSeparation / 4f, i.probeSeparation / 4f), Random.Range(-i.probeSeparation / 4f, i.probeSeparation / 4f));
         command.SetComputeFloatParam(computeShader, "randomRayOffset", rayOffset);
         command.SetComputeVectorParam(computeShader, "randomProbeOffset", randomProbeOffset.xyxy);
 
@@ -167,14 +165,11 @@ public class TooDSpriteRenderPass : ScriptableRenderPass
     static readonly List<ShaderTagId> normalShaderTags = new List<ShaderTagId>() {new ShaderTagId("Universal2D")};
 
     static readonly List<ShaderTagId> lightingShaderTags = new List<ShaderTagId>() {new ShaderTagId("TooDLighting")};
-
-    //TODO: separate into two passes. Delete the lighting camera and reuse the default one
     static SortingLayer[] sortingLayers;
 
     public TooDSpriteRenderPass()
     {
-        if (sortingLayers == null)
-            sortingLayers = SortingLayer.layers;
+        sortingLayers = SortingLayer.layers;
     }
 
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
