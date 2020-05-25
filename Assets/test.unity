@@ -5512,7 +5512,7 @@ MonoBehaviour:
   pixelsPerUnit: 32
   dataTransferMaterial: {fileID: 2100000, guid: bc9a9e1629e1b7f478c7410901025ae2,
     type: 2}
-  directionCount: 64
+  directionCount: 32
   MaxRayLength: 512
   irradianceBuffer: {fileID: 0}
   wallBuffer: {fileID: 0}

@@ -134,7 +134,7 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
                 float2 normal = get2DNormal(result.endPosition[0]);
                 float2 localPos = (wsEndPos - probeAreaStartPosition)/ probeSeparation;
                 
-                uint2 BLProbe = (uint2)(localPos);
+                uint2 BLProbe = (uint2)(localPos + probeSeparation/2);
                 
                 float2 f = frac(localPos);
                 float4 BL = sampleIrradianceDirection(normal, BLProbe);
@@ -148,7 +148,6 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
                 float dist = distance(wsEndPos, rayOriginWS) * DIST_FUDGE;
             
                 float3 bounceColor = combined.rgb * 4;
-                
                 col += bounceColor / (1 + dist);
                 
             }

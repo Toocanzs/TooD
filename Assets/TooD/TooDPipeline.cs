@@ -116,7 +116,7 @@ public class TooDRenderer : ScriptableRenderer
         rayOffset = math.frac(rayOffset) * ((2 * math.PI) / i.directionCount);
         noiseIndex += 4; //This works lol
 
-        float2 randomProbeOffset = new float2(Random.Range(-i.probeSeparation / 4f, i.probeSeparation / 4f), Random.Range(-i.probeSeparation / 4f, i.probeSeparation / 4f));
+        float2 randomProbeOffset = new float2(Random.Range(-i.probeSeparation / 4f, i.probeSeparation / 4f), Random.Range(-i.probeSeparation / 4f, i.probeSeparation /4f));
         command.SetComputeFloatParam(computeShader, "randomRayOffset", rayOffset);
         command.SetComputeVectorParam(computeShader, "randomProbeOffset", randomProbeOffset.xyxy);
 
