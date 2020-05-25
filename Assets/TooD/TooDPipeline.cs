@@ -105,7 +105,6 @@ public class TooDRenderer : ScriptableRenderer
         command.SetComputeFloatParams(computeShader, "probeAreaStartPosition", origin.x, origin.y);
         command.SetComputeIntParam(computeShader, "directionCount", i.directionCount);
         command.SetComputeIntParam(computeShader, "maxDirectRayLength", i.MaxRayLength);
-        command.SetComputeIntParam(computeShader, "maxIndirectRayLength", i.MaxIndirectRayLength);
         command.SetComputeIntParams(computeShader, "wallBufferSize", i.wallBuffer.width, i.wallBuffer.height);
         command.SetComputeIntParam(computeShader, "gutterSize", IrradianceProbeManager.GutterSize);
 
@@ -118,7 +117,7 @@ public class TooDRenderer : ScriptableRenderer
         rayOffset = math.frac(rayOffset) * ((2 * math.PI) / i.directionCount);
         noiseIndex += 4; //This works lol
         //float a = Random.Range(0, (2 * math.PI) / i.directionCount);
-
+        
         float2 randomProbeOffset = new float2(Random.Range(-i.probeSeparation / 2f, i.probeSeparation / 2f), Random.Range(-i.probeSeparation / 2f, i.probeSeparation / 2f));
         command.SetComputeFloatParam(computeShader, "randomRayOffset", rayOffset);
         command.SetComputeVectorParam(computeShader, "randomProbeOffset", randomProbeOffset.xyxy);
@@ -138,7 +137,7 @@ public class TooDRenderer : ScriptableRenderer
         command.SetComputeMatrixParam(computeShader, "worldDirectionToBufferDirection", worldDirectionToBufferDirection);
 
         command.DispatchCompute(computeShader, probeRaycastMainKernel,
-            (i.probeCounts.x + 63) / 64, i.probeCounts.y, 4);
+            (i.probeCounts.x + 63) / 64, i.probeCounts.y, 2);
 
         //CopyToFullscreen
         command.SetComputeTextureParam(computeShader, CopyToFullscreenKernel, "AverageIrradianceBuffer", i.averageIrradiancePerProbeBuffer);

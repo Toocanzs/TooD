@@ -32,7 +32,6 @@ public class IrradianceProbeManager : MonoBehaviour
     public int directionCount = 32;
     public const int GutterSize = 1; //each side
     public int SingleProbePixelWidth => (directionCount + GutterSize * 2);
-    public int MaxIndirectRayLength = 128;
     public int MaxRayLength = 512;
     
     //irradiance buffer is directionCount pixels wide, one for each direction,

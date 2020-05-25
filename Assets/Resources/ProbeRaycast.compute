@@ -6,7 +6,6 @@ float probeSeparation;
 float2 probeAreaStartPosition;//GetProbeAreaOrigin() + OriginOffset
 int directionCount;
 int maxDirectRayLength;
-int maxIndirectRayLength;
 uint2 wallBufferSize;
 uint2 probeCount;
 int gutterSize;
@@ -37,7 +36,7 @@ struct Ray
     float2 dir;
 };
 
-RaycastResult raycast(float2 start, float2 dir, int maxRayLength) 
+RaycastResult raycast(float2 start, float2 dir) 
 {
     
     RaycastResult result;
@@ -50,7 +49,7 @@ RaycastResult raycast(float2 start, float2 dir, int maxRayLength)
     float4 color;
     float2 pos;
     float2 offsetFromStart = 0;
-    for(int i = 0; i < maxRayLength; i++)
+    for(int i = 0; i < maxDirectRayLength; i++)
     {
         float2 pos = start + offsetFromStart;
         if(any(bool4(pos.xy < 0, pos.xy >= float2(wallBufferSize))))
@@ -101,9 +100,9 @@ float4 sampleIrradianceDirection(float2 normal, uint2 probe)
 }
 
 #define DIST_FUDGE 0.2
-
+groupshared float4 sums[128];
 #pragma kernel GenerateProbeData
-[numthreads(64,1,1)]
+[numthreads(64,1,2)]
 void GenerateProbeData (uint3 groupID : SV_GroupID, 
    uint3 groupThreadID : SV_GroupThreadID, 
    uint groupIndex : SV_GroupIndex, 
@@ -116,7 +115,7 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
     float denominator = (0.5/directionCount);
     //only half the rays contribute to a particular direction, so average acoss all those is sum/directionCount/2
     
-    float4 sum = 0;
+    sums[groupIndex] = 0;
     for(int i = 0; i < directionCount; i++)
     {
         float percent = float(i)/float(directionCount);
@@ -124,10 +123,11 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         sincos(2*PI*percent + randomRayOffset, c, s);
         float2 dirI = float2(c, s);
         float3 col = 0;
-        {//bounce lighting
+        if(groupThreadID.z == 0)//bounce lighting
+        {
             float2 rayDir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;
             float2 rayOrigin = mul(worldToWallBuffer, float4(rayOriginWS, 0, 1)).xy;
-            RaycastResult result = raycast(rayOrigin, rayDir, maxIndirectRayLength);
+            RaycastResult result = raycast(rayOrigin, rayDir);
             if(result.hit)
             {
                 float2 wsEndPos = result.endPosition.xy / pixelsPerUnit + _ProbeAreaOrigin;
@@ -154,23 +154,35 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
             }
             uint2 offset = rowStartPos + uint2(gutterSize + i, 0);
             IrradianceBuffer[offset] = float4(result.color,1);
+            sums[groupIndex] += float4(col,1);
         }
         
-        {//Direct lighting with random offset
+        if(groupThreadID.z != 0)//Direct lighting with random offset
+        {
             float2 rayDir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;
             float2 rayOrigin = mul(worldToWallBuffer, float4(offsetWSRayOrigin, 0, 1)).xy;
-            RaycastResult result = raycast(rayOrigin, rayDir, maxDirectRayLength);//
+            RaycastResult result = raycast(rayOrigin, rayDir);
             if(result.hit)
             {
                 float2 wsEndPos = result.endPosition.xy / pixelsPerUnit + _ProbeAreaOrigin;
                 float dist = distance(wsEndPos, offsetWSRayOrigin) * DIST_FUDGE;
                 col += result.color / (1 + dist);
             }
+            sums[groupIndex] += float4(col,1);
         }
-
-        sum += float4(col,1);
     }
-    AverageIrradianceBuffer[id.xy] = sum / float(directionCount);
+    GroupMemoryBarrierWithGroupSync();
+    if(groupThreadID.z == 0)
+    {
+        float4 sum = 0;
+        [unroll]
+        for(int i = 0; i < 2; i++)
+        {
+           sum += sums[groupThreadID.x + 64*i];
+        }
+        
+        AverageIrradianceBuffer[id.xy] = sum / float(directionCount);
+    }
  }
 
 #pragma kernel GenerateCosineWeighted

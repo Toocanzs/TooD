@@ -9,6 +9,8 @@
         [Toggle]
         _IsWall("Is Wall Or Light", int) = 0
         _Clip("Alpha Clip", float) = 0.1
+        [Toggle]
+        _ColorFromVertex("Emission Color From Vertex Color", int) = 0
     }
 
     HLSLINCLUDE
@@ -174,6 +176,7 @@
             float3 _EmissionColor;
             float _IsWall;
             float _Clip;
+            bool _ColorFromVertex;
 
             half4 frag(Varyings i) : SV_Target
             {
@@ -181,7 +184,10 @@
                 half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
                 float4 col =  CombinedShapeLightShared(main, mask, i.lightingUV);
                 clip(col.a - _Clip);
-                return float4(_EmissionColor, _IsWall);
+                if(_ColorFromVertex)
+                    return float4(i.color.rgb * length(_EmissionColor), _IsWall);
+                else
+                    return float4(_EmissionColor, _IsWall);
             }
             ENDHLSL
         }
