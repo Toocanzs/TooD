@@ -150,7 +150,10 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
                 float3 bounceColor = combined.rgb * 4;
                 
                 col += bounceColor / (1 + dist);
+                
             }
+            uint2 offset = rowStartPos + uint2(gutterSize + i, 0);
+            IrradianceBuffer[offset] = float4(result.color,1);
         }
         
         {//Direct lighting with random offset
@@ -165,10 +168,7 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
             }
         }
 
-        uint2 offset = rowStartPos + uint2(gutterSize + i, 0);
-        float4 newCol = float4(col,1);
-        IrradianceBuffer[offset] = newCol;
-        sum += newCol;
+        sum += float4(col,1);
     }
     AverageIrradianceBuffer[id.xy] = sum / float(directionCount);
  }
@@ -232,7 +232,6 @@ void CopyToFullscreen (uint3 groupID : SV_GroupID,
    uint3 id : SV_DispatchThreadID) 
 {
     float probeOver2 = probeSeparation/2;
-    float2 probeOffset = randomProbeOffset;
     
     float2 idOffset = float2(id.xy) - randomProbeOffset * pixelsPerUnit * probeSeparation;
     
