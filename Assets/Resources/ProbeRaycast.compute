@@ -44,7 +44,19 @@ RaycastResult raycast(float2 start, float2 dir)
     result.color = 0;
     result.endPosition = start;
     result.hit = false;
-    dir /= max(abs(dir.x), abs(dir.y));
+    //Make the direction vector have at least one side length be 1
+    //That way += dir always moves at least 1 pixel
+    //Since maybe division can produce something that isn't 1, just set it after
+    if(abs(dir.x) >= abs(dir.y))
+    {
+        dir /= abs(dir.x);
+        dir.x = dir.x > 0 ? 1 : -1;//Just to be sure
+    }
+    else
+    {
+        dir /= abs(dir.y);
+        dir.y = dir.y > 0 ? 1 : -1;
+    }
     
     float4 color;
     float2 pos;
@@ -100,7 +112,7 @@ float4 sampleIrradianceDirection(float2 normal, uint2 probe)
 }
 
 #define DIST_FUDGE 0.2
-groupshared float4 sums[128];
+groupshared float4 sums[64 * 2];
 #pragma kernel GenerateProbeData
 [numthreads(64,1,2)]
 void GenerateProbeData (uint3 groupID : SV_GroupID, 
@@ -231,31 +243,4 @@ void FillGutter (uint3 groupID : SV_GroupID,
     uint2 gutterSpotTwo = rowStartPos + uint2(gutterSize + directionCount, 0);
     CosineWeightedIrradianceBuffer[gutterSpotOne] = CosineWeightedIrradianceBuffer[gutterSpotTwo - uint2(1,0)];
     CosineWeightedIrradianceBuffer[gutterSpotTwo] = CosineWeightedIrradianceBuffer[gutterSpotOne + uint2(1,0)];
-}
-
-RWTexture2D<float4> FullScreenAverage;
-
-#pragma kernel CopyToFullscreen
-[numthreads(64,1,1)]
-void CopyToFullscreen (uint3 groupID : SV_GroupID, 
-   uint3 groupThreadID : SV_GroupThreadID, 
-   uint groupIndex : SV_GroupIndex, 
-   uint3 id : SV_DispatchThreadID) 
-{
-    float probeOver2 = probeSeparation/2;
-    
-    float2 idOffset = float2(id.xy) - randomProbeOffset * pixelsPerUnit * probeSeparation;
-    
-    uint2 BL = ((float2(idOffset)) / float(probeSeparation * pixelsPerUnit)) - probeOver2;
-    uint2 BR = BL + uint2(1,0);
-    uint2 TL = BL + uint2(0,1);
-    uint2 TR = BL + uint2(1,1);
-    
-    float2 f = float2(idOffset - ((float2(BL) + probeOver2) * (probeSeparation * pixelsPerUnit))) / (probeSeparation * pixelsPerUnit);
-    
-    float4 top = lerp(AverageIrradianceBuffer[TL], AverageIrradianceBuffer[TR], f.x);
-    float4 bottom = lerp(AverageIrradianceBuffer[BL], AverageIrradianceBuffer[BR], f.x);
-    float4 combined = lerp(bottom, top, f.y);
-    
-    FullScreenAverage[id.xy] = lerp(FullScreenAverage[id.xy], combined, HYSTERESIS);
 }

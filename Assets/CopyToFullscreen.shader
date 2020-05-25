@@ -1,4 +1,4 @@
-﻿Shader "Unlit/TransferData"
+﻿Shader "Unlit/CopyToFullscreen"
 {
     Properties
     {
@@ -30,23 +30,27 @@
             };
 
             sampler2D _MainTex;
-            
             float2 _Offset;
+            sampler2D _FullScreenAverage;
+            float HYSTERESIS;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv + _Offset;
+                o.uv = v.uv;
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                if(any(bool4(i.uv > 1, i.uv < 0)))
+                float2 uv = i.uv +  _Offset;
+                if(any(bool4(uv > 1, uv < 0)))
                     return float4(0,0,0,0);
-                float4 col = tex2D(_MainTex, i.uv);
-                return col;
+                
+                float4 original = tex2D(_FullScreenAverage, i.uv);
+                float4 newCol = tex2D(_MainTex, uv);
+                return lerp(original, newCol, HYSTERESIS);
             }
             ENDCG
         }

@@ -26,7 +26,8 @@ public class IrradianceProbeManager : MonoBehaviour
     public int pixelsPerUnit = 32;
     
     public Material dataTransferMaterial = null;
-
+    public Material fullScreenCopyMaterial = null;
+    
     public int2 BufferSize => math.int2(math.float2(probeCounts) * probeSeparation * pixelsPerUnit);
 
     public int directionCount = 32;

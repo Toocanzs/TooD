@@ -13,7 +13,6 @@ public class TooDRenderer : ScriptableRenderer
 
     private static ComputeShader computeShader = (ComputeShader) Resources.Load("ProbeRaycast");
     private int probeRaycastMainKernel = computeShader.FindKernel("GenerateProbeData");
-    private int CopyToFullscreenKernel = computeShader.FindKernel("CopyToFullscreen");
     private int GenerateCosineWeightedKernel = computeShader.FindKernel("GenerateCosineWeighted");
     private int FillGutterKernel = computeShader.FindKernel("FillGutter");
 
@@ -57,11 +56,11 @@ public class TooDRenderer : ScriptableRenderer
                 float2 uvOffset = pixelOffset / i.cosineWeightedIrradianceBuffer.Dimensions;
                 command.SetGlobalVector("_Offset", uvOffset.xyxy);
                 command.Blit(i.cosineWeightedIrradianceBuffer.Current, i.cosineWeightedIrradianceBuffer.Other, i.dataTransferMaterial);
-                command.Blit(i.cosineWeightedIrradianceBuffer.Other, i.cosineWeightedIrradianceBuffer.Current);
+                i.cosineWeightedIrradianceBuffer.Swap();
 
                 command.SetGlobalVector("_Offset", (((i.GetProbeAreaOrigin() - oldPos).xy * i.pixelsPerUnit) / i.fullScreenAverageIrradianceBuffer.Dimensions).xyxy);
                 command.Blit(i.fullScreenAverageIrradianceBuffer.Current, i.fullScreenAverageIrradianceBuffer.Other, i.dataTransferMaterial);
-                command.Blit(i.fullScreenAverageIrradianceBuffer.Other, i.fullScreenAverageIrradianceBuffer.Current);
+                i.fullScreenAverageIrradianceBuffer.Swap();
             }
             
             i.lightingCamera.transform.position = new float3(i.GetCenter(), i.lightingCamera.transform.position.z);
@@ -116,7 +115,7 @@ public class TooDRenderer : ScriptableRenderer
         rayOffset = math.frac(rayOffset) * ((2 * math.PI) / i.directionCount);
         noiseIndex += 4; //This works lol
 
-        float2 randomProbeOffset = new float2(Random.Range(-i.probeSeparation / 4f, i.probeSeparation / 4f), Random.Range(-i.probeSeparation / 4f, i.probeSeparation /4f));
+        float2 randomProbeOffset = new float2(Random.Range(-i.probeSeparation, i.probeSeparation), Random.Range(-i.probeSeparation, i.probeSeparation)) / 2f;
         command.SetComputeFloatParam(computeShader, "randomRayOffset", rayOffset);
         command.SetComputeVectorParam(computeShader, "randomProbeOffset", randomProbeOffset.xyxy);
 
@@ -137,11 +136,20 @@ public class TooDRenderer : ScriptableRenderer
         command.DispatchCompute(computeShader, probeRaycastMainKernel,
             (i.probeCounts.x + 63) / 64, i.probeCounts.y, 2);
 
-        //CopyToFullscreen
+        /*
         command.SetComputeTextureParam(computeShader, CopyToFullscreenKernel, "AverageIrradianceBuffer", i.averageIrradiancePerProbeBuffer);
         command.SetComputeTextureParam(computeShader, CopyToFullscreenKernel, "FullScreenAverage", i.fullScreenAverageIrradianceBuffer);
         command.DispatchCompute(computeShader, CopyToFullscreenKernel,
-            (i.fullScreenAverageIrradianceBuffer.Dimensions.x + 63) / 64, i.fullScreenAverageIrradianceBuffer.Dimensions.y, 1);
+            (i.fullScreenAverageIrradianceBuffer.Dimensions.x + 63) / 64, i.fullScreenAverageIrradianceBuffer.Dimensions.y, 1);*/
+
+        float2 averageOffset = -randomProbeOffset * i.pixelsPerUnit * i.probeSeparation;
+        averageOffset /= i.fullScreenAverageIrradianceBuffer.Dimensions;
+
+        i.fullScreenCopyMaterial.SetVector("_Offset", averageOffset.xyxy);
+        i.fullScreenCopyMaterial.SetFloat("HYSTERESIS", Time.deltaTime * i.hysteresis);
+        i.fullScreenCopyMaterial.SetTexture("_FullScreenAverage", i.fullScreenAverageIrradianceBuffer.Current);
+        command.Blit(i.averageIrradiancePerProbeBuffer, i.fullScreenAverageIrradianceBuffer.Other, i.fullScreenCopyMaterial);
+        i.fullScreenAverageIrradianceBuffer.Swap();
 
         command.SetComputeTextureParam(computeShader, GenerateCosineWeightedKernel, "IrradianceBuffer", i.irradianceBuffer);
         command.SetComputeTextureParam(computeShader, GenerateCosineWeightedKernel, "CosineWeightedIrradianceBuffer", i.cosineWeightedIrradianceBuffer);
