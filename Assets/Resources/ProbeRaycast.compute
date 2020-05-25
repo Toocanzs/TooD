@@ -5,7 +5,8 @@ RWTexture2D<float4> AverageIrradianceBuffer;
 float probeSeparation;
 float2 probeAreaStartPosition;//GetProbeAreaOrigin() + OriginOffset
 int directionCount;
-int maxRayLength;
+int maxDirectRayLength;
+int maxIndirectRayLength;
 uint2 wallBufferSize;
 uint2 probeCount;
 int gutterSize;
@@ -26,10 +27,9 @@ float4x4 worldDirectionToBufferDirection;
 
 struct RaycastResult
 {
-    float3 color[2];
-    float2 endPosition[2];
-    bool hit[2];
-    bool stopped[2];
+    float3 color;
+    float2 endPosition;
+    bool hit;
 };
 struct Ray
 {
@@ -37,64 +37,36 @@ struct Ray
     float2 dir;
 };
 
-struct RayBundle
-{
-    Ray rays[2];
-};
-
-void stepRay(int rayIndex, inout RayBundle rayBundle, inout float2 offsetFromStart[2], inout RaycastResult result)
-{
-    float2 pos = rayBundle.rays[rayIndex].start + offsetFromStart[rayIndex];
-    if(any(bool4(pos.xy < 0, pos.xy >= float2(wallBufferSize))))
-    {
-        result.stopped[rayIndex] = true;
-        return;
-    }
-
-    float4 color = WallBuffer[int2(pos)];
-    if(color.a > 0)
-    {
-        result.color[rayIndex] = color.rgb;
-        result.hit[rayIndex] = true;
-        result.stopped[rayIndex] = true;
-        return;
-    }
-    offsetFromStart[rayIndex] += rayBundle.rays[rayIndex].dir;
-    result.endPosition[rayIndex] = int2(pos);
-}
-
-RaycastResult raycast(RayBundle rayBundle) 
+RaycastResult raycast(float2 start, float2 dir, int maxRayLength) 
 {
     
     RaycastResult result;
-    float2 offsetFromStart[2];
-    int rayIndex = 0;
-    
-    result.color[rayIndex] = 0;
-    result.endPosition[rayIndex] = rayBundle.rays[rayIndex].start;
-    result.hit[rayIndex] = false;
-    result.stopped[rayIndex] = false;
-    rayBundle.rays[rayIndex].dir /= max(abs(rayBundle.rays[rayIndex].dir.x), abs(rayBundle.rays[rayIndex].dir.y));
-    offsetFromStart[rayIndex] = 0;
-    
-    rayIndex = 1;
-    result.color[rayIndex] = 0;
-    result.endPosition[rayIndex] = rayBundle.rays[rayIndex].start;
-    result.hit[rayIndex] = false;
-    result.stopped[rayIndex] = false;
-    rayBundle.rays[rayIndex].dir /= max(abs(rayBundle.rays[rayIndex].dir.x), abs(rayBundle.rays[rayIndex].dir.y));
-    offsetFromStart[rayIndex] = 0;
+
+    result.color = 0;
+    result.endPosition = start;
+    result.hit = false;
+    dir /= max(abs(dir.x), abs(dir.y));
     
     float4 color;
     float2 pos;
+    float2 offsetFromStart = 0;
     for(int i = 0; i < maxRayLength; i++)
     {
-        if(!result.stopped[0])
-            stepRay(0, rayBundle, offsetFromStart, result);
-        if(!result.stopped[1])
-            stepRay(1, rayBundle, offsetFromStart, result);
-        if(result.stopped[0] && result.stopped[1])
-            break;
+        float2 pos = start + offsetFromStart;
+        if(any(bool4(pos.xy < 0, pos.xy >= float2(wallBufferSize))))
+        {
+            return result;
+        }
+    
+        float4 color = WallBuffer[int2(pos)];
+        if(color.a > 0)
+        {
+            result.color = color.rgb;
+            result.hit = true;
+            return result;
+        }
+        offsetFromStart += dir;
+        result.endPosition = int2(pos);
     }
     return result;
 }
@@ -151,50 +123,46 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         float c, s;
         sincos(2*PI*percent + randomRayOffset, c, s);
         float2 dirI = float2(c, s);
-        RayBundle bundle;
-        {
-            Ray normalRay;
-            normalRay.dir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;
-            normalRay.start = mul(worldToWallBuffer, float4(rayOriginWS, 0, 1)).xy;
-            bundle.rays[0] = normalRay;
-            
-            Ray offsetRay;
-            offsetRay.dir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;
-            offsetRay.start = mul(worldToWallBuffer, float4(offsetWSRayOrigin, 0, 1)).xy;
-            bundle.rays[1] = offsetRay;
-        }
-        
-        RaycastResult result = raycast(bundle);
-        
         float3 col = 0;
-        if(result.hit[0])
-        {
-            float2 wsEndPos = result.endPosition[0].xy / pixelsPerUnit + _ProbeAreaOrigin;
-            float2 normal = get2DNormal(result.endPosition[0]);
-            float2 localPos = (wsEndPos - probeAreaStartPosition)/ probeSeparation;
+        {//bounce lighting
+            float2 rayDir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;
+            float2 rayOrigin = mul(worldToWallBuffer, float4(rayOriginWS, 0, 1)).xy;
+            RaycastResult result = raycast(rayOrigin, rayDir, maxIndirectRayLength);
+            if(result.hit)
+            {
+                float2 wsEndPos = result.endPosition.xy / pixelsPerUnit + _ProbeAreaOrigin;
+                float2 normal = get2DNormal(result.endPosition[0]);
+                float2 localPos = (wsEndPos - probeAreaStartPosition)/ probeSeparation;
+                
+                uint2 BLProbe = (uint2)(localPos);
+                
+                float2 f = frac(localPos);
+                float4 BL = sampleIrradianceDirection(normal, BLProbe);
+                float4 BR = sampleIrradianceDirection(normal, BLProbe + uint2(1,0));
+                float4 TL = sampleIrradianceDirection(normal, BLProbe + uint2(0,1));
+                float4 TR = sampleIrradianceDirection(normal, BLProbe + uint2(1,1));
+                float4 bottom = lerp(BL, BR, f.x);
+                float4 top = lerp(TL, TR, f.x);
+                float4 combined = lerp(bottom, top, f.y);//fix with depth later
+                
+                float dist = distance(wsEndPos, rayOriginWS) * DIST_FUDGE;
             
-            uint2 BLProbe = (uint2)(localPos);
-            
-            float2 f = frac(localPos);
-            float4 BL = sampleIrradianceDirection(normal, BLProbe);
-            float4 BR = sampleIrradianceDirection(normal, BLProbe + uint2(1,0));
-            float4 TL = sampleIrradianceDirection(normal, BLProbe + uint2(0,1));
-            float4 TR = sampleIrradianceDirection(normal, BLProbe + uint2(1,1));
-            float4 bottom = lerp(BL, BR, f.x);
-            float4 top = lerp(TL, TR, f.x);
-            float4 combined = lerp(bottom, top, f.y);//fix with depth later
-            
-            float dist = distance(wsEndPos, rayOriginWS) * DIST_FUDGE;
-        
-            float3 bounceColor = combined.rgb * 4;
-            
-            col += bounceColor / (1 + dist);
+                float3 bounceColor = combined.rgb * 4;
+                
+                col += bounceColor / (1 + dist);
+            }
         }
-        if(result.hit[1])
-        {
-            float2 wsEndPos = result.endPosition[1].xy / pixelsPerUnit + _ProbeAreaOrigin;
-            float dist = distance(wsEndPos, offsetWSRayOrigin) * DIST_FUDGE;
-            col += result.color[1] / (1 + dist);
+        
+        {//Direct lighting with random offset
+            float2 rayDir = normalize(mul(worldDirectionToBufferDirection, float4(dirI, 0, 0))).xy;
+            float2 rayOrigin = mul(worldToWallBuffer, float4(offsetWSRayOrigin, 0, 1)).xy;
+            RaycastResult result = raycast(rayOrigin, rayDir, maxDirectRayLength);//
+            if(result.hit)
+            {
+                float2 wsEndPos = result.endPosition.xy / pixelsPerUnit + _ProbeAreaOrigin;
+                float dist = distance(wsEndPos, offsetWSRayOrigin) * DIST_FUDGE;
+                col += result.color / (1 + dist);
+            }
         }
 
         uint2 offset = rowStartPos + uint2(gutterSize + i, 0);

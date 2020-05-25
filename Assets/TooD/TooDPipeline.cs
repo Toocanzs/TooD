@@ -107,7 +107,8 @@ public class TooDRenderer : ScriptableRenderer
         float2 origin = i.GetProbeAreaOrigin() + i.OriginOffset;
         command.SetComputeFloatParams(computeShader, "probeAreaStartPosition", origin.x, origin.y);
         command.SetComputeIntParam(computeShader, "directionCount", i.directionCount);
-        command.SetComputeIntParam(computeShader, "maxRayLength", i.MaxRayLength);
+        command.SetComputeIntParam(computeShader, "maxDirectRayLength", i.MaxRayLength);
+        command.SetComputeIntParam(computeShader, "maxIndirectRayLength", i.MaxIndirectRayLength);
         command.SetComputeIntParams(computeShader, "wallBufferSize", i.wallBuffer.width, i.wallBuffer.height);
         command.SetComputeIntParam(computeShader, "gutterSize", IrradianceProbeManager.GutterSize);
 
