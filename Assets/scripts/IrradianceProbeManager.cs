@@ -51,8 +51,6 @@ public class IrradianceProbeManager : MonoBehaviour
             return;
         }
         Instance = this;
-        
-        //TODO: Randomize the locations of the probes too so that the average buffer represents the average light over that area?
 
         var size = BufferSize;
         wallBuffer = new RenderTexture(size.x, size.y, 0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
@@ -80,9 +78,6 @@ public class IrradianceProbeManager : MonoBehaviour
         fullScreenAverageIrradianceBuffer.wrapMode = TextureWrapMode.Clamp;
         fullScreenAverageIrradianceBuffer.enableRandomWrite = true;
         fullScreenAverageIrradianceBuffer.Create();
-        
-        //TODO: Maybe have a color buffer for diffuse walls
-        //TODO: Then multiply bounce color by that diffuse color
     }
 
     private void OnDestroy()
