@@ -57,7 +57,7 @@ public class BasicMovement : MonoBehaviour
             positions[1] = newPos + basePos;
             for (int i = 2; i < numPositions; i++)
             {
-                positions[i] = math.mul(Quaternion.Euler(0, 0, (rightSide ? 1 : -1) * ((float)(i-2)/(numPositions - 2)) * 180), basePos) + newPos;
+                positions[i] = math.mul(Quaternion.Euler(0, 0, (rightSide ? 1 : -1) * ((float)(i-2)/(numPositions - 3)) * 160), basePos) + newPos;
             }
             lineRenderer.SetPositions(positions);
             transform.position = newPos;

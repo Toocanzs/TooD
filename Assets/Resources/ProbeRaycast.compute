@@ -82,32 +82,31 @@ RaycastResult raycast(float2 start, float2 dir)
     return result;
 }
 
-float2 get2DNormal(uint2 pixel) 
+float2 get2DNormal(int2 sourcePixel) 
 {
-    float R = WallBuffer[pixel + int2(1, 0)].a;
-    float L = WallBuffer[pixel + int2(-1, 0)].a;
-    float T = WallBuffer[pixel + int2(0, 1)].a;
-    float B = WallBuffer[pixel + int2(0, -1)].a;
-    float TL = WallBuffer[pixel + int2(-1, 1)].a;
-    float BL = WallBuffer[pixel + int2(-1, -1)].a;
-    float TR = WallBuffer[pixel + int2(1, 1)].a;
-    float BR = WallBuffer[pixel + int2(1, -1)].a;
+    int2 pixel = int2(sourcePixel);
+    float R = WallBuffer[uint2(pixel + int2(1, 0))].a;
+    float L = WallBuffer[uint2(pixel + int2(-1, 0))].a;
+    float T = WallBuffer[uint2(pixel + int2(0, 1))].a;
+    float B = WallBuffer[uint2(pixel + int2(0, -1))].a;
+    float TL = WallBuffer[uint2(pixel + int2(-1, 1))].a;
+    float BL = WallBuffer[uint2(pixel + int2(-1, -1))].a;
+    float TR = WallBuffer[uint2(pixel + int2(1, 1))].a;
+    float BR = WallBuffer[uint2(pixel + int2(1, -1))].a;
     
     //Check for a walls in the 8 nearby pixels, the normal is in the opposite direction of the most walls
-
     return normalize(float2(
-        (BL + TL + L) - (BR + TR + R),
-        (BL + BR + B) - (TL + TR + T) 
+       (BL + BR + B) - (TL + TR + T),
+        (BL + TL + L) - (BR + TR + R)
     ));
 }
 
 float4 sampleIrradianceDirection(float2 normal, uint2 probe)
 {
-    float angle = atan2(normal.y, normal.x);
+    float angle = atan2(normal.x, normal.y);
     int directionIndex = (angle /(2*PI))*directionCount;
     uint2 st = (probe) * uint2(directionCount + gutterSize * 2, 1);
     uint2 directionUV = st + uint2(gutterSize + directionIndex, 0);
-    //TODO: needs to get rid of data that is inside walls or not visible from the probe?
     return CosineWeightedIrradianceBuffer[directionUV];
 }
 
@@ -146,9 +145,9 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
                 float2 normal = get2DNormal(result.endPosition[0]);
                 float2 localPos = (wsEndPos - probeAreaStartPosition)/ probeSeparation;
                 
-                uint2 BLProbe = (uint2)(localPos + probeSeparation/2);
+                uint2 BLProbe = (uint2)(localPos);
                 
-                float2 f = frac(localPos);
+                float2 f = frac(localPos + probeSeparation);
                 float4 BL = sampleIrradianceDirection(normal, BLProbe);
                 float4 BR = sampleIrradianceDirection(normal, BLProbe + uint2(1,0));
                 float4 TL = sampleIrradianceDirection(normal, BLProbe + uint2(0,1));
@@ -192,8 +191,9 @@ void GenerateProbeData (uint3 groupID : SV_GroupID,
         {
            sum += sums[groupThreadID.x + 64*i];
         }
-        
-        AverageIrradianceBuffer[id.xy] = sum / float(directionCount);
+        sum /= float(directionCount);
+        sum = pow(max(0,sum), 1.0/1.5);
+        AverageIrradianceBuffer[id.xy] = sum;
     }
  }
 
@@ -214,7 +214,7 @@ void GenerateCosineWeighted (uint3 groupID : SV_GroupID,
         uint2 inputDirectionOffset = rowStartPos + uint2(gutterSize + i, 0);
         float percent = float(i)/float(directionCount);
         float c, s;
-        sincos(2*PI*percent + randomRayOffset, c, s);
+        sincos(2*PI*percent, c, s);
         float2 dirI = float2(c, s);
         
         float4 sum = 0;

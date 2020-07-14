@@ -50,7 +50,10 @@
                 
                 float4 original = tex2D(_FullScreenAverage, i.uv);
                 float4 newCol = tex2D(_MainTex, uv);
-                return lerp(original, newCol, HYSTERESIS);
+                
+                float4 final = lerp(original, newCol, HYSTERESIS);
+                final.a = 1;
+                return final;
             }
             ENDCG
         }
