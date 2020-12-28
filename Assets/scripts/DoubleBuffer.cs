@@ -15,6 +15,7 @@ public class DoubleBuffer
 
     public RenderTexture Current => aIsCurrent ? a : b;
     public RenderTexture Other => aIsCurrent ? b : a;
+    public bool IsCreated => a.IsCreated() || b.IsCreated();
 
     public bool enableRandomWrite
     {
@@ -73,5 +74,17 @@ public static class RenderTextureExtensions
     public static DoubleBuffer ToDoubleBuffer(this RenderTexture renderTexture)
     {
         return new DoubleBuffer(renderTexture);
+    }
+    
+    public static void ReleaseIfExists(this RenderTexture rt)
+    {
+        if(rt != null && rt.IsCreated())
+            rt.Release();
+    }
+        
+    public static void ReleaseIfExists(this DoubleBuffer rt)
+    {
+        if(rt != null && rt.IsCreated)
+            rt.Release();
     }
 }

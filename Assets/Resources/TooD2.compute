@@ -1,0 +1,46 @@
+
+RWTexture2D<float4> IrradianceBands;
+int pixelsPerProbe;
+int pixelsPerUnit;
+int frameNumber;
+
+float3 HUEtoRGB(in float H)
+{
+   float R = abs(H * 6 - 3) - 1;
+   float G = 2 - abs(H * 6 - 2);
+   float B = 2 - abs(H * 6 - 4);
+   return saturate(float3(R,G,B));
+}
+
+uint2 probePosToPixel(int2 probePos, int bandPixel)
+{
+   return probePos * int2(pixelsPerProbe + 2, 1) + int2(bandPixel + 1, 0);
+}
+
+#pragma kernel DispatchRays
+[numthreads(32,32,1)]
+void DispatchRays(uint3 groupID : SV_GroupID, 
+   uint3 groupThreadID : SV_GroupThreadID, 
+   uint groupIndex : SV_GroupIndex, 
+   uint3 id : SV_DispatchThreadID) 
+{
+   //.xy = probe position
+   //.z = ray id
+   float3 c = HUEtoRGB(frac((float)id.z / pixelsPerProbe  + (frameNumber+id.x*100)/1000.));
+   IrradianceBands[probePosToPixel(id.xy, id.z)] = float4(c,1);
+}
+
+#pragma kernel AddGutter
+[numthreads(32,32,1)]
+void AddGutter(uint3 groupID : SV_GroupID, 
+   uint3 groupThreadID : SV_GroupThreadID, 
+   uint groupIndex : SV_GroupIndex, 
+   uint3 id : SV_DispatchThreadID) 
+{
+   //.xy = probe position
+
+   //Left gutter
+   IrradianceBands[probePosToPixel(id.xy, -1)] = IrradianceBands[probePosToPixel(id.xy, pixelsPerProbe - 1)];
+   //Right gutter
+   IrradianceBands[probePosToPixel(id.xy, pixelsPerProbe)] = IrradianceBands[probePosToPixel(id.xy, 0)];
+}

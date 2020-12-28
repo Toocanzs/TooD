@@ -95,7 +95,7 @@
             float2 G_ProbeAreaOrigin;
             float G_ProbeSeparation;
             float2 G_ProbeCounts;
-            
+            float3 _EmissionColor;
             #define OriginOffset (0.5*G_ProbeSeparation)
             
             TEXTURE2D(G_AverageIrradianceBuffer);
@@ -118,10 +118,10 @@
             half4 CombinedShapeLightFragment(Varyings i) : SV_Target
             {
                 half4 main = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
-                half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
+                //half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
                 
                 float4 irradianceColor = SAMPLE_TEXTURE2D(G_AverageIrradianceBuffer, samplerG_AverageIrradianceBuffer, GetIrradianceUv(i.worldPos));
-                float4 col = CombinedShapeLightShared(main, mask, i.lightingUV);
+                float4 col = main;//CombinedShapeLightShared(main, mask, i.lightingUV);
                 col.rgb *= irradianceColor.rgb;
                 return col;
             }
@@ -181,8 +181,8 @@
             half4 frag(Varyings i) : SV_Target
             {
                 half4 main = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
-                half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
-                float4 col =  CombinedShapeLightShared(main, mask, i.lightingUV);
+                //half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
+                float4 col = main;//CombinedShapeLightShared(main, mask, i.lightingUV);
                 clip(col.a - _Clip);
                 if(_ColorFromVertex)
                     return float4(i.color.rgb * length(_EmissionColor), _IsWall);

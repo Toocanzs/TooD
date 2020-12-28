@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-[CreateAssetMenu(fileName = "TooD data", menuName = "TooD/TooD data")]
-public class TooDRendererData : ScriptableRendererData
+namespace TooD
 {
-    protected override ScriptableRenderer Create()
+    [CreateAssetMenu(fileName = "TooD data", menuName = "TooD/TooD data")]
+    public class TooDRendererData : ScriptableRendererData
     {
-        return new TooDRenderer(this);
+        protected override ScriptableRenderer Create()
+        {
+            return new TooDRenderer(this);
+        }
     }
 }

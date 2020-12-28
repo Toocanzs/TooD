@@ -59,7 +59,7 @@ RaycastResult raycast(float2 start, float2 dir)
     }
     
     float4 color;
-    float2 pos;
+    float2 pos;//TODO: THIS IS A DUPLICATE OF BELOW DEFINITION????
     float2 offsetFromStart = 0;
     for(int i = 0; i < maxDirectRayLength; i++)
     {
