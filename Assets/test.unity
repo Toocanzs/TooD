@@ -401,6 +401,7 @@ MonoBehaviour:
   phiNoiseMat: {fileID: 2100000, guid: 22bfee2cd601b504c860126c1181ff42, type: 2}
   debug: {fileID: 0}
   debugMat: {fileID: 2100000, guid: cd28972762b20c041addac3580f5b7a1, type: 2}
+  TEST: {fileID: 2100000, guid: 27a02b9607495094dad6b71f507c34fc, type: 2}
 --- !u!114 &528587656
 MonoBehaviour:
   m_ObjectHideFlags: 0

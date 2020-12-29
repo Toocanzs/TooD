@@ -2,6 +2,7 @@
 RWTexture2D<float4> IrradianceBands;
 RWTexture2D<float4> PhiNoise;
 int pixelsPerUnit;
+int2 probeCounts;
 float time;
 int2 bottomLeft;
 int pixelsPerProbe;
@@ -22,12 +23,14 @@ float3 HUEtoRGB(in float H)
 }
 
 #pragma kernel DispatchRays
-[numthreads(32,32,1)]
+[numthreads(1,1,64)]
 void DispatchRays(uint3 groupID : SV_GroupID, 
    uint3 groupThreadID : SV_GroupThreadID, 
    uint groupIndex : SV_GroupIndex, 
    uint3 id : SV_DispatchThreadID) 
 {
+   if(any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
+      return;
    //.xy = probe position
    //.z = ray id
    ProbeWorldPos p = probeToWorld(id.xy);
@@ -42,8 +45,9 @@ void AddGutter(uint3 groupID : SV_GroupID,
    uint groupIndex : SV_GroupIndex, 
    uint3 id : SV_DispatchThreadID) 
 {
+   if(any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
+      return;
    //.xy = probe position
-
    //Left gutter
    IrradianceBands[probePosToPixel(id.xy, -1)] = IrradianceBands[probePosToPixel(id.xy, pixelsPerProbe - 1)];
    //Right gutter

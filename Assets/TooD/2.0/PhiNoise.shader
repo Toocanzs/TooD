@@ -57,7 +57,7 @@ Shader "Unlit/PhiNoise"
             fixed4 frag (v2f i) : SV_Target
             {
                 #ifdef UPDATE
-                return frac(tex2D(_MainTex, i.uv) + phi);// + (-1. + 2.*hash(i.uv)) * 0.05;
+                return frac(tex2D(_MainTex, i.uv) + phi);
                 #else
                 return hash(i.uv);
                 #endif

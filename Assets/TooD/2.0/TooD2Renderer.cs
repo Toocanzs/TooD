@@ -57,6 +57,7 @@ namespace TooD2
             command.SetComputeTextureParam(computeShader, DispatchRays.index, "PhiNoise", manager.phiNoiseBuffer.Current);
             command.SetComputeIntParam(computeShader, "pixelsPerProbe", manager.pixelsPerProbe);
             command.SetComputeIntParam(computeShader, "pixelsPerUnit", manager.pixelsPerUnit);
+            command.SetComputeIntParams(computeShader, "probeCounts", manager.probeCounts.x, manager.probeCounts.y);
             command.SetComputeFloatParam(computeShader, "time", Time.time);
             var bl = manager.BottomLeft;
             command.SetComputeIntParams(computeShader, "bottomLeft", bl.x, bl.y);

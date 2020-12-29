@@ -14,5 +14,15 @@ namespace UnityMathematicsExtentions
         {
             return math.float4(color.r, color.g, color.b, color.a);
         }
+
+        public static Vector3 asV3(this float3 p)
+        {
+            return new Vector3(p.x, p.y, p.z);
+        }
+        
+        public static Vector3 asV3(this int3 p)
+        {
+            return new Vector3(p.x, p.y, p.z);
+        }
     }
 }

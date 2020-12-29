@@ -2,6 +2,7 @@ using System;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityMathematicsExtentions;
+
 namespace TooD2
 {
     [RequireComponent(typeof(Camera))]
@@ -10,22 +11,21 @@ namespace TooD2
         public int2 probeCounts = new int2(10, 10);
         public int pixelsPerProbe = 32;
         public int pixelsPerUnit = 32;
-        [HideInInspector]
-        public Transform mainCamera;
-        [HideInInspector]
-        public new Camera camera;
+        [HideInInspector] public Transform mainCamera;
+        [HideInInspector] public new Camera camera;
         public static IrradianceManager2 Instance;
         public RenderTexture wallBuffer;
         public DoubleBuffer irradianceBandBuffer;
         public DoubleBuffer phiNoiseBuffer;
-        
+
         public int2 BottomLeft => math.int2(transform.pos().xy) - probeCounts / 2;
 
         public Material phiNoiseMat;
 
         public RenderTexture debug;
-        
-        static Mesh debugMesh;
+
+        private Mesh debugMesh;
+        private Mesh gridMesh;
         public Material debugMat;
 
         private void OnValidate()
@@ -42,6 +42,7 @@ namespace TooD2
                 Debug.LogError($"Duplicate instance of {nameof(IrradianceManager2)}");
                 return;
             }
+
             Instance = this;
             if (math.any(probeCounts % 2 == 1))
                 Debug.LogError($"{nameof(probeCounts)} must be even");
@@ -51,29 +52,31 @@ namespace TooD2
             {
                 Debug.LogError("Irradiance camera must have a background color of 0,0,0,0");
             }
-            
+
             int2 irradianceBandBufferSize = probeCounts * math.int2(pixelsPerProbe + 2, 1);
             int2 wallBufferSize = probeCounts * pixelsPerUnit;
-            
-            wallBuffer = new RenderTexture(wallBufferSize.x, wallBufferSize.y, 0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
+
+            wallBuffer = new RenderTexture(wallBufferSize.x, wallBufferSize.y, 0, RenderTextureFormat.DefaultHDR,
+                RenderTextureReadWrite.Linear);
             wallBuffer.wrapMode = TextureWrapMode.Clamp;
             wallBuffer.Create();
-            
+
             irradianceBandBuffer = new RenderTexture(irradianceBandBufferSize.x, irradianceBandBufferSize.y,
                     0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
                 .ToDoubleBuffer();
             irradianceBandBuffer.enableRandomWrite = true;
             irradianceBandBuffer.Create();
-            
+
             phiNoiseBuffer = new RenderTexture(irradianceBandBufferSize.x, irradianceBandBufferSize.y,
-                0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear)
+                    0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear)
                 .ToDoubleBuffer();
             phiNoiseBuffer.Create();
             InitPhiNoise();
-            
+
             debug = irradianceBandBuffer.Current;
 
             CreateDebugMesh();
+            gridMesh = MeshGenerator.CreateGridMesh(probeCounts);
         }
 
         private void InitPhiNoise()
@@ -114,9 +117,10 @@ namespace TooD2
                 new Vector2(1, 1)
             };
             debugMesh.uv = uv;
-            
+
             debugMat.SetVector("probeCounts", new float4(probeCounts.x, probeCounts.y, 0, 0));
-            debugMat.SetVector("G_IrradianceBand_Size", new float4(irradianceBandBuffer.Current.width, irradianceBandBuffer.Current.height, 0, 0));
+            debugMat.SetVector("G_IrradianceBand_Size",
+                new float4(irradianceBandBuffer.Current.width, irradianceBandBuffer.Current.height, 0, 0));
             debugMat.SetInt("pixelsPerProbe", pixelsPerProbe);
         }
 
@@ -140,7 +144,8 @@ namespace TooD2
             {
                 return SetPositionRounded(mainCamera.position);
             }
-            return new int2(0,0);
+
+            return new int2(0, 0);
         }
 
         //TODO: Probe positions are += 0.5
@@ -155,5 +160,49 @@ namespace TooD2
                 Graphics.DrawMeshNow(debugMesh, mat, 0);
             }
         }
+    }
+}
+
+public class MeshGenerator
+{
+    public static Mesh CreateGridMesh(int2 size)
+    {
+        var mesh = new Mesh();
+        var vertices = new Vector3[(size.x + 1) * (size.y + 1)];
+        for (int i = 0, y = 0; y <= size.y; y++)
+        for (int x = 0; x <= size.x; x++, i++)
+        {
+            vertices[i] = (math.float3(x, y, 0) / math.float3(size, 1)).asV3();
+        }
+
+        mesh.vertices = vertices;
+
+        var triangles = new int[size.x * size.y * 6];
+        for (int ti = 0, vi = 0, y = 0; y < size.y; y++, vi++)
+        for (int x = 0; x < size.x; x++, ti += 6, vi++)
+        {
+            triangles[ti] = vi;
+            triangles[ti + 3] = triangles[ti + 2] = vi + 1;
+            triangles[ti + 4] = triangles[ti + 1] = vi + size.x + 1;
+            triangles[ti + 5] = vi + size.x + 2;
+        }
+
+
+        mesh.triangles = triangles;
+
+        var uvs = new Vector2[vertices.Length];
+        var uv2 = new Vector2[vertices.Length]; //xy pos
+        for (int i = 0, y = 0; y <= size.y; y++)
+        for (int x = 0; x <= size.x; x++, i++)
+        {
+            vertices[i] = new Vector3(x, y);
+            uvs[i] = new Vector2((float) x / size.x, (float) y / size.y);
+            uv2[i] = new Vector2(x, y);
+        }
+
+        mesh.uv = uvs;
+        mesh.uv2 = uv2;
+
+        return mesh;
     }
 }
