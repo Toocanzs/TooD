@@ -16,8 +16,6 @@ namespace TooD2
         private KernelInfo DispatchRays = new KernelInfo(computeShader, "DispatchRays");
         private KernelInfo AddGutter = new KernelInfo(computeShader, "AddGutter");
 
-        private int frameNumber = 0;
-
         public TooD2Renderer(TooD2RendererData data) : base(data)
         {
             tooDSpriteRenderPass = new TooD2SpriteRenderPass();
@@ -34,8 +32,7 @@ namespace TooD2
 
             var manager = IrradianceManager2.Instance;
             int2 delta = manager.DoMove();
-
-            frameNumber++;
+            manager.UpdatePhiNoise();
         }
 
         private void OnEndRenderingCamera(ScriptableRenderContext context, Camera camera)
@@ -56,24 +53,28 @@ namespace TooD2
             command.Clear();
             
             //Send rays
-            command.SetComputeTextureParam(computeShader, DispatchRays.index, "IrradianceBands", manager.irradianceBandBuffer);
+            command.SetComputeTextureParam(computeShader, DispatchRays.index, "IrradianceBands", manager.irradianceBandBuffer.Current);
+            command.SetComputeTextureParam(computeShader, DispatchRays.index, "PhiNoise", manager.phiNoiseBuffer.Current);
             command.SetComputeIntParam(computeShader, "pixelsPerProbe", manager.pixelsPerProbe);
             command.SetComputeIntParam(computeShader, "pixelsPerUnit", manager.pixelsPerUnit);
-            command.SetComputeIntParam(computeShader, "frameNumber", frameNumber);
+            command.SetComputeFloatParam(computeShader, "time", Time.time);
+            var bl = manager.BottomLeft;
+            command.SetComputeIntParams(computeShader, "bottomLeft", bl.x, bl.y);
             command.DispatchCompute(computeShader, DispatchRays.index, DispatchRays.numthreads, new int3(manager.probeCounts, manager.pixelsPerProbe));
             
             //Add gutter
-            command.SetComputeTextureParam(computeShader, AddGutter.index, "IrradianceBands", manager.irradianceBandBuffer);
+            command.SetComputeTextureParam(computeShader, AddGutter.index, "IrradianceBands", manager.irradianceBandBuffer.Current);
             command.DispatchCompute(computeShader, AddGutter.index, AddGutter.numthreads, new int3(manager.probeCounts, 1));
 
+            //Set result as a global
+            command.SetGlobalTexture("G_IrradianceBand", manager.irradianceBandBuffer.Current);
+            
             context.ExecuteCommandBuffer(command);
             command.Clear();
             CommandBufferPool.Release(command);
             
             //Make sure everything has run up to this point
             GL.Flush();
-            
-            Shader.SetGlobalTexture("G_IrradianceBand", manager.irradianceBandBuffer);
         }
 
         public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)

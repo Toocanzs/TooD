@@ -51,17 +51,6 @@ public class DoubleBuffer
         a.Release();
         b.Release();
     }
-
-    public static implicit operator RenderTexture(DoubleBuffer buffer)
-    {
-        return buffer.Current;
-    }
-
-    public static implicit operator RenderTargetIdentifier(DoubleBuffer buffer)
-    {
-        return new RenderTargetIdentifier(buffer.Current);
-    }
-
     public void Create()
     {
         a.Create();

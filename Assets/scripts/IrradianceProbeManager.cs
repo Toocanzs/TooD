@@ -68,7 +68,7 @@ namespace TooD
             cosineWeightedIrradianceBuffer.enableRandomWrite = true;
             cosineWeightedIrradianceBuffer.Create();
 
-            irradianceBuffer = new RenderTexture(cosineWeightedIrradianceBuffer);
+            irradianceBuffer = new RenderTexture(cosineWeightedIrradianceBuffer.Current);
             irradianceBuffer.enableRandomWrite = true;
             irradianceBuffer.Create();
 

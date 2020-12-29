@@ -1,8 +1,17 @@
 
 RWTexture2D<float4> IrradianceBands;
-int pixelsPerProbe;
+RWTexture2D<float4> PhiNoise;
 int pixelsPerUnit;
-int frameNumber;
+float time;
+int2 bottomLeft;
+int pixelsPerProbe;
+
+#include "Probe.cginc"
+
+ProbeWorldPos probeToWorld(ProbePos p)
+{
+   return p + bottomLeft;
+}
 
 float3 HUEtoRGB(in float H)
 {
@@ -10,11 +19,6 @@ float3 HUEtoRGB(in float H)
    float G = 2 - abs(H * 6 - 2);
    float B = 2 - abs(H * 6 - 4);
    return saturate(float3(R,G,B));
-}
-
-uint2 probePosToPixel(int2 probePos, int bandPixel)
-{
-   return probePos * int2(pixelsPerProbe + 2, 1) + int2(bandPixel + 1, 0);
 }
 
 #pragma kernel DispatchRays
@@ -26,7 +30,8 @@ void DispatchRays(uint3 groupID : SV_GroupID,
 {
    //.xy = probe position
    //.z = ray id
-   float3 c = HUEtoRGB(frac((float)id.z / pixelsPerProbe  + (frameNumber+id.x*100)/1000.));
+   ProbeWorldPos p = probeToWorld(id.xy);
+   float3 c = HUEtoRGB(frac((float)id.z / pixelsPerProbe  + (time+p.y*1.681 + p.x*0.63024562)));
    IrradianceBands[probePosToPixel(id.xy, id.z)] = float4(c,1);
 }
 

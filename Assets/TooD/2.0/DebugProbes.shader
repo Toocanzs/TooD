@@ -34,17 +34,14 @@ Shader "Unlit/DebugProbes"
             int2 probeCounts;
             int pixelsPerProbe;
 
+            #include "Assets/Resources/Probe.cginc"
+
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
                 return o;
-            }
-
-            float2 probeToPixelFloat(int2 probePos, float bandPixel)
-            {
-               return probePos * float2(pixelsPerProbe + 2, 1) + float2(bandPixel + 1, 0);
             }
 
             fixed4 frag (v2f i) : SV_Target

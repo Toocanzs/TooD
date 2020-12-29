@@ -15,7 +15,9 @@
         <e p="PlayerFollower.cs" t="Include" />
         <e p="Resources" t="Include">
           <e p="JFA.compute" t="Include" />
+          <e p="Probe.cginc" t="Include" />
           <e p="ProbeRaycast.compute" t="Include" />
+          <e p="TooD2.compute" t="Include" />
         </e>
         <e p="scripts" t="Include">
           <e p="BasicMovement.cs" t="Include" />
@@ -29,9 +31,11 @@
         <e p="TestLineAlgorithm.cs" t="Include" />
         <e p="TooD" t="Include">
           <e p="2.0" t="Include">
+            <e p="DebugProbes.shader" t="Include" />
             <e p="IrradianceManager2.cs" t="Include" />
-            <e p="TooD2Data.cs" t="Include" />
+            <e p="PhiNoise.shader" t="Include" />
             <e p="TooD2Renderer.cs" t="Include" />
+            <e p="TooD2RendererData.cs" t="Include" />
           </e>
           <e p="TooD Sprite.shader" t="Include" />
           <e p="TooD Unlit.shader" t="Include" />

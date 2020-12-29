@@ -17,6 +17,11 @@ namespace TooD2
         public static IrradianceManager2 Instance;
         public RenderTexture wallBuffer;
         public DoubleBuffer irradianceBandBuffer;
+        public DoubleBuffer phiNoiseBuffer;
+        
+        public int2 BottomLeft => math.int2(transform.pos().xy) - probeCounts / 2;
+
+        public Material phiNoiseMat;
 
         public RenderTexture debug;
         
@@ -59,10 +64,29 @@ namespace TooD2
                 .ToDoubleBuffer();
             irradianceBandBuffer.enableRandomWrite = true;
             irradianceBandBuffer.Create();
-
-            debug = irradianceBandBuffer.Current;
             
+            phiNoiseBuffer = new RenderTexture(irradianceBandBufferSize.x, irradianceBandBufferSize.y,
+                0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear)
+                .ToDoubleBuffer();
+            phiNoiseBuffer.Create();
+            InitPhiNoise();
+            
+            debug = irradianceBandBuffer.Current;
+
             CreateDebugMesh();
+        }
+
+        private void InitPhiNoise()
+        {
+            phiNoiseMat.DisableKeyword("UPDATE");
+            UpdatePhiNoise();
+            phiNoiseMat.EnableKeyword("UPDATE");
+        }
+
+        public void UpdatePhiNoise()
+        {
+            Graphics.Blit(phiNoiseBuffer.Current, phiNoiseBuffer.Other, phiNoiseMat);
+            phiNoiseBuffer.Swap();
         }
 
         private void CreateDebugMesh()

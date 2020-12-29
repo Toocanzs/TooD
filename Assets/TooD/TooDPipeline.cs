@@ -79,7 +79,7 @@ namespace TooD
                 i.lightingCamera.aspect = scale.x / scale.y;
 
                 command.SetGlobalFloat("G_ProbeSeparation", i.probeSeparation);
-                command.SetGlobalTexture("G_AverageIrradianceBuffer", i.fullScreenAverageIrradianceBuffer);
+                command.SetGlobalTexture("G_AverageIrradianceBuffer", i.fullScreenAverageIrradianceBuffer.Current);
                 command.SetGlobalVector("G_ProbeCounts", (float4) i.probeCounts.xyxy);
                 command.SetGlobalVector("G_ProbeAreaOrigin", i.GetProbeAreaOrigin().xyxy);
                 command.SetGlobalInt("G_PixelsPerUnit", i.pixelsPerUnit);
@@ -117,7 +117,7 @@ namespace TooD
             command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "AverageIrradianceBuffer",
                 i.averageIrradiancePerProbeBuffer);
             command.SetComputeTextureParam(computeShader, probeRaycastMainKernel, "CosineWeightedIrradianceBuffer",
-                i.cosineWeightedIrradianceBuffer);
+                i.cosineWeightedIrradianceBuffer.Current);
             command.SetComputeFloatParam(computeShader, "probeSeparation", i.probeSeparation);
 
             float2 origin = i.GetProbeAreaOrigin() + i.OriginOffset;
@@ -178,12 +178,12 @@ namespace TooD
             command.SetComputeTextureParam(computeShader, GenerateCosineWeightedKernel, "IrradianceBuffer",
                 i.irradianceBuffer);
             command.SetComputeTextureParam(computeShader, GenerateCosineWeightedKernel,
-                "CosineWeightedIrradianceBuffer", i.cosineWeightedIrradianceBuffer);
+                "CosineWeightedIrradianceBuffer", i.cosineWeightedIrradianceBuffer.Current);
             command.DispatchCompute(computeShader, GenerateCosineWeightedKernel, (i.probeCounts.x + 63) / 64,
                 i.probeCounts.y, 1);
 
             command.SetComputeTextureParam(computeShader, FillGutterKernel, "CosineWeightedIrradianceBuffer",
-                i.cosineWeightedIrradianceBuffer);
+                i.cosineWeightedIrradianceBuffer.Current);
             command.DispatchCompute(computeShader, FillGutterKernel, (i.probeCounts.x + 63) / 64, i.probeCounts.y, 1);
 
             context.ExecuteCommandBuffer(command);
