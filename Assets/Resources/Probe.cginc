@@ -1,6 +1,5 @@
 typedef int2 ProbePos;
 typedef uint2 TexPixelPos;
-typedef int2 ProbeWorldPos;
 typedef float2 TexUvs;
 
 TexPixelPos probePosToPixel(ProbePos p, int bandPixel)

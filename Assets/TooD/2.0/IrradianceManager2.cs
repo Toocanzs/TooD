@@ -15,7 +15,8 @@ namespace TooD2
         [HideInInspector] public new Camera camera;
         public static IrradianceManager2 Instance;
         public RenderTexture wallBuffer;
-        public DoubleBuffer irradianceBandBuffer;
+        public RenderTexture diffuseRadialBuffer;
+        public RenderTexture diffuseAveragePerProbeBuffer;
         public DoubleBuffer phiNoiseBuffer;
 
         public int2 BottomLeft => math.int2(transform.pos().xy) - probeCounts / 2;
@@ -27,6 +28,10 @@ namespace TooD2
         private Mesh debugMesh;
         private Mesh gridMesh;
         public Material debugMat;
+
+        public Material gridOffsetMat;
+
+        public int MaxDirectRayLength = 900;
 
         private void OnValidate()
         {
@@ -61,22 +66,38 @@ namespace TooD2
             wallBuffer.wrapMode = TextureWrapMode.Clamp;
             wallBuffer.Create();
 
-            irradianceBandBuffer = new RenderTexture(irradianceBandBufferSize.x, irradianceBandBufferSize.y,
-                    0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear)
-                .ToDoubleBuffer();
-            irradianceBandBuffer.enableRandomWrite = true;
-            irradianceBandBuffer.Create();
+            diffuseRadialBuffer = new RenderTexture(irradianceBandBufferSize.x, irradianceBandBufferSize.y,
+                0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
+            diffuseRadialBuffer.enableRandomWrite = true;
+            diffuseRadialBuffer.Create();
+            
+            diffuseAveragePerProbeBuffer = new RenderTexture(probeCounts.x, probeCounts.y,
+                0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
+            diffuseAveragePerProbeBuffer.enableRandomWrite = true;
+            diffuseAveragePerProbeBuffer.Create();
 
-            phiNoiseBuffer = new RenderTexture(irradianceBandBufferSize.x, irradianceBandBufferSize.y,
+            phiNoiseBuffer = new RenderTexture(irradianceBandBufferSize.x + pixelsPerProbe + 2, irradianceBandBufferSize.y + 1,
                     0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear)
                 .ToDoubleBuffer();
             phiNoiseBuffer.Create();
             InitPhiNoise();
 
-            debug = irradianceBandBuffer.Current;
+            debug = diffuseAveragePerProbeBuffer;
+            transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = debug;//TODO: REMVOE
 
             CreateDebugMesh();
             gridMesh = MeshGenerator.CreateGridMesh(probeCounts);
+            gridOffsetMat.SetTexture("PhiNoise", phiNoiseBuffer.Current);
+            gridOffsetMat.SetVector("probeCounts", new float4(probeCounts.x, probeCounts.y, 0, 0));
+            gridOffsetMat.SetInt("pixelsPerProbe", pixelsPerProbe);
+        }
+        
+        private void OnDestroy()
+        {
+            wallBuffer.ReleaseIfExists();
+            diffuseRadialBuffer.ReleaseIfExists();
+            diffuseAveragePerProbeBuffer.ReleaseIfExists();
+            phiNoiseBuffer.ReleaseIfExists();
         }
 
         private void InitPhiNoise()
@@ -120,14 +141,8 @@ namespace TooD2
 
             debugMat.SetVector("probeCounts", new float4(probeCounts.x, probeCounts.y, 0, 0));
             debugMat.SetVector("G_IrradianceBand_Size",
-                new float4(irradianceBandBuffer.Current.width, irradianceBandBuffer.Current.height, 0, 0));
+                new float4(diffuseRadialBuffer.width, diffuseRadialBuffer.height, 0, 0));
             debugMat.SetInt("pixelsPerProbe", pixelsPerProbe);
-        }
-
-        private void OnDestroy()
-        {
-            wallBuffer.ReleaseIfExists();
-            irradianceBandBuffer.ReleaseIfExists();
         }
 
         int2 SetPositionRounded(float3 newPos)
@@ -147,8 +162,7 @@ namespace TooD2
 
             return new int2(0, 0);
         }
-
-        //TODO: Probe positions are += 0.5
+        
         private void OnDrawGizmosSelected()
         {
             if (Application.isPlaying)
@@ -158,6 +172,9 @@ namespace TooD2
                 float4x4 mat = float4x4.TRS(pos, quaternion.identity, math.float3(probeCounts.xy, 1));
                 debugMat.SetPass(0);
                 Graphics.DrawMeshNow(debugMesh, mat, 0);
+                
+                //gridOffsetMat.SetPass(0);
+                //Graphics.DrawMeshNow(gridMesh, mat, 0);
             }
         }
     }

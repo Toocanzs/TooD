@@ -53,10 +53,13 @@ namespace TooD2
             command.Clear();
             
             //Send rays
-            command.SetComputeTextureParam(computeShader, DispatchRays.index, "IrradianceBands", manager.irradianceBandBuffer.Current);
+            command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseRadialBuffer", manager.diffuseRadialBuffer);
             command.SetComputeTextureParam(computeShader, DispatchRays.index, "PhiNoise", manager.phiNoiseBuffer.Current);
+            command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseAveragePerProbeBuffer", manager.diffuseAveragePerProbeBuffer);
+            command.SetComputeTextureParam(computeShader, DispatchRays.index, "WallBuffer", manager.wallBuffer);
             command.SetComputeIntParam(computeShader, "pixelsPerProbe", manager.pixelsPerProbe);
             command.SetComputeIntParam(computeShader, "pixelsPerUnit", manager.pixelsPerUnit);
+            command.SetComputeIntParam(computeShader, "MaxDirectRayLength", manager.MaxDirectRayLength);
             command.SetComputeIntParams(computeShader, "probeCounts", manager.probeCounts.x, manager.probeCounts.y);
             command.SetComputeFloatParam(computeShader, "time", Time.time);
             var bl = manager.BottomLeft;
@@ -64,11 +67,11 @@ namespace TooD2
             command.DispatchCompute(computeShader, DispatchRays.index, DispatchRays.numthreads, new int3(manager.probeCounts, manager.pixelsPerProbe));
             
             //Add gutter
-            command.SetComputeTextureParam(computeShader, AddGutter.index, "IrradianceBands", manager.irradianceBandBuffer.Current);
+            command.SetComputeTextureParam(computeShader, AddGutter.index, "DiffuseRadialBuffer", manager.diffuseRadialBuffer);
             command.DispatchCompute(computeShader, AddGutter.index, AddGutter.numthreads, new int3(manager.probeCounts, 1));
 
             //Set result as a global
-            command.SetGlobalTexture("G_IrradianceBand", manager.irradianceBandBuffer.Current);
+            command.SetGlobalTexture("G_IrradianceBand", manager.diffuseRadialBuffer);//TODO: remove and replace with the average buffer
             
             context.ExecuteCommandBuffer(command);
             command.Clear();

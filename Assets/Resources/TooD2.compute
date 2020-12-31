@@ -1,55 +1,142 @@
-
-RWTexture2D<float4> IrradianceBands;
-RWTexture2D<float4> PhiNoise;
+RWTexture2D<float4> DiffuseRadialBuffer;
+RWTexture2D<float4> DiffuseAveragePerProbeBuffer;
+Texture2D<float4> PhiNoise;
+Texture2D<float4> WallBuffer;
 int pixelsPerUnit;
 int2 probeCounts;
 float time;
 int2 bottomLeft;
 int pixelsPerProbe;
+int MaxDirectRayLength;
+
+#define PI 3.14159265359
+#define TAU 6.283185307179586
 
 #include "Probe.cginc"
 
+typedef float2 ProbeWorldPos;
 ProbeWorldPos probeToWorld(ProbePos p)
 {
-   return p + bottomLeft;
+    return p + bottomLeft + 0.5;
 }
 
 float3 HUEtoRGB(in float H)
 {
-   float R = abs(H * 6 - 3) - 1;
-   float G = 2 - abs(H * 6 - 2);
-   float B = 2 - abs(H * 6 - 4);
-   return saturate(float3(R,G,B));
+    float R = abs(H * 6 - 3) - 1;
+    float G = 2 - abs(H * 6 - 2);
+    float B = 2 - abs(H * 6 - 4);
+    return saturate(float3(R, G, B));
 }
 
-#pragma kernel DispatchRays
-[numthreads(1,1,64)]
-void DispatchRays(uint3 groupID : SV_GroupID, 
-   uint3 groupThreadID : SV_GroupThreadID, 
-   uint groupIndex : SV_GroupIndex, 
-   uint3 id : SV_DispatchThreadID) 
+struct RaycastResult
 {
-   if(any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
-      return;
-   //.xy = probe position
-   //.z = ray id
-   ProbeWorldPos p = probeToWorld(id.xy);
-   float3 c = HUEtoRGB(frac((float)id.z / pixelsPerProbe  + (time+p.y*1.681 + p.x*0.63024562)));
-   IrradianceBands[probePosToPixel(id.xy, id.z)] = float4(c,1);
+    float3 color;
+    float2 endPosition;
+    bool hit;
+};
+typedef float2 TexturePos;
+RaycastResult raycast(TexturePos start, float2 dir)
+{
+    RaycastResult result;
+
+    result.color = 0;
+    result.endPosition = start;
+    result.hit = false;
+    //Make the direction vector have at least one side length be 1
+    //That way += dir always moves at least 1 pixel
+    //Since maybe division can produce something that isn't 1, just set it after
+    if(abs(dir.x) >= abs(dir.y))
+    {
+        dir /= abs(dir.x);
+        dir.x = dir.x > 0 ? 1 : -1;//Just to be sure
+    }
+    else
+    {
+        dir /= abs(dir.y);
+        dir.y = dir.y > 0 ? 1 : -1;
+    }
+
+    for(int i = 0; i < MaxDirectRayLength; i++)
+    {
+        float2 pos = start + dir * i;
+        result.endPosition = int2(pos);
+        if(any(bool4(pos.xy < 0, pos.xy >= float2(pixelsPerUnit * probeCounts))))
+        {
+            return result;
+        }
+    
+        float4 color = WallBuffer[int2(pos)];
+        if(color.a > 0)
+        {
+            result.color = color.rgb;
+            result.hit = true;
+            return result;
+        }
+    }
+    return result;
+}
+
+groupshared float3 sums[64];
+#define DispatchRaysThreadsX 1
+#define DispatchRaysThreadsY 1
+#define DispatchRaysThreadsZ 64
+#pragma kernel DispatchRays
+[numthreads(DispatchRaysThreadsX,DispatchRaysThreadsY,DispatchRaysThreadsZ)]
+void DispatchRays(uint3 groupID : SV_GroupID,
+                  uint3 groupThreadID : SV_GroupThreadID,
+                  uint groupIndex : SV_GroupIndex,
+                  uint3 id : SV_DispatchThreadID)
+{
+    //.xy = probe position
+    //.z = ray id
+    ProbeWorldPos probeWorldPos = probeToWorld(id.xy);
+    //float3 c = HUEtoRGB(frac((float)id.z / pixelsPerProbe + (time + probeWorldPos.y * 1.681 + probeWorldPos.x * 0.63024562)));
+    if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
+    {
+        float ang = TAU * (float(id.z) / pixelsPerProbe);
+        TexturePos probePositionInWallBuffer = (probeWorldPos - bottomLeft) * pixelsPerUnit;
+        RaycastResult result = raycast(probePositionInWallBuffer, float2(cos(ang), sin(ang)));
+        float3 c = result.color;
+        DiffuseRadialBuffer[probePosToPixel(id.xy, id.z)] = float4(c, 1);
+        sums[groupIndex] = c;
+    }
+    GroupMemoryBarrierWithGroupSync();
+    //Sum all directions
+    if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
+    {
+        if (groupThreadID.z == 0)
+        {
+            //TODO: 2n loop that starts at -8 to 8 (hemisphere of 32 rays per probe)
+            //Then increment start and end and subtract arr[start] and add arr[end]
+            //Basically moving window sum
+            //We need a cosine weighted one tho so when BEFORE incrementing subtract arr[end]*dot(dir, getRayDir(end))
+            //Fallback to n*n loop if needed
+            float3 sum = 0;
+            [unroll]
+            for (int i = 0; i < pixelsPerProbe; i++)
+            {
+                sum += sums[i * DispatchRaysThreadsX * DispatchRaysThreadsY
+                    + groupThreadID.y * DispatchRaysThreadsX
+                    + groupThreadID.x];
+            }
+            sum /= float(pixelsPerProbe);
+            DiffuseAveragePerProbeBuffer[id.xy] = float4(sum, 1);
+        }
+    }
 }
 
 #pragma kernel AddGutter
 [numthreads(32,32,1)]
-void AddGutter(uint3 groupID : SV_GroupID, 
-   uint3 groupThreadID : SV_GroupThreadID, 
-   uint groupIndex : SV_GroupIndex, 
-   uint3 id : SV_DispatchThreadID) 
+void AddGutter(uint3 groupID : SV_GroupID,
+               uint3 groupThreadID : SV_GroupThreadID,
+               uint groupIndex : SV_GroupIndex,
+               uint3 id : SV_DispatchThreadID)
 {
-   if(any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
-      return;
-   //.xy = probe position
-   //Left gutter
-   IrradianceBands[probePosToPixel(id.xy, -1)] = IrradianceBands[probePosToPixel(id.xy, pixelsPerProbe - 1)];
-   //Right gutter
-   IrradianceBands[probePosToPixel(id.xy, pixelsPerProbe)] = IrradianceBands[probePosToPixel(id.xy, 0)];
+    if (any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
+        return;
+    //.xy = probe position
+    //Left gutter
+    DiffuseRadialBuffer[probePosToPixel(id.xy, -1)] = DiffuseRadialBuffer[probePosToPixel(id.xy, pixelsPerProbe - 1)];
+    //Right gutter
+    DiffuseRadialBuffer[probePosToPixel(id.xy, pixelsPerProbe)] = DiffuseRadialBuffer[probePosToPixel(id.xy, 0)];
 }
