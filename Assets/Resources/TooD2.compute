@@ -17,7 +17,7 @@ int MaxDirectRayLength;
 typedef float2 ProbeWorldPos;
 ProbeWorldPos probeToWorld(ProbePos p)
 {
-    return p + bottomLeft + 0.5;
+    return p + bottomLeft;
 }
 
 float3 HUEtoRGB(in float H)
@@ -93,8 +93,14 @@ void DispatchRays(uint3 groupID : SV_GroupID,
     //float3 c = HUEtoRGB(frac((float)id.z / pixelsPerProbe + (time + probeWorldPos.y * 1.681 + probeWorldPos.x * 0.63024562)));
     if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
     {
-        float ang = TAU * (float(id.z) / pixelsPerProbe);
-        TexturePos probePositionInWallBuffer = (probeWorldPos - bottomLeft) * pixelsPerUnit;
+        float oneArc = 1.0/pixelsPerProbe;
+        float rand01 = PhiNoise[probeToPixelFloat(id.xy, id.z)].z;
+        float ang = TAU * (float(id.z) / pixelsPerProbe + oneArc * rand01);
+        //Get random probe offset
+        float2 n = PhiNoise[probePosToPixel(id.xy, -1)].xy;
+        float2 randomProbeOffset =  n - 0.5;
+        
+        TexturePos probePositionInWallBuffer = (probeWorldPos - bottomLeft + randomProbeOffset) * pixelsPerUnit;
         RaycastResult result = raycast(probePositionInWallBuffer, float2(cos(ang), sin(ang)));
         float3 c = result.color;
         DiffuseRadialBuffer[probePosToPixel(id.xy, id.z)] = float4(c, 1);
@@ -120,6 +126,7 @@ void DispatchRays(uint3 groupID : SV_GroupID,
                     + groupThreadID.x];
             }
             sum /= float(pixelsPerProbe);
+            sum = pow(max(0,sum), 1.0/1.5);
             DiffuseAveragePerProbeBuffer[id.xy] = float4(sum, 1);
         }
     }

@@ -1,4 +1,4 @@
-﻿Shader "TooD/Unlit"
+Shader "TooD/Unlit TEST"
 {
     Properties
     {
@@ -88,7 +88,7 @@
             }
 
             #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/CombinedShapeLightShared.hlsl"
-
+            
             int2 G_BottomLeft;
             int2 G_ProbeCounts;
             TEXTURE2D(G_FullScreenAverageBuffer);
@@ -99,6 +99,7 @@
                 float2 LightingUvs = (i.worldPos - G_BottomLeft) / G_ProbeCounts;
                 float3 lightCol = SAMPLE_TEXTURE2D(G_FullScreenAverageBuffer, sampler_G_FullScreenAverageBuffer, LightingUvs).rgb;
                 float3 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv).xyz;
+                col = length(-1 + 2*i.uv);
                 return float4(col,1);
             }
             ENDHLSL

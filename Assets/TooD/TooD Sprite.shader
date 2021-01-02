@@ -92,37 +92,20 @@
 
             #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/CombinedShapeLightShared.hlsl"
             
-            float2 G_ProbeAreaOrigin;
-            float G_ProbeSeparation;
-            float2 G_ProbeCounts;
             float3 _EmissionColor;
-            #define OriginOffset (0.5*G_ProbeSeparation)
-            
-            TEXTURE2D(G_AverageIrradianceBuffer);
-            SAMPLER(samplerG_AverageIrradianceBuffer);
-            
-            TEXTURE2D(G_CosineIrradianceBuffer);
-            SAMPLER(samplerG_CosineIrradianceBuffer);
-            
-            float2 WorldToProbe(float2 worldPos)
-            {
-                worldPos += G_ProbeSeparation/2;//Maybe remove this later? Makes it look right atm
-                return ((worldPos - G_ProbeAreaOrigin - OriginOffset)/ G_ProbeSeparation);
-            }
-            
-            float2 GetIrradianceUv(float2 worldPos)
-            {
-                return WorldToProbe(worldPos)/G_ProbeCounts;
-            }
+            int2 G_BottomLeft;
+            int2 G_ProbeCounts;
+            TEXTURE2D(G_FullScreenAverageBuffer);
+            SAMPLER(sampler_G_FullScreenAverageBuffer);
 
             half4 CombinedShapeLightFragment(Varyings i) : SV_Target
             {
-                half4 main = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
+                float4 col = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 //half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
                 
-                float4 irradianceColor = SAMPLE_TEXTURE2D(G_AverageIrradianceBuffer, samplerG_AverageIrradianceBuffer, GetIrradianceUv(i.worldPos));
-                float4 col = main;//CombinedShapeLightShared(main, mask, i.lightingUV);
-                col.rgb *= irradianceColor.rgb;
+                float2 LightingUvs = (i.worldPos - G_BottomLeft) / G_ProbeCounts;
+                float3 lightCol = SAMPLE_TEXTURE2D(G_FullScreenAverageBuffer, sampler_G_FullScreenAverageBuffer, LightingUvs).rgb;
+                col.rgb *= lightCol.rgb;
                 return col;
             }
             ENDHLSL

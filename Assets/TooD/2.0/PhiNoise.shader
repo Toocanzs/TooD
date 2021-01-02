@@ -41,7 +41,10 @@ Shader "Unlit/PhiNoise"
 	            return frac((a2.xyxy + a3.xxyy + a1.xyyx)*(1./1739.));
             }
 
-            static float phi = 1.6180339887498948482045868343656;
+            static float phi = 1.6180339887498948482045868343656381177203091798058;
+            static float phi2 = 1.3247179572447460259609088544780973407344040569017;
+            static float phi3 = 1.2207440846057594753616853491088319144324890862486;
+            static float phi4 = 1.1673039782614186842560458998548421807205603715255;
             #pragma multi_compile_local __ UPDATE
 
             sampler2D _MainTex;
@@ -57,7 +60,7 @@ Shader "Unlit/PhiNoise"
             fixed4 frag (v2f i) : SV_Target
             {
                 #ifdef UPDATE
-                return frac(tex2D(_MainTex, i.uv) + phi);
+                return frac(tex2D(_MainTex, i.uv) + 1.0/float4(phi2, phi2*phi2, phi, phi2*phi2));
                 #else
                 return hash(i.uv);
                 #endif

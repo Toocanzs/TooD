@@ -11,12 +11,17 @@ namespace TooD2
         public int2 probeCounts = new int2(10, 10);
         public int pixelsPerProbe = 32;
         public int pixelsPerUnit = 32;
+        
+        public int MaxDirectRayLength = 900;
+        [Range(0,1)]
+        public float hysteresis = 0.9f;
         [HideInInspector] public Transform mainCamera;
         [HideInInspector] public new Camera camera;
         public static IrradianceManager2 Instance;
         public RenderTexture wallBuffer;
         public RenderTexture diffuseRadialBuffer;
         public RenderTexture diffuseAveragePerProbeBuffer;
+        public DoubleBuffer diffuseFullScreenAverageBuffer;
         public DoubleBuffer phiNoiseBuffer;
 
         public int2 BottomLeft => math.int2(transform.pos().xy) - probeCounts / 2;
@@ -26,12 +31,12 @@ namespace TooD2
         public RenderTexture debug;
 
         private Mesh debugMesh;
-        private Mesh gridMesh;
+        public Mesh gridMesh;
         public Material debugMat;
 
         public Material gridOffsetMat;
 
-        public int MaxDirectRayLength = 900;
+        public Material TEST;
 
         private void OnValidate()
         {
@@ -75,6 +80,10 @@ namespace TooD2
                 0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
             diffuseAveragePerProbeBuffer.enableRandomWrite = true;
             diffuseAveragePerProbeBuffer.Create();
+            
+            diffuseFullScreenAverageBuffer = new RenderTexture(probeCounts.x * pixelsPerUnit, probeCounts.y * pixelsPerUnit, 0,
+                RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear).ToDoubleBuffer();
+            diffuseFullScreenAverageBuffer.Create();
 
             phiNoiseBuffer = new RenderTexture(irradianceBandBufferSize.x + pixelsPerProbe + 2, irradianceBandBufferSize.y + 1,
                     0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear)
@@ -82,7 +91,7 @@ namespace TooD2
             phiNoiseBuffer.Create();
             InitPhiNoise();
 
-            debug = diffuseAveragePerProbeBuffer;
+            debug = diffuseFullScreenAverageBuffer.Current;
             transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = debug;//TODO: REMVOE
 
             CreateDebugMesh();
@@ -90,6 +99,13 @@ namespace TooD2
             gridOffsetMat.SetTexture("PhiNoise", phiNoiseBuffer.Current);
             gridOffsetMat.SetVector("probeCounts", new float4(probeCounts.x, probeCounts.y, 0, 0));
             gridOffsetMat.SetInt("pixelsPerProbe", pixelsPerProbe);
+            
+            //TODO: rmeove
+            var go = new GameObject("xd");
+            var mf = go.AddComponent<MeshFilter>();
+            var mr = go.AddComponent<MeshRenderer>();
+            mf.mesh = gridMesh;
+            mr.material = TEST;
         }
         
         private void OnDestroy()
@@ -98,6 +114,7 @@ namespace TooD2
             diffuseRadialBuffer.ReleaseIfExists();
             diffuseAveragePerProbeBuffer.ReleaseIfExists();
             phiNoiseBuffer.ReleaseIfExists();
+            diffuseFullScreenAverageBuffer.ReleaseIfExists();
         }
 
         private void InitPhiNoise()
@@ -169,12 +186,9 @@ namespace TooD2
             {
                 float3 pos = transform.pos() - math.float3(probeCounts, 0) / 2f;
                 pos.z = 0;
-                float4x4 mat = float4x4.TRS(pos, quaternion.identity, math.float3(probeCounts.xy, 1));
+                float4x4 matrix = float4x4.TRS(pos, quaternion.identity, math.float3(probeCounts.xy, 1));
                 debugMat.SetPass(0);
-                Graphics.DrawMeshNow(debugMesh, mat, 0);
-                
-                //gridOffsetMat.SetPass(0);
-                //Graphics.DrawMeshNow(gridMesh, mat, 0);
+                Graphics.DrawMeshNow(debugMesh, matrix, 0);
             }
         }
     }

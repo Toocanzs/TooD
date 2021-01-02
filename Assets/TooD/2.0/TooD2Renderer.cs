@@ -4,13 +4,14 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using static Unity.Mathematics.math;
+using UnityMathematicsExtentions;
+
 namespace TooD2
 {
     public class TooD2Renderer : ScriptableRenderer
     {
         private TooD2SpriteRenderPass tooDSpriteRenderPass;
-        private double goldenRatio = (1d + sqrt(5d)) / 2d;
+        private double goldenRatio = (1d + math.sqrt(5d)) / 2d;
         
         private static ComputeShader computeShader = (ComputeShader) Resources.Load("TooD2");
         private KernelInfo DispatchRays = new KernelInfo(computeShader, "DispatchRays");
@@ -32,6 +33,21 @@ namespace TooD2
 
             var manager = IrradianceManager2.Instance;
             int2 delta = manager.DoMove();
+            CommandBuffer command = CommandBufferPool.Get("TooD Offset Old");
+            command.Clear();
+            float2 worldOffset = delta;
+            float2 uvOffset = (worldOffset * manager.pixelsPerUnit) / new float2(manager.diffuseFullScreenAverageBuffer.Dimensions);
+            command.Blit(manager.diffuseFullScreenAverageBuffer.Current, manager.diffuseFullScreenAverageBuffer.Other, Vector2.one, -uvOffset);
+            
+            var bl = manager.BottomLeft;
+            command.SetGlobalVector("G_BottomLeft", new Vector4(bl.x, bl.y, 0, 0));
+            command.SetGlobalVector("G_ProbeCounts", new Vector4(manager.probeCounts.x, manager.probeCounts.y, 0, 0));
+
+            context.ExecuteCommandBuffer(command);
+            command.Clear();
+            CommandBufferPool.Release(command);
+            GL.Flush();
+            manager.diffuseFullScreenAverageBuffer.Swap();
             manager.UpdatePhiNoise();
         }
 
@@ -51,6 +67,7 @@ namespace TooD2
             
             CommandBuffer command = CommandBufferPool.Get("TooD Rays");
             command.Clear();
+            command.SetGlobalFloat("hysteresis", manager.hysteresis);
             
             //Send rays
             command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseRadialBuffer", manager.diffuseRadialBuffer);
@@ -69,16 +86,39 @@ namespace TooD2
             //Add gutter
             command.SetComputeTextureParam(computeShader, AddGutter.index, "DiffuseRadialBuffer", manager.diffuseRadialBuffer);
             command.DispatchCompute(computeShader, AddGutter.index, AddGutter.numthreads, new int3(manager.probeCounts, 1));
-
-            //Set result as a global
-            command.SetGlobalTexture("G_IrradianceBand", manager.diffuseRadialBuffer);//TODO: remove and replace with the average buffer
             
+            #if DEBUG
+            command.SetGlobalTexture("G_IrradianceBand", manager.diffuseRadialBuffer);
+            #endif
+            
+            //Draw randomly offset grid over the fullscreen buffer
+            DrawOffsetGrid(command, manager, 0, 1f, 1f-manager.hysteresis);
+
+            command.SetGlobalTexture("G_FullScreenAverageBuffer", manager.diffuseFullScreenAverageBuffer.Current);
+
             context.ExecuteCommandBuffer(command);
             command.Clear();
             CommandBufferPool.Release(command);
-            
             //Make sure everything has run up to this point
             GL.Flush();
+        }
+
+        private static void DrawOffsetGrid(CommandBuffer command, IrradianceManager2 manager, int2 offset, float noiseScale, float alpha)
+        {
+            command.SetRenderTarget(manager.diffuseFullScreenAverageBuffer.Current);
+            command.SetViewMatrix(Matrix4x4.identity);
+            command.SetProjectionMatrix(Matrix4x4.Ortho(0, manager.probeCounts.x,
+                0, manager.probeCounts.y,
+                0.01f, 100));
+            var block = new MaterialPropertyBlock();
+            block.SetFloat("_Alpha", alpha);
+            block.SetFloat("_NoiseScale", noiseScale);
+            manager.gridOffsetMat.SetTexture("PerProbeAverageTexture", manager.diffuseAveragePerProbeBuffer);
+            manager.gridOffsetMat.SetPass(0);
+            command.DrawMesh(manager.gridMesh,
+                float4x4.TRS(new float3(offset, -10), quaternion.identity,
+                    new float3(manager.probeCounts.x, manager.probeCounts.y, 1)),
+                manager.gridOffsetMat, 0, 0,  block);
         }
 
         public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)
