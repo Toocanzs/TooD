@@ -31,11 +31,11 @@
         <e p="TestLineAlgorithm.cs" t="Include" />
         <e p="TooD" t="Include">
           <e p="2.0" t="Include">
+            <e p="AlphaBlendedBlit.shader" t="Include" />
             <e p="DebugProbes.shader" t="Include" />
             <e p="GridOffset.shader" t="Include" />
             <e p="IrradianceManager2.cs" t="Include" />
             <e p="PhiNoise.shader" t="Include" />
-            <e p="Test.shader" t="Include" />
             <e p="TooD2Renderer.cs" t="Include" />
             <e p="TooD2RendererData.cs" t="Include" />
           </e>

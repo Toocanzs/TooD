@@ -97,7 +97,7 @@ void DispatchRays(uint3 groupID : SV_GroupID,
         float rand01 = PhiNoise[probeToPixelFloat(id.xy, id.z)].z;
         float ang = TAU * (float(id.z) / pixelsPerProbe + oneArc * rand01);
         //Get random probe offset
-        float2 n = PhiNoise[probePosToPixel(id.xy, -1)].xy;
+        float2 n = PhiNoise[probePosToPixel(0, -1)].xy;
         float2 randomProbeOffset =  n - 0.5;
         
         TexturePos probePositionInWallBuffer = (probeWorldPos - bottomLeft + randomProbeOffset) * pixelsPerUnit;

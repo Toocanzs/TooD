@@ -1,6 +1,7 @@
 using System;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityMathematicsExtentions;
 
 namespace TooD2
@@ -15,6 +16,9 @@ namespace TooD2
         public int MaxDirectRayLength = 900;
         [Range(0,1)]
         public float hysteresis = 0.9f;
+        [Range(0, 500)]
+        public float UpdatePeriod = 60f;
+        public float UpdateFrequency => 1f / UpdatePeriod;
         [HideInInspector] public Transform mainCamera;
         [HideInInspector] public new Camera camera;
         public static IrradianceManager2 Instance;
@@ -99,15 +103,18 @@ namespace TooD2
             gridOffsetMat.SetTexture("PhiNoise", phiNoiseBuffer.Current);
             gridOffsetMat.SetVector("probeCounts", new float4(probeCounts.x, probeCounts.y, 0, 0));
             gridOffsetMat.SetInt("pixelsPerProbe", pixelsPerProbe);
-            
-            //TODO: rmeove
-            var go = new GameObject("xd");
-            var mf = go.AddComponent<MeshFilter>();
-            var mr = go.AddComponent<MeshRenderer>();
-            mf.mesh = gridMesh;
-            mr.material = TEST;
         }
-        
+
+        #if DEBUG
+        private void Update()
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                Application.targetFrameRate = Application.targetFrameRate == -1 ? 60 : -1;
+            }
+        }
+        #endif
+
         private void OnDestroy()
         {
             wallBuffer.ReleaseIfExists();

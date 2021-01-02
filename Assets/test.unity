@@ -396,7 +396,8 @@ MonoBehaviour:
   pixelsPerProbe: 32
   pixelsPerUnit: 32
   MaxDirectRayLength: 512
-  hysteresis: 0.985
+  hysteresis: 0.99
+  UpdatePeriod: 200
   mainCamera: {fileID: 251381488}
   camera: {fileID: 528587658}
   wallBuffer: {fileID: 0}

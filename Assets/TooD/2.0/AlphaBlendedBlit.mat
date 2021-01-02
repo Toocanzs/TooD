@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit_Test
-  m_Shader: {fileID: 4800000, guid: fa5288499c701e742bc289bb153d2bcd, type: 3}
+  m_Name: AlphaBlendedBlit
+  m_Shader: {fileID: 4800000, guid: 82e097a83ea9b4042a4fdcd304976c50, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
