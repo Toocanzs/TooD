@@ -99,6 +99,7 @@ namespace TooD2
             transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = debug;//TODO: REMVOE
 
             CreateDebugMesh();
+            
             gridMesh = MeshGenerator.CreateGridMesh(probeCounts);
             gridOffsetMat.SetTexture("PhiNoise", phiNoiseBuffer.Current);
             gridOffsetMat.SetVector("probeCounts", new float4(probeCounts.x, probeCounts.y, 0, 0));
