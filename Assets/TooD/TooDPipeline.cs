@@ -64,14 +64,14 @@ namespace TooD
                     command.SetGlobalVector("_Offset", uvOffset.xyxy);
                     command.Blit(i.cosineWeightedIrradianceBuffer.Current, i.cosineWeightedIrradianceBuffer.Other,
                         i.dataTransferMaterial);
-                    i.cosineWeightedIrradianceBuffer.Swap();
+                    //TODO:i.cosineWeightedIrradianceBuffer.Swap();
 
                     command.SetGlobalVector("_Offset",
                         (((i.GetProbeAreaOrigin() - oldPos).xy * i.pixelsPerUnit) /
                          i.fullScreenAverageIrradianceBuffer.Dimensions).xyxy);
                     command.Blit(i.fullScreenAverageIrradianceBuffer.Current, i.fullScreenAverageIrradianceBuffer.Other,
                         i.dataTransferMaterial);
-                    i.fullScreenAverageIrradianceBuffer.Swap();
+                    //TODO:i.fullScreenAverageIrradianceBuffer.Swap();
                 }
 
                 i.lightingCamera.transform.position = new float3(i.GetCenter(), i.lightingCamera.transform.position.z);
@@ -173,7 +173,7 @@ namespace TooD
             i.fullScreenCopyMaterial.SetTexture("_FullScreenAverage", i.fullScreenAverageIrradianceBuffer.Current);
             command.Blit(i.averageIrradiancePerProbeBuffer, i.fullScreenAverageIrradianceBuffer.Other,
                 i.fullScreenCopyMaterial);
-            i.fullScreenAverageIrradianceBuffer.Swap();
+            //TODO:i.fullScreenAverageIrradianceBuffer.Swap();
 
             command.SetComputeTextureParam(computeShader, GenerateCosineWeightedKernel, "IrradianceBuffer",
                 i.irradianceBuffer);

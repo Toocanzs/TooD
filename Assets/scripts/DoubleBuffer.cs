@@ -41,10 +41,11 @@ public class DoubleBuffer
         b = new RenderTexture(source);
     }
 
-    public void Swap()
+    /*public void Swap()
     {
         aIsCurrent = !aIsCurrent;
-    }
+    }*/
+    //I HATE DOUBLE BUFFERING
 
     public void Release()
     {

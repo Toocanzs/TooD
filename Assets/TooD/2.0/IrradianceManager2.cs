@@ -1,6 +1,7 @@
 using System;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 using UnityMathematicsExtentions;
 
@@ -35,12 +36,10 @@ namespace TooD2
         public RenderTexture debug;
 
         private Mesh debugMesh;
-        public Mesh gridMesh;
+        public Mesh quadsMesh;
         public Material debugMat;
 
-        public Material gridOffsetMat;
-
-        public Material TEST;
+        public Material quadsOffsetMaterial;
 
         private void OnValidate()
         {
@@ -87,6 +86,7 @@ namespace TooD2
             
             diffuseFullScreenAverageBuffer = new RenderTexture(probeCounts.x * pixelsPerUnit, probeCounts.y * pixelsPerUnit, 0,
                 RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear).ToDoubleBuffer();
+            diffuseFullScreenAverageBuffer.enableRandomWrite = true;
             diffuseFullScreenAverageBuffer.Create();
 
             phiNoiseBuffer = new RenderTexture(irradianceBandBufferSize.x + pixelsPerProbe + 2, irradianceBandBufferSize.y + 1,
@@ -100,10 +100,10 @@ namespace TooD2
 
             CreateDebugMesh();
             
-            gridMesh = MeshGenerator.CreateGridMesh(probeCounts);
-            gridOffsetMat.SetTexture("PhiNoise", phiNoiseBuffer.Current);
-            gridOffsetMat.SetVector("probeCounts", new float4(probeCounts.x, probeCounts.y, 0, 0));
-            gridOffsetMat.SetInt("pixelsPerProbe", pixelsPerProbe);
+            quadsMesh = MeshGenerator.CreateQuadsMesh(probeCounts);
+            quadsOffsetMaterial.SetTexture("PhiNoise", phiNoiseBuffer.Current);
+            quadsOffsetMaterial.SetVector("probeCounts", new float4(probeCounts.x, probeCounts.y, 0, 0));
+            quadsOffsetMaterial.SetInt("pixelsPerProbe", pixelsPerProbe);
         }
 
         #if DEBUG
@@ -132,10 +132,17 @@ namespace TooD2
             phiNoiseMat.EnableKeyword("UPDATE");
         }
 
-        public void UpdatePhiNoise()
+        
+        private void UpdatePhiNoise()
         {
             Graphics.Blit(phiNoiseBuffer.Current, phiNoiseBuffer.Other, phiNoiseMat);
-            phiNoiseBuffer.Swap();
+            Graphics.Blit(phiNoiseBuffer.Other, phiNoiseBuffer.Current);
+        }
+        
+        public void UpdatePhiNoise(CommandBuffer command)
+        {
+            command.Blit(phiNoiseBuffer.Current, phiNoiseBuffer.Other, phiNoiseMat);
+            command.Blit(phiNoiseBuffer.Other, phiNoiseBuffer.Current);
         }
 
         private void CreateDebugMesh()
@@ -180,7 +187,7 @@ namespace TooD2
 
         public int2 DoMove()
         {
-            if (math.distance(transform.position, mainCamera.position) > 5)
+            if (math.distance(transform.position, mainCamera.position) > 4)
             {
                 return SetPositionRounded(mainCamera.position);
             }
@@ -204,44 +211,65 @@ namespace TooD2
 
 public class MeshGenerator
 {
-    public static Mesh CreateGridMesh(int2 size)
+    public static Mesh CreateQuadsMesh(int2 size)
     {
         var mesh = new Mesh();
-        var vertices = new Vector3[(size.x + 1) * (size.y + 1)];
-        for (int i = 0, y = 0; y <= size.y; y++)
-        for (int x = 0; x <= size.x; x++, i++)
+        var vertices = new Vector3[size.x*size.y * 6];
+        for (int i = 0, y = 0; y < size.y; y++)
+        for (int x = 0; x < size.x; x++, i+=6)
         {
-            vertices[i] = (math.float3(x, y, 0) / math.float3(size, 1)).asV3();
+            vertices[i + 0] = (math.float3(0, 0, 0) / math.float3(size, 1)).asV3();
+            vertices[i + 1] = (math.float3(0, 1, 0) / math.float3(size, 1)).asV3();
+            vertices[i + 2] = (math.float3(1, 1, 0) / math.float3(size, 1)).asV3();
+            
+            vertices[i + 3] = (math.float3(0, 0, 0) / math.float3(size, 1)).asV3();
+            vertices[i + 4] = (math.float3(1, 1, 0) / math.float3(size, 1)).asV3();
+            vertices[i + 5] = (math.float3(1, 0, 0) / math.float3(size, 1)).asV3();
         }
 
         mesh.vertices = vertices;
 
-        var triangles = new int[size.x * size.y * 6];
-        for (int ti = 0, vi = 0, y = 0; y < size.y; y++, vi++)
-        for (int x = 0; x < size.x; x++, ti += 6, vi++)
+        var triangles = new int[vertices.Length];
+        var bary = new Vector4[vertices.Length];
+        for (int ti = 0, vi = 0; ti < triangles.Length; ti += 6, vi += 6)
         {
-            triangles[ti] = vi;
-            triangles[ti + 3] = triangles[ti + 2] = vi + 1;
-            triangles[ti + 4] = triangles[ti + 1] = vi + size.x + 1;
-            triangles[ti + 5] = vi + size.x + 2;
+            triangles[ti + 0] = vi + 0;
+            triangles[ti + 1] = vi + 1;
+            triangles[ti + 2] = vi + 2;
+            
+            triangles[ti + 3] = vi + 3;
+            triangles[ti + 4] = vi + 4;
+            triangles[ti + 5] = vi + 5;
+            
+            bary[vi + 0] = new Vector4(1, 0, 0, 0);
+            bary[vi + 1] = new Vector4(0, 1, 0, 0);
+            bary[vi + 2] = new Vector4(0, 0, 1, 0);
+            
+            bary[vi + 3] = new Vector4(1, 0, 0, 1);
+            bary[vi + 4] = new Vector4(0, 1, 0, 1);
+            bary[vi + 5] = new Vector4(0, 0, 1, 1);
         }
 
 
         mesh.triangles = triangles;
 
-        var uvs = new Vector2[vertices.Length];
-        var uv2 = new Vector2[vertices.Length]; //xy pos
-        for (int i = 0, y = 0; y <= size.y; y++)
-        for (int x = 0; x <= size.x; x++, i++)
+        
+        var uvs = new Vector4[vertices.Length];
+
+        for (int i = 0, y = 0; y < size.y; y++)
+        for (int x = 0; x < size.x; x++, i+=6)
         {
-            vertices[i] = new Vector3(x, y);
-            uvs[i] = new Vector2((float) x / size.x, (float) y / size.y);
-            uv2[i] = new Vector2(x, y);
+            uvs[i + 0] = new Vector4(x, y, 0, 0);
+            uvs[i + 1] = new Vector4(x, y, 0, 1);
+            uvs[i + 2] = new Vector4(x, y, 1, 1);
+            
+            uvs[i + 3] = new Vector4(x, y, 0, 0);
+            uvs[i + 4] = new Vector4(x, y, 1, 1);
+            uvs[i + 5] = new Vector4(x, y, 1, 0);
         }
-
-        mesh.uv = uvs;
-        mesh.uv2 = uv2;
-
+        
+        mesh.SetUVs(0, uvs);
+        mesh.SetUVs(1, bary);
         return mesh;
     }
 }

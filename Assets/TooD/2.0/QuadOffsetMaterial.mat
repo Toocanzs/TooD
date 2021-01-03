@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GridOffsetMat
+  m_Name: QuadOffsetMaterial
   m_Shader: {fileID: 4800000, guid: 385d30dde6036ed499b7ccda3404f4f2, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -23,6 +23,8 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    m_Floats:
+    - _Alpha: 0
+    - _NoiseScale: 0
     m_Colors: []
   m_BuildTextureStacks: []

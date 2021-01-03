@@ -16,12 +16,35 @@ namespace TooD2
         private static ComputeShader computeShader = (ComputeShader) Resources.Load("TooD2");
         private KernelInfo DispatchRays = new KernelInfo(computeShader, "DispatchRays");
         private KernelInfo AddGutter = new KernelInfo(computeShader, "AddGutter");
+        private KernelInfo OffsetKernel = new KernelInfo(computeShader, "DoOffset");
         private float counter = 0;
 
         public TooD2Renderer(TooD2RendererData data) : base(data)
         {
             tooDSpriteRenderPass = new TooD2SpriteRenderPass();
             RenderPipelineManager.endCameraRendering += OnEndRenderingCamera;
+            RenderPipelineManager.beginFrameRendering += BeginFrameRendering;
+        }
+
+        private void BeginFrameRendering(ScriptableRenderContext context, Camera[] camera)
+        {
+            if (IrradianceManager2.Instance == null)
+                return;
+            var manager = IrradianceManager2.Instance;
+
+
+            int2 delta = manager.DoMove();
+            CommandBuffer command = CommandBufferPool.Get("TooD Setup");
+            command.Clear();
+            command.SetComputeIntParams(computeShader, "offset", -delta.x, -delta.y);
+            command.SetComputeIntParam(computeShader, "pixelsPerUnit", manager.pixelsPerUnit);
+            command.SetComputeTextureParam(computeShader, OffsetKernel.index, "OffsetInput", manager.diffuseFullScreenAverageBuffer.Current);
+            command.SetComputeTextureParam(computeShader, OffsetKernel.index, "OffsetOutput", manager.diffuseFullScreenAverageBuffer.Other);
+            command.DispatchCompute(computeShader, OffsetKernel.index, OffsetKernel.numthreads, math.int3(manager.diffuseFullScreenAverageBuffer.Dimensions, 1));
+            command.Blit(manager.diffuseFullScreenAverageBuffer.Other, manager.diffuseFullScreenAverageBuffer.Current);
+
+            context.ExecuteCommandBuffer(command);
+            command.Clear();
         }
 
         private void OnEndRenderingCamera(ScriptableRenderContext context, Camera camera)
@@ -32,33 +55,20 @@ namespace TooD2
                 return;
             counter += Time.deltaTime;
             var manager = IrradianceManager2.Instance;
+
+            CommandBuffer command = CommandBufferPool.Get("TooD Rays");
+            command.Clear();
+            
+            var bl = manager.BottomLeft;
+            command.SetGlobalVector("G_BottomLeft", new Vector4(bl.x, bl.y, 0, 0));
+            command.SetGlobalVector("G_ProbeCounts",
+                new Vector4(manager.probeCounts.x, manager.probeCounts.y, 0, 0));
+            command.SetGlobalFloat("hysteresis", manager.hysteresis);
+
             while (counter > manager.UpdateFrequency)
             {
+                manager.UpdatePhiNoise(command);
                 counter -= manager.UpdateFrequency;
-                
-                CommandBuffer command = CommandBufferPool.Get("TooD Rays");
-                command.Clear();
-
-                int2 delta = manager.DoMove();
-                command.Clear();
-                float2 worldOffset = delta;
-                float2 uvOffset = (worldOffset * manager.pixelsPerUnit) /
-                                  new float2(manager.diffuseFullScreenAverageBuffer.Dimensions);
-                command.Blit(manager.diffuseFullScreenAverageBuffer.Current,
-                    manager.diffuseFullScreenAverageBuffer.Other, Vector2.one, -uvOffset);
-
-                var bl = manager.BottomLeft;
-                command.SetGlobalVector("G_BottomLeft", new Vector4(bl.x, bl.y, 0, 0));
-                command.SetGlobalVector("G_ProbeCounts",
-                    new Vector4(manager.probeCounts.x, manager.probeCounts.y, 0, 0));
-
-                context.ExecuteCommandBuffer(command);
-                command.Clear();
-
-                manager.diffuseFullScreenAverageBuffer.Swap();
-                manager.UpdatePhiNoise();
-
-                command.SetGlobalFloat("hysteresis", manager.hysteresis);
 
                 //Send rays
                 command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseRadialBuffer",
@@ -91,13 +101,10 @@ namespace TooD2
                 DrawOffsetGrid(command, manager, 0, 1f - manager.hysteresis);
 
                 command.SetGlobalTexture("G_FullScreenAverageBuffer", manager.diffuseFullScreenAverageBuffer.Current);
-
-                context.ExecuteCommandBuffer(command);
-                command.Clear();
-                CommandBufferPool.Release(command);
-                //Make sure everything has run up to this point
-                GL.Flush();
             }
+            context.ExecuteCommandBuffer(command);
+            command.Clear();
+            CommandBufferPool.Release(command);
         }
 
         private static void DrawOffsetGrid(CommandBuffer command, IrradianceManager2 manager, int2 offset, float alpha)
@@ -109,12 +116,12 @@ namespace TooD2
                 0.01f, 100));
             var block = new MaterialPropertyBlock();
             block.SetFloat("_Alpha", alpha);
-            manager.gridOffsetMat.SetTexture("PerProbeAverageTexture", manager.diffuseAveragePerProbeBuffer);
-            manager.gridOffsetMat.SetPass(0);
-            command.DrawMesh(manager.gridMesh,
+            manager.quadsOffsetMaterial.SetTexture("PerProbeAverageTexture", manager.diffuseAveragePerProbeBuffer);
+            manager.quadsOffsetMaterial.SetPass(0);
+            command.DrawMesh(manager.quadsMesh,
                 float4x4.TRS(new float3(offset, -10), quaternion.identity,
                     new float3(manager.probeCounts.x, manager.probeCounts.y, 1)),
-                manager.gridOffsetMat, 0, 0, block);
+                manager.quadsOffsetMaterial, 0, 0, block);
         }
 
         public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)

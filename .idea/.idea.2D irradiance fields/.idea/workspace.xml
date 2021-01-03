@@ -10,7 +10,18 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad3ec9c0-88bd-4840-883e-9d906858d72e" name="Default Changelist" comment="" />
+    <list default="true" id="ad3ec9c0-88bd-4840-883e-9d906858d72e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/TooD2.compute" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TooD2.compute" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TooD/2.0/GridOffset.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TooD/2.0/GridOffset.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TooD/2.0/GridOffsetMat.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TooD/2.0/GridOffsetMat.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TooD/2.0/IrradianceManager2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TooD/2.0/IrradianceManager2.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TooD/2.0/TooD2Renderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TooD/2.0/TooD2Renderer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/scripts/DoubleBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/DoubleBuffer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/test.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/test.unity" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,56 +31,43 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/IrradianceManager2.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/TooD2Renderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/8e/83923025/ScriptableRenderContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TooD/TransferData.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/CopyToFullscreen.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TooD/2.0/TooD2Renderer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/b6/348804f4/Mathf.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/65/bb5e6ce2/Transform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/e1/434ec2da/Graphics.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/BladeTrailFalloff.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TestLineAlgorithm.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/53/19e29d33/Camera.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/d3/eb2a1c78/Quaternion.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/ec/1b0cde18/RenderPipelineManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Resources/JFA.compute" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.1/Unity.Mathematics/float3.gen.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@8.1.0/Runtime/UniversalRenderPipeline.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/KernelInfo.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.1/Unity.Mathematics/math.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/GridOffset.shader" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/TooD2Renderer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/TooD2Renderer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.1/Unity.Mathematics/float4x4.gen.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/IrradianceManager2.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/PlayerFollower.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/IrradianceManager2.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/TooD2Renderer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/test/SDF_Raycast_test.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/TooD2Renderer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/8e/83923025/ScriptableRenderContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/IrradianceManager2.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/TooD/TransferData.shader" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/IrradianceManager2.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/65/bb5e6ce2/Transform.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/TooD2Renderer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/e1/434ec2da/Graphics.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/IrradianceManager2.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/d3/eb2a1c78/Quaternion.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/ec/1b0cde18/RenderPipelineManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/fb/ced9c76e/Transform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/63DD8BF9-8CFA-4BA9-85AF-735EF1A56BA9/e0/844a6f6f/Boolean.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/3e/ef03df77/CustomRenderTextureManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.1/Unity.Mathematics/math.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/DontDestroy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/DoubleBuffer.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/IrradianceManager2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/16/de4e8700/CustomRenderTexture.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/GridOffset.shader" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/IrradianceManager2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.1/Unity.Mathematics/float4x4.gen.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TooD/TooD Unlit.shader" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/TooD2Renderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/fc/0f431cbb/CommandBuffer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/PlayerFollower.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TooD/TooDIrradianceCamera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/e2/03f9f90c/Mesh.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/BasicMovement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TooD/TooDRendererData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/test/SDF_Raycast_test.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -101,20 +99,20 @@
         <option value="$PROJECT_DIR$/Assets/TooD/2.0/IrradianceCameraController2.cs" />
         <option value="$PROJECT_DIR$/Assets/TooD/TooDRendererData.cs" />
         <option value="$PROJECT_DIR$/Assets/TooD/2.0/TooD2Data.cs" />
-        <option value="$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" />
-        <option value="$PROJECT_DIR$/Assets/scripts/DoubleBuffer.cs" />
         <option value="$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" />
         <option value="$PROJECT_DIR$/Assets/TransformExtensions.cs" />
-        <option value="$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute" />
         <option value="$PROJECT_DIR$/Assets/TooD/2.0/DebugProbes.shader" />
         <option value="$PROJECT_DIR$/Assets/Resources/Probe.cginc" />
         <option value="$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader" />
         <option value="$PROJECT_DIR$/Assets/TooD/TooD Unlit.shader" />
         <option value="$PROJECT_DIR$/Assets/TooD/2.0/PhiNoise.shader" />
+        <option value="$PROJECT_DIR$/Assets/Resources/ProbeRaycast.compute" />
         <option value="$PROJECT_DIR$/Assets/Resources/TooD2.compute" />
         <option value="$PROJECT_DIR$/Assets/TooD/2.0/GridOffset.shader" />
         <option value="$PROJECT_DIR$/Assets/TooD/2.0/TooD2Renderer.cs" />
+        <option value="$PROJECT_DIR$/Assets/scripts/DoubleBuffer.cs" />
         <option value="$PROJECT_DIR$/Assets/TooD/2.0/IrradianceManager2.cs" />
+        <option value="$PROJECT_DIR$/Assets/TooD/TooDPipeline.cs" />
       </list>
     </option>
   </component>
@@ -222,6 +220,8 @@
       <workItem from="1609285598410" duration="1537000" />
       <workItem from="1609435388763" duration="15366000" />
       <workItem from="1609546191237" duration="1095000" />
+      <workItem from="1609639240133" duration="5967000" />
+      <workItem from="1609716073289" duration="724000" />
     </task>
     <servers />
   </component>
