@@ -147,26 +147,3 @@ void AddGutter(uint3 groupID : SV_GroupID,
     //Right gutter
     DiffuseRadialBuffer[probePosToPixel(id.xy, pixelsPerProbe)] = DiffuseRadialBuffer[probePosToPixel(id.xy, 0)];
 }
-
-int2 offset;
-Texture2D<float4> OffsetInput;
-RWTexture2D<float4> OffsetOutput;
-#pragma kernel DoOffset
-[numthreads(32,32,1)]
-void DoOffset(uint3 groupID : SV_GroupID,
-               uint3 groupThreadID : SV_GroupThreadID,
-               uint groupIndex : SV_GroupIndex,
-               uint3 id : SV_DispatchThreadID)
-{
-
-    int w, h;
-    OffsetInput.GetDimensions(w, h);
-    if (any(id.xy > uint2(w, h)))
-        return;
-    float4 newColor = OffsetInput[id.xy + offset * pixelsPerUnit];
-    if(any((id.xy + offset * pixelsPerUnit) > uint2(w, h)))
-    {
-        newColor = float4(0,0,0,1);//TODO: remove
-    }
-    OffsetOutput[id.xy] = newColor;
-}

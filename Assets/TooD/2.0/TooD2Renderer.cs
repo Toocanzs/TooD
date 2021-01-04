@@ -16,9 +16,10 @@ namespace TooD2
         private static ComputeShader computeShader = (ComputeShader) Resources.Load("TooD2");
         private KernelInfo DispatchRays = new KernelInfo(computeShader, "DispatchRays");
         private KernelInfo AddGutter = new KernelInfo(computeShader, "AddGutter");
-        private KernelInfo OffsetKernel = new KernelInfo(computeShader, "DoOffset");
         private float counter = 0;
-        private static readonly int PerProbeAverageTextureId = Shader.PropertyToID("PerProbeAverageTexture");
+        
+        private static readonly int PerProbeAverageTexture = Shader.PropertyToID("PerProbeAverageTexture");
+        //TEMP RTS:
         private static readonly int TempTextureId = Shader.PropertyToID("__TEMP__TEXTURE");
 
         public TooD2Renderer(TooD2RendererData data) : base(data)
@@ -75,8 +76,8 @@ namespace TooD2
                     manager.diffuseRadialBuffer);
                 command.SetComputeTextureParam(computeShader, DispatchRays.index, "PhiNoise",
                     manager.phiNoiseBuffer);
-                command.GetTemporaryRT(PerProbeAverageTextureId, manager.diffuseAveragePerProbeBufferDescriptor);
-                command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseAveragePerProbeBuffer", PerProbeAverageTextureId);
+                command.GetTemporaryRT(PerProbeAverageTexture, manager.diffuseAveragePerProbeBufferDescriptor);
+                command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseAveragePerProbeBuffer", PerProbeAverageTexture);
                 command.SetComputeTextureParam(computeShader, DispatchRays.index, "WallBuffer", manager.wallBuffer);
                 command.SetComputeIntParam(computeShader, "pixelsPerProbe", manager.pixelsPerProbe);
                 command.SetComputeIntParam(computeShader, "pixelsPerUnit", manager.pixelsPerUnit);
@@ -101,7 +102,7 @@ namespace TooD2
                 DrawOffsetGrid(command, manager, 0, 1f - manager.hysteresis);
 
                 command.SetGlobalTexture("G_FullScreenAverageBuffer", manager.diffuseFullScreenAverageBuffer);
-                command.ReleaseTemporaryRT(PerProbeAverageTextureId);
+                command.ReleaseTemporaryRT(PerProbeAverageTexture);
             }
             context.ExecuteCommandBuffer(command);
             command.Clear();

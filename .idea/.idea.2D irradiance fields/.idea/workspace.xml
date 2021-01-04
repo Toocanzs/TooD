@@ -11,13 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad3ec9c0-88bd-4840-883e-9d906858d72e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/TooD/2.0/CommandBufferExtensions.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/TooD/2.0/CommandBufferExtensions.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TooD/2.0/IrradianceManager2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TooD/2.0/IrradianceManager2.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TooD/2.0/TooD2Renderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TooD/2.0/TooD2Renderer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/scripts/DoubleBuffer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/scripts/DoubleBuffer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +49,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/scripts/DoubleBuffer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/16/de4e8700/CustomRenderTexture.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/12/74fd5b95/RenderTextureDescriptor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.1/Unity.Mathematics/float4x4.gen.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TooD/TooD Unlit.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/fc/0f431cbb/CommandBuffer.cs" root0="SKIP_HIGHLIGHTING" />
@@ -219,7 +214,7 @@
       <workItem from="1609435388763" duration="15366000" />
       <workItem from="1609546191237" duration="1095000" />
       <workItem from="1609639240133" duration="5967000" />
-      <workItem from="1609716073289" duration="2822000" />
+      <workItem from="1609716073289" duration="3189000" />
     </task>
     <servers />
   </component>
