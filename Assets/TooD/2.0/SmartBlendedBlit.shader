@@ -1,4 +1,4 @@
-Shader "TooD/AlphaBlendedBlit"
+Shader "TooD/SmartBlendedBlit"
 {
     Properties
     {
@@ -30,10 +30,18 @@ Shader "TooD/AlphaBlendedBlit"
                     float4 vertex : SV_POSITION;
                 };
 
-                Texture2D<float4> _MainTex;//The addtive buffer
-                Texture2D<float4> OldColor;//old fullscreen colors
+                Texture2D<float4> _MainTex;
+                Texture2D<float4> OldColor;
                 SamplerState sampler_linear_repeat;
                 float Hysteresis;
+
+                float4 smartBlend(float4 newColor, float4 oldColor, float hysteresis)
+                {
+                    //expects col*a, a premultiplied
+                    float3 blend = newColor.rgb + (1.-newColor.a)*oldColor.rgb;
+                    float3 c = lerp(blend, oldColor.rgb, hysteresis);
+                    return float4(c, 1.);
+                }
 
                 v2f vert(appdata v)
                 {
@@ -45,10 +53,9 @@ Shader "TooD/AlphaBlendedBlit"
 
                 half4 frag(v2f i) : SV_Target
                 {
-                    float4 A = _MainTex.Sample(sampler_linear_repeat, i.uv);
-                    float4 B = OldColor.Sample(sampler_linear_repeat, i.uv);
-                    float3 c = lerp(B.rgb, A.rgb, Hysteresis);
-                    return float4(c, 1);
+                    float4 oldColor = OldColor.Sample(sampler_linear_repeat, i.uv);
+                    float4 newColor = _MainTex.Sample(sampler_linear_repeat, i.uv);
+                    return smartBlend(newColor, oldColor, Hysteresis);
                 }
             ENDCG
         }

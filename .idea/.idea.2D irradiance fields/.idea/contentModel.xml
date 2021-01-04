@@ -13,6 +13,7 @@
         <e p="KernelInfo.cs" t="Include" />
         <e p="Player.cs" t="Include" />
         <e p="PlayerFollower.cs" t="Include" />
+        <e p="RaycastTest.cs" t="Include" />
         <e p="Resources" t="Include">
           <e p="JFA.compute" t="Include" />
           <e p="Probe.cginc" t="Include" />
@@ -37,6 +38,7 @@
             <e p="GridOffset.shader" t="Include" />
             <e p="IrradianceManager2.cs" t="Include" />
             <e p="PhiNoise.shader" t="Include" />
+            <e p="SmartBlendedBlit.shader" t="Include" />
             <e p="TooD2Renderer.cs" t="Include" />
             <e p="TooD2RendererData.cs" t="Include" />
           </e>

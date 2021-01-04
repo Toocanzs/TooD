@@ -16,10 +16,7 @@ namespace TooD2
         
         public int MaxDirectRayLength = 900;
         [Range(0,1)]
-        public float hysteresis = 0.9f;
-        [Range(0, 500)]
-        public float UpdatePeriod = 60f;
-        public float UpdateFrequency => 1f / UpdatePeriod;
+        public float hysteresis = 0.99f;
         [HideInInspector] public Transform mainCamera;
         [HideInInspector] public new Camera camera;
         public static IrradianceManager2 Instance;
@@ -39,8 +36,8 @@ namespace TooD2
         private Mesh debugMesh;
         public Mesh quadsMesh;
         public Material debugMat;
-
         public Material quadsOffsetMaterial;
+        public Material SmartBlendedBlitMaterial;
 
         private void OnValidate()
         {

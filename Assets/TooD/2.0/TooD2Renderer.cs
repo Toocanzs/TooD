@@ -11,14 +11,15 @@ namespace TooD2
     public class TooD2Renderer : ScriptableRenderer
     {
         private TooD2SpriteRenderPass tooDSpriteRenderPass;
-        private double goldenRatio = (1d + math.sqrt(5d)) / 2d;
 
         private static ComputeShader computeShader = (ComputeShader) Resources.Load("TooD2");
         private KernelInfo DispatchRays = new KernelInfo(computeShader, "DispatchRays");
         private KernelInfo AddGutter = new KernelInfo(computeShader, "AddGutter");
-        private float counter = 0;
-        
+        private KernelInfo SumRays = new KernelInfo(computeShader, "SumRays");
+
         private static readonly int PerProbeAverageTexture = Shader.PropertyToID("PerProbeAverageTexture");
+        private static readonly int OldColorId = Shader.PropertyToID("OldColor");
+
         //TEMP RTS:
         private static readonly int TempTextureId = Shader.PropertyToID("__TEMP__TEXTURE");
 
@@ -54,75 +55,76 @@ namespace TooD2
                 return;
             if (camera != IrradianceManager2.Instance.camera)
                 return;
-            counter += Time.deltaTime;
             var manager = IrradianceManager2.Instance;
 
             CommandBuffer command = CommandBufferPool.Get("TooD Rays");
             command.Clear();
-            
+
             var bl = manager.BottomLeft;
             command.SetGlobalVector("G_BottomLeft", new Vector4(bl.x, bl.y, 0, 0));
             command.SetGlobalVector("G_ProbeCounts",
                 new Vector4(manager.probeCounts.x, manager.probeCounts.y, 0, 0));
-            command.SetGlobalFloat("hysteresis", manager.hysteresis);
+            manager.UpdatePhiNoise(command);
 
-            while (counter > manager.UpdateFrequency)
-            {
-                manager.UpdatePhiNoise(command);
-                counter -= manager.UpdateFrequency;
+            //Send rays
+            command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseRadialBuffer",
+                manager.diffuseRadialBuffer);
+            command.SetComputeTextureParam(computeShader, DispatchRays.index, "PhiNoise",
+                manager.phiNoiseBuffer);
+            command.GetTemporaryRT(PerProbeAverageTexture, manager.diffuseAveragePerProbeBufferDescriptor);
+            command.SetComputeTextureParam(computeShader, DispatchRays.index, "WallBuffer", manager.wallBuffer);
+            command.SetComputeIntParam(computeShader, "pixelsPerProbe", manager.pixelsPerProbe);
+            command.SetComputeIntParam(computeShader, "pixelsPerUnit", manager.pixelsPerUnit);
+            command.SetComputeIntParam(computeShader, "MaxDirectRayLength", manager.MaxDirectRayLength);
+            command.SetComputeIntParams(computeShader, "probeCounts", manager.probeCounts.x, manager.probeCounts.y);
+            command.SetComputeFloatParam(computeShader, "time", Time.time);
+            command.SetComputeIntParams(computeShader, "bottomLeft", bl.x, bl.y);
+            command.DispatchCompute(computeShader, DispatchRays.index, DispatchRays.numthreads,
+                new int3(manager.probeCounts, manager.pixelsPerProbe));
+            
+            command.SetComputeTextureParam(computeShader, SumRays.index, "DiffuseAveragePerProbeBuffer",
+                PerProbeAverageTexture);
+            command.SetComputeTextureParam(computeShader, SumRays.index, "DiffuseRadialBuffer",
+                manager.diffuseRadialBuffer);
+            command.DispatchCompute(computeShader, SumRays.index, SumRays.numthreads, new int3(manager.probeCounts, 1));
 
-                //Send rays
-                command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseRadialBuffer",
-                    manager.diffuseRadialBuffer);
-                command.SetComputeTextureParam(computeShader, DispatchRays.index, "PhiNoise",
-                    manager.phiNoiseBuffer);
-                command.GetTemporaryRT(PerProbeAverageTexture, manager.diffuseAveragePerProbeBufferDescriptor);
-                command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseAveragePerProbeBuffer", PerProbeAverageTexture);
-                command.SetComputeTextureParam(computeShader, DispatchRays.index, "WallBuffer", manager.wallBuffer);
-                command.SetComputeIntParam(computeShader, "pixelsPerProbe", manager.pixelsPerProbe);
-                command.SetComputeIntParam(computeShader, "pixelsPerUnit", manager.pixelsPerUnit);
-                command.SetComputeIntParam(computeShader, "MaxDirectRayLength", manager.MaxDirectRayLength);
-                command.SetComputeIntParams(computeShader, "probeCounts", manager.probeCounts.x, manager.probeCounts.y);
-                command.SetComputeFloatParam(computeShader, "time", Time.time);
-                command.SetComputeIntParams(computeShader, "bottomLeft", bl.x, bl.y);
-                command.DispatchCompute(computeShader, DispatchRays.index, DispatchRays.numthreads,
-                    new int3(manager.probeCounts, manager.pixelsPerProbe));
-
-                //Add gutter
-                command.SetComputeTextureParam(computeShader, AddGutter.index, "DiffuseRadialBuffer",
-                    manager.diffuseRadialBuffer);
-                command.DispatchCompute(computeShader, AddGutter.index, AddGutter.numthreads,
-                    new int3(manager.probeCounts, 1));
+            //Add gutter
+            command.SetComputeTextureParam(computeShader, AddGutter.index, "DiffuseRadialBuffer",
+                manager.diffuseRadialBuffer);
+            command.DispatchCompute(computeShader, AddGutter.index, AddGutter.numthreads,
+                new int3(manager.probeCounts, 1));
 
 #if DEBUG
-                command.SetGlobalTexture("G_IrradianceBand", manager.diffuseRadialBuffer);
+            command.SetGlobalTexture("G_IrradianceBand", manager.diffuseRadialBuffer);
 #endif
 
-                //Draw randomly offset grid over the fullscreen buffer
-                DrawOffsetGrid(command, manager, 0, 1f - manager.hysteresis);
-
-                command.SetGlobalTexture("G_FullScreenAverageBuffer", manager.diffuseFullScreenAverageBuffer);
-                command.ReleaseTemporaryRT(PerProbeAverageTexture);
-            }
-            context.ExecuteCommandBuffer(command);
-            command.Clear();
-            CommandBufferPool.Release(command);
-        }
-
-        private static void DrawOffsetGrid(CommandBuffer command, IrradianceManager2 manager, int2 offset, float alpha)
-        {
-            command.SetRenderTarget(manager.diffuseFullScreenAverageBuffer);
+            //Draw randomly offset grid over the fullscreen buffer
+            command.GetTemporaryRT(TempTextureId, manager.diffuseFullScreenAverageBuffer.descriptor);
+            command.SetRenderTarget(TempTextureId);
+            command.ClearRenderTarget(false, true, Color.clear);
             command.SetViewMatrix(Matrix4x4.identity);
             command.SetProjectionMatrix(Matrix4x4.Ortho(0, manager.probeCounts.x,
                 0, manager.probeCounts.y,
                 0.01f, 100));
             var block = new MaterialPropertyBlock();
-            block.SetFloat("_Alpha", alpha);
+            block.SetFloat("_Alpha", 1f - manager.hysteresis);
             manager.quadsOffsetMaterial.SetPass(0);
             command.DrawMesh(manager.quadsMesh,
-                float4x4.TRS(new float3(offset, -10), quaternion.identity,
+                float4x4.TRS(new float3(0, 0, -10), quaternion.identity,
                     new float3(manager.probeCounts.x, manager.probeCounts.y, 1)),
                 manager.quadsOffsetMaterial, 0, 0, block);
+            
+            command.GenerateTempReadableCopy(OldColorId, manager.diffuseFullScreenAverageBuffer);
+            manager.SmartBlendedBlitMaterial.SetFloat("Hysteresis", manager.hysteresis);
+            command.Blit(TempTextureId, manager.diffuseFullScreenAverageBuffer, manager.SmartBlendedBlitMaterial);
+            command.ReleaseTemporaryRT(TempTextureId);
+            command.ReleaseTemporaryRT(OldColorId);
+
+            command.SetGlobalTexture("G_FullScreenAverageBuffer", manager.diffuseFullScreenAverageBuffer);
+            command.ReleaseTemporaryRT(PerProbeAverageTexture);
+            context.ExecuteCommandBuffer(command);
+            command.Clear();
+            CommandBufferPool.Release(command);
         }
 
         public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)

@@ -358,6 +358,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followSpeed: 4
+--- !u!1 &434622570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 434622572}
+  - component: {fileID: 434622571}
+  m_Layer: 0
+  m_Name: TESt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &434622571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434622570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68d56fe93d20fd449130ca9923ac6e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &434622572
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434622570}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.7555032, y: -2.780706, z: -39.974632}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &528587654
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,21 +436,23 @@ MonoBehaviour:
   probeCounts:
     x: 40
     y: 30
-  pixelsPerProbe: 16
+  pixelsPerProbe: 256
   pixelsPerUnit: 32
   MaxDirectRayLength: 512
-  hysteresis: 0.99
-  UpdatePeriod: 200
+  hysteresis: 0.981
   mainCamera: {fileID: 251381488}
   camera: {fileID: 528587658}
   wallBuffer: {fileID: 0}
   diffuseRadialBuffer: {fileID: 0}
-  diffuseAveragePerProbeBuffer: {fileID: 0}
+  diffuseFullScreenAverageBuffer: {fileID: 0}
+  phiNoiseBuffer: {fileID: 0}
   phiNoiseMat: {fileID: 2100000, guid: 22bfee2cd601b504c860126c1181ff42, type: 2}
   debug: {fileID: 0}
   quadsMesh: {fileID: 0}
   debugMat: {fileID: 2100000, guid: cd28972762b20c041addac3580f5b7a1, type: 2}
   quadsOffsetMaterial: {fileID: 2100000, guid: 427e2f65329ab4d4f82eefc355101d60, type: 2}
+  SmartBlendedBlitMaterial: {fileID: 2100000, guid: b7c578890a29ba548aadd8739942dfc9,
+    type: 2}
 --- !u!114 &528587656
 MonoBehaviour:
   m_ObjectHideFlags: 0

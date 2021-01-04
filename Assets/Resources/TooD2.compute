@@ -15,6 +15,7 @@ int MaxDirectRayLength;
 #include "Probe.cginc"
 
 typedef float2 ProbeWorldPos;
+
 ProbeWorldPos probeToWorld(ProbePos p)
 {
     return p + bottomLeft + 0.5;
@@ -32,16 +33,20 @@ struct RaycastResult
 {
     float3 color;
     float2 endPosition;
-    bool hit;
+    //bool hit;
 };
+
 typedef float2 TexturePos;
-RaycastResult raycast(TexturePos start, float2 dir)
+
+RaycastResult raycast(TexturePos start, float ang)
 {
     RaycastResult result;
 
     result.color = 0;
     result.endPosition = start;
-    result.hit = false;
+    //result.hit = false;
+    #if 0
+    float2 dir = float2(cos(ang), sin(ang));
     //Make the direction vector have at least one side length be 1
     //That way += dir always moves at least 1 pixel
     //Since maybe division can produce something that isn't 1, just set it after
@@ -69,14 +74,49 @@ RaycastResult raycast(TexturePos start, float2 dir)
         if(color.a > 0)
         {
             result.color = color.rgb;
-            result.hit = true;
+            //result.hit = true;
             return result;
         }
     }
     return result;
+    #else
+    float2 s, a, b;
+    int2 pos = start;
+    int2 dir = int2(floor(int2(sin(ang)*MaxDirectRayLength, cos(ang)*MaxDirectRayLength)));
+    
+    if (dir.x > 0)
+    {s.x =  1; a.x =  dir.x;}
+    else
+    {s.x = -1; a.x = -dir.x;}
+    if (dir.y > 0)
+    {s.y =  1; a.y =  dir.y;}
+    else
+    {s.y = -1; a.y = -dir.y;}
+			
+    b = a + a;
+    int e   = a.y - a.x;
+    int len = a.x + a.y;
+    for (int i = 0; i < len; i++)
+    {
+        if(any(bool4(pos.xy < 0, pos.xy >= float2(pixelsPerUnit * probeCounts))))
+        {
+            return result;
+        }
+        float4 color = WallBuffer[pos];
+        if(color.a > 0)
+        {
+            result.color = color.rgb;
+            //result.hit = true;
+            return result;
+        }
+        float3 pos_e_delta = e < 0 ? float3(s.x, 0, b.y) : float3(0, s.y, -b.x);
+        pos += pos_e_delta.xy;
+        e += pos_e_delta.z; 
+    }
+    return result;
+    #endif
 }
 
-groupshared float3 sums[64];
 #define DispatchRaysThreadsX 1
 #define DispatchRaysThreadsY 1
 #define DispatchRaysThreadsZ 64
@@ -89,24 +129,23 @@ void DispatchRays(uint3 groupID : SV_GroupID,
 {
     //.xy = probe position
     //.z = ray id
-    ProbeWorldPos probeWorldPos = probeToWorld(id.xy);
+    //ProbeWorldPos probeWorldPos = probeToWorld(id.xy);
     //float3 c = HUEtoRGB(frac((float)id.z / pixelsPerProbe + (time + probeWorldPos.y * 1.681 + probeWorldPos.x * 0.63024562)));
     if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
     {
-        float oneArc = 1.0/pixelsPerProbe;
+        float oneArc = 1.0 / pixelsPerProbe;
         float rand01 = PhiNoise[probeToPixelFloat(id.xy, id.z)].z;
         float ang = TAU * (float(id.z) / pixelsPerProbe + oneArc * rand01);
         //Get random probe offset
-        float2 n = PhiNoise[probePosToPixel(0, -1)].xy;
-        float2 randomProbeOffset =  n - 0.5;
-        
-        TexturePos probePositionInWallBuffer = (probeWorldPos - bottomLeft + randomProbeOffset) * pixelsPerUnit;
-        RaycastResult result = raycast(probePositionInWallBuffer, float2(cos(ang), sin(ang)));
+        float2 n = PhiNoise[probePosToPixel(id.xy, -1)].xy;
+        float2 randomProbeOffset = n * probeCounts;
+
+        TexturePos probePositionInWallBuffer = (randomProbeOffset + 0.5) * pixelsPerUnit;
+        RaycastResult result = raycast(probePositionInWallBuffer, ang);
         float3 c = result.color;
         DiffuseRadialBuffer[probePosToPixel(id.xy, id.z)] = float4(c, 1);
-        sums[groupIndex] = c;
     }
-    GroupMemoryBarrierWithGroupSync();
+    /*GroupMemoryBarrierWithGroupSync();
     //Sum all directions
     if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
     {
@@ -129,6 +168,28 @@ void DispatchRays(uint3 groupID : SV_GroupID,
             sum = pow(max(0,sum), 1.0/1.5);
             DiffuseAveragePerProbeBuffer[id.xy] = float4(sum, 1);
         }
+    }*/
+}
+
+#pragma kernel SumRays
+[numthreads(32,32,1)]
+void SumRays(uint3 groupID : SV_GroupID,
+             uint3 groupThreadID : SV_GroupThreadID,
+             uint groupIndex : SV_GroupIndex,
+             uint3 id : SV_DispatchThreadID)
+{
+    //.xy = probe position
+    //.z = 1
+    float3 sum = 0;
+    if (!any(id.xy > uint2(probeCounts)))
+    {
+        for (int i = 0; i < pixelsPerProbe; i++)
+        {
+            sum += DiffuseRadialBuffer[probePosToPixel(id.xy, i)].rgb;
+        }
+        sum /= float(pixelsPerProbe);
+        sum = pow(max(0, sum), 1.0 / 1.5);
+        DiffuseAveragePerProbeBuffer[id.xy] = float4(sum, 1);
     }
 }
 
