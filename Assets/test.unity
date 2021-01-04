@@ -441,6 +441,7 @@ MonoBehaviour:
   MaxDirectRayLength: 512
   MaxFpsHysterisis: 0.999
   MinFpsHysterisis: 0.979
+  LightSizeMultiplier: 2.1
   mainCamera: {fileID: 251381488}
   camera: {fileID: 528587658}
   wallBuffer: {fileID: 0}

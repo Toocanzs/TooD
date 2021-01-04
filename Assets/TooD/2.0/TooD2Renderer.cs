@@ -110,6 +110,7 @@ namespace TooD2
             var block = new MaterialPropertyBlock();
             block.SetFloat("_Alpha", 1f - manager.hysteresis);
             manager.quadsOffsetMaterial.SetPass(0);
+            manager.quadsOffsetMaterial.SetFloat("LightSizeMultiplier", manager.LightSizeMultiplier);
             command.DrawMesh(manager.quadsMesh,
                 float4x4.TRS(new float3(0, 0, -10), quaternion.identity,
                     new float3(manager.probeCounts.x, manager.probeCounts.y, 1)),

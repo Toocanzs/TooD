@@ -19,6 +19,9 @@ namespace TooD2
         public float MaxFpsHysterisis = 0.999f;
         [Range(0,1)]
         public float MinFpsHysterisis = 0.979f;
+
+        [Range(1,5)]
+        public float LightSizeMultiplier = 2;
         public float hysteresis => math.lerp(MinFpsHysterisis, MaxFpsHysterisis, ((1f/Time.smoothDeltaTime) - 60f) / 500f);
         [HideInInspector] public Transform mainCamera;
         [HideInInspector] public new Camera camera;
