@@ -16,7 +16,10 @@ namespace TooD2
         
         public int MaxDirectRayLength = 900;
         [Range(0,1)]
-        public float hysteresis = 0.99f;
+        public float MaxFpsHysterisis = 0.999f;
+        [Range(0,1)]
+        public float MinFpsHysterisis = 0.979f;
+        public float hysteresis => math.lerp(MinFpsHysterisis, MaxFpsHysterisis, ((1f/Time.smoothDeltaTime) - 60f) / 500f);
         [HideInInspector] public Transform mainCamera;
         [HideInInspector] public new Camera camera;
         public static IrradianceManager2 Instance;
@@ -105,11 +108,18 @@ namespace TooD2
         }
 
         #if DEBUG
+        private int what = 0;
         private void Update()
         {
             if (Input.GetButtonDown("Jump"))
             {
                 Application.targetFrameRate = Application.targetFrameRate == -1 ? 60 : -1;
+            }
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                what = what == 0 ? 1 : 0;
+                Shader.SetGlobalInt("TEST", what);
             }
         }
         #endif

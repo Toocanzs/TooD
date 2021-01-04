@@ -64,6 +64,7 @@ namespace TooD2
             command.SetGlobalVector("G_BottomLeft", new Vector4(bl.x, bl.y, 0, 0));
             command.SetGlobalVector("G_ProbeCounts",
                 new Vector4(manager.probeCounts.x, manager.probeCounts.y, 0, 0));
+            command.SetGlobalInt("G_PixelsPerProbe", manager.pixelsPerProbe);
             manager.UpdatePhiNoise(command);
 
             //Send rays
