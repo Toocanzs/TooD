@@ -9,12 +9,12 @@ public class DoubleBuffer
 {
     private RenderTexture a, b;
 
-    private bool aIsCurrent = true;
+    //private bool aIsCurrent = true;
     
     public int2 Dimensions => new int2(Current.width, Current.height);
 
-    public RenderTexture Current => aIsCurrent ? a : b;
-    public RenderTexture Other => aIsCurrent ? b : a;
+    public RenderTexture Current => a;
+    public RenderTexture Other => b;
     public bool IsCreated => a.IsCreated() || b.IsCreated();
 
     public bool enableRandomWrite
@@ -43,9 +43,8 @@ public class DoubleBuffer
 
     /*public void Swap()
     {
-        aIsCurrent = !aIsCurrent;
+        (a, b) = (b, a);
     }*/
-    //I HATE DOUBLE BUFFERING
 
     public void Release()
     {
@@ -76,5 +75,10 @@ public static class RenderTextureExtensions
     {
         if(rt != null && rt.IsCreated)
             rt.Release();
+    }
+
+    public static int2 Dimensions(this RenderTexture rt)
+    {
+        return new int2(rt.width, rt.height);
     }
 }

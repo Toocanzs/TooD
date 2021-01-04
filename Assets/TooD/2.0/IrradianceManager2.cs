@@ -25,9 +25,10 @@ namespace TooD2
         public static IrradianceManager2 Instance;
         public RenderTexture wallBuffer;
         public RenderTexture diffuseRadialBuffer;
-        public RenderTexture diffuseAveragePerProbeBuffer;
-        public DoubleBuffer diffuseFullScreenAverageBuffer;
-        public DoubleBuffer phiNoiseBuffer;
+        public RenderTextureDescriptor diffuseAveragePerProbeBufferDescriptor;
+        public RenderTexture diffuseFullScreenAverageBuffer;
+        public RenderTexture phiNoiseBuffer;
+        private static readonly int TempPhiTextureId = Shader.PropertyToID("__TEMP__PHI__TEXTURE");
 
         public int2 BottomLeft => math.int2(transform.pos().xy) - probeCounts / 2;
 
@@ -79,29 +80,29 @@ namespace TooD2
             diffuseRadialBuffer.enableRandomWrite = true;
             diffuseRadialBuffer.Create();
             
-            diffuseAveragePerProbeBuffer = new RenderTexture(probeCounts.x, probeCounts.y,
-                0, RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
-            diffuseAveragePerProbeBuffer.enableRandomWrite = true;
-            diffuseAveragePerProbeBuffer.Create();
-            
-            diffuseFullScreenAverageBuffer = new RenderTexture(probeCounts.x * pixelsPerUnit, probeCounts.y * pixelsPerUnit, 0,
-                RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear).ToDoubleBuffer();
+            diffuseAveragePerProbeBufferDescriptor = new RenderTextureDescriptor(probeCounts.x, probeCounts.y, RenderTextureFormat.DefaultHDR, 0);
+            diffuseAveragePerProbeBufferDescriptor.sRGB = false;
+            diffuseAveragePerProbeBufferDescriptor.enableRandomWrite = true;
+
+            diffuseFullScreenAverageBuffer = new RenderTexture(probeCounts.x * pixelsPerUnit,
+                probeCounts.y * pixelsPerUnit, 0,
+                RenderTextureFormat.DefaultHDR, RenderTextureReadWrite.Linear);
             diffuseFullScreenAverageBuffer.enableRandomWrite = true;
             diffuseFullScreenAverageBuffer.Create();
 
-            phiNoiseBuffer = new RenderTexture(irradianceBandBufferSize.x + pixelsPerProbe + 2, irradianceBandBufferSize.y + 1,
-                    0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear)
-                .ToDoubleBuffer();
+            phiNoiseBuffer = new RenderTexture(irradianceBandBufferSize.x + pixelsPerProbe + 2,
+                irradianceBandBufferSize.y + 1,
+                0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear);
             phiNoiseBuffer.Create();
             InitPhiNoise();
 
-            debug = diffuseFullScreenAverageBuffer.Current;
+            debug = diffuseFullScreenAverageBuffer;
             transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = debug;//TODO: REMVOE
 
             CreateDebugMesh();
             
             quadsMesh = MeshGenerator.CreateQuadsMesh(probeCounts);
-            quadsOffsetMaterial.SetTexture("PhiNoise", phiNoiseBuffer.Current);
+            quadsOffsetMaterial.SetTexture("PhiNoise", phiNoiseBuffer);
             quadsOffsetMaterial.SetVector("probeCounts", new float4(probeCounts.x, probeCounts.y, 0, 0));
             quadsOffsetMaterial.SetInt("pixelsPerProbe", pixelsPerProbe);
         }
@@ -120,7 +121,6 @@ namespace TooD2
         {
             wallBuffer.ReleaseIfExists();
             diffuseRadialBuffer.ReleaseIfExists();
-            diffuseAveragePerProbeBuffer.ReleaseIfExists();
             phiNoiseBuffer.ReleaseIfExists();
             diffuseFullScreenAverageBuffer.ReleaseIfExists();
         }
@@ -135,14 +135,16 @@ namespace TooD2
         
         private void UpdatePhiNoise()
         {
-            Graphics.Blit(phiNoiseBuffer.Current, phiNoiseBuffer.Other, phiNoiseMat);
-            Graphics.Blit(phiNoiseBuffer.Other, phiNoiseBuffer.Current);
+            CommandBuffer command = new CommandBuffer();
+            UpdatePhiNoise(command);
+            Graphics.ExecuteCommandBuffer(command);
         }
         
         public void UpdatePhiNoise(CommandBuffer command)
         {
-            command.Blit(phiNoiseBuffer.Current, phiNoiseBuffer.Other, phiNoiseMat);
-            command.Blit(phiNoiseBuffer.Other, phiNoiseBuffer.Current);
+            command.GenerateTempReadableCopy(TempPhiTextureId, phiNoiseBuffer);
+            command.Blit(TempPhiTextureId, phiNoiseBuffer, phiNoiseMat);
+            command.ReleaseTemporaryRT(TempPhiTextureId);
         }
 
         private void CreateDebugMesh()

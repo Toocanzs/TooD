@@ -18,6 +18,8 @@ namespace TooD2
         private KernelInfo AddGutter = new KernelInfo(computeShader, "AddGutter");
         private KernelInfo OffsetKernel = new KernelInfo(computeShader, "DoOffset");
         private float counter = 0;
+        private static readonly int PerProbeAverageTextureId = Shader.PropertyToID("PerProbeAverageTexture");
+        private static readonly int TempTextureId = Shader.PropertyToID("__TEMP__TEXTURE");
 
         public TooD2Renderer(TooD2RendererData data) : base(data)
         {
@@ -36,15 +38,13 @@ namespace TooD2
             int2 delta = manager.DoMove();
             CommandBuffer command = CommandBufferPool.Get("TooD Setup");
             command.Clear();
-            command.SetComputeIntParams(computeShader, "offset", -delta.x, -delta.y);
-            command.SetComputeIntParam(computeShader, "pixelsPerUnit", manager.pixelsPerUnit);
-            command.SetComputeTextureParam(computeShader, OffsetKernel.index, "OffsetInput", manager.diffuseFullScreenAverageBuffer.Current);
-            command.SetComputeTextureParam(computeShader, OffsetKernel.index, "OffsetOutput", manager.diffuseFullScreenAverageBuffer.Other);
-            command.DispatchCompute(computeShader, OffsetKernel.index, OffsetKernel.numthreads, math.int3(manager.diffuseFullScreenAverageBuffer.Dimensions, 1));
-            command.Blit(manager.diffuseFullScreenAverageBuffer.Other, manager.diffuseFullScreenAverageBuffer.Current);
-
+            command.GenerateTempReadableCopy(TempTextureId, manager.diffuseFullScreenAverageBuffer);
+            float2 worldOffset = delta;
+            float2 uvOffset = (worldOffset * manager.pixelsPerUnit) /
+                              manager.diffuseFullScreenAverageBuffer.Dimensions();
+            command.Blit(TempTextureId, manager.diffuseFullScreenAverageBuffer, Vector2.one, -uvOffset);
+            command.ReleaseTemporaryRT(TempTextureId);
             context.ExecuteCommandBuffer(command);
-            command.Clear();
         }
 
         private void OnEndRenderingCamera(ScriptableRenderContext context, Camera camera)
@@ -74,9 +74,9 @@ namespace TooD2
                 command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseRadialBuffer",
                     manager.diffuseRadialBuffer);
                 command.SetComputeTextureParam(computeShader, DispatchRays.index, "PhiNoise",
-                    manager.phiNoiseBuffer.Current);
-                command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseAveragePerProbeBuffer",
-                    manager.diffuseAveragePerProbeBuffer);
+                    manager.phiNoiseBuffer);
+                command.GetTemporaryRT(PerProbeAverageTextureId, manager.diffuseAveragePerProbeBufferDescriptor);
+                command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseAveragePerProbeBuffer", PerProbeAverageTextureId);
                 command.SetComputeTextureParam(computeShader, DispatchRays.index, "WallBuffer", manager.wallBuffer);
                 command.SetComputeIntParam(computeShader, "pixelsPerProbe", manager.pixelsPerProbe);
                 command.SetComputeIntParam(computeShader, "pixelsPerUnit", manager.pixelsPerUnit);
@@ -100,7 +100,8 @@ namespace TooD2
                 //Draw randomly offset grid over the fullscreen buffer
                 DrawOffsetGrid(command, manager, 0, 1f - manager.hysteresis);
 
-                command.SetGlobalTexture("G_FullScreenAverageBuffer", manager.diffuseFullScreenAverageBuffer.Current);
+                command.SetGlobalTexture("G_FullScreenAverageBuffer", manager.diffuseFullScreenAverageBuffer);
+                command.ReleaseTemporaryRT(PerProbeAverageTextureId);
             }
             context.ExecuteCommandBuffer(command);
             command.Clear();
@@ -109,14 +110,13 @@ namespace TooD2
 
         private static void DrawOffsetGrid(CommandBuffer command, IrradianceManager2 manager, int2 offset, float alpha)
         {
-            command.SetRenderTarget(manager.diffuseFullScreenAverageBuffer.Current);
+            command.SetRenderTarget(manager.diffuseFullScreenAverageBuffer);
             command.SetViewMatrix(Matrix4x4.identity);
             command.SetProjectionMatrix(Matrix4x4.Ortho(0, manager.probeCounts.x,
                 0, manager.probeCounts.y,
                 0.01f, 100));
             var block = new MaterialPropertyBlock();
             block.SetFloat("_Alpha", alpha);
-            manager.quadsOffsetMaterial.SetTexture("PerProbeAverageTexture", manager.diffuseAveragePerProbeBuffer);
             manager.quadsOffsetMaterial.SetPass(0);
             command.DrawMesh(manager.quadsMesh,
                 float4x4.TRS(new float3(offset, -10), quaternion.identity,
