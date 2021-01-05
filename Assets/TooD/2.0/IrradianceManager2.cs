@@ -20,9 +20,10 @@ namespace TooD2
         [Range(0,1)]
         public float MinFpsHysterisis = 0.979f;
 
+        public float2 DarknessBias = new float2(0, 100);
+
         [Range(1,5)]
         public float LightSizeMultiplier = 2;
-        public float hysteresis => math.lerp(MinFpsHysterisis, MaxFpsHysterisis, ((1f/Time.smoothDeltaTime) - 60f) / 500f);
         [HideInInspector] public Transform mainCamera;
         [HideInInspector] public new Camera camera;
         public static IrradianceManager2 Instance;

@@ -35,11 +35,16 @@ Shader "TooD/SmartBlendedBlit"
                 SamplerState sampler_linear_repeat;
                 float Hysteresis;
 
+                float2 DarknessBias;
+
                 float4 smartBlend(float4 newColor, float4 oldColor, float hysteresis)
                 {
                     //expects col*a, a premultiplied
+                    //Lerp but with a premultiplied newColor
                     float3 blend = newColor.rgb + (1.-newColor.a)*oldColor.rgb;
-                    float3 c = lerp(blend, oldColor.rgb, hysteresis);
+                    //Bias so towards darkness so that darkness recedes faster
+                    float factor = lerp(hysteresis, 0, smoothstep(DarknessBias.x, DarknessBias.y, length(newColor)));
+                    float3 c = lerp(blend, oldColor.rgb, factor);
                     return float4(c, 1.);
                 }
 

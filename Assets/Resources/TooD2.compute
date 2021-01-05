@@ -21,14 +21,6 @@ ProbeWorldPos probeToWorld(ProbePos p)
     return p + bottomLeft + 0.5;
 }
 
-float3 HUEtoRGB(in float H)
-{
-    float R = abs(H * 6 - 3) - 1;
-    float G = 2 - abs(H * 6 - 2);
-    float B = 2 - abs(H * 6 - 4);
-    return saturate(float3(R, G, B));
-}
-
 struct RaycastResult
 {
     float3 color;
@@ -98,6 +90,7 @@ RaycastResult raycast(TexturePos start, float ang)
     int len = a.x + a.y;
     for (int i = 0; i < len; i++)
     {
+        result.endPosition = pos;
         if(any(bool4(pos.xy < 0, pos.xy >= float2(pixelsPerUnit * probeCounts))))
         {
             return result;
@@ -129,8 +122,6 @@ void DispatchRays(uint3 groupID : SV_GroupID,
 {
     //.xy = probe position
     //.z = ray id
-    //ProbeWorldPos probeWorldPos = probeToWorld(id.xy);
-    //float3 c = HUEtoRGB(frac((float)id.z / pixelsPerProbe + (time + probeWorldPos.y * 1.681 + probeWorldPos.x * 0.63024562)));
     if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
     {
         float oneArc = 1.0 / pixelsPerProbe;
@@ -142,33 +133,11 @@ void DispatchRays(uint3 groupID : SV_GroupID,
 
         TexturePos probePositionInWallBuffer = (randomProbeOffset + 0.5) * pixelsPerUnit;
         RaycastResult result = raycast(probePositionInWallBuffer, ang);
-        float3 c = result.color;
+        float d = distance(probePositionInWallBuffer, result.endPosition);
+        float attenuation = smoothstep(MaxDirectRayLength, MaxDirectRayLength/2.0, d);
+        float3 c = result.color * attenuation;
         DiffuseRadialBuffer[probePosToPixel(id.xy, id.z)] = float4(c, 1);
     }
-    /*GroupMemoryBarrierWithGroupSync();
-    //Sum all directions
-    if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
-    {
-        if (groupThreadID.z == 0)
-        {
-            //TODO: 2n loop that starts at -8 to 8 (hemisphere of 32 rays per probe)
-            //Then increment start and end and subtract arr[start] and add arr[end]
-            //Basically moving window sum
-            //We need a cosine weighted one tho so when BEFORE incrementing subtract arr[end]*dot(dir, getRayDir(end))
-            //Fallback to n*n loop if needed
-            float3 sum = 0;
-            [unroll]
-            for (int i = 0; i < pixelsPerProbe; i++)
-            {
-                sum += sums[i * DispatchRaysThreadsX * DispatchRaysThreadsY
-                    + groupThreadID.y * DispatchRaysThreadsX
-                    + groupThreadID.x];
-            }
-            sum /= float(pixelsPerProbe);
-            sum = pow(max(0,sum), 1.0/1.5);
-            DiffuseAveragePerProbeBuffer[id.xy] = float4(sum, 1);
-        }
-    }*/
 }
 
 #pragma kernel SumRays

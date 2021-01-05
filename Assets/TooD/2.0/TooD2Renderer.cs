@@ -57,6 +57,9 @@ namespace TooD2
                 return;
             var manager = IrradianceManager2.Instance;
 
+            float fps = 1f / Time.smoothDeltaTime;
+            float hysteresis = math.lerp(manager.MinFpsHysterisis, manager.MaxFpsHysterisis, math.smoothstep(60f, 600f, fps));
+
             CommandBuffer command = CommandBufferPool.Get("TooD Rays");
             command.Clear();
 
@@ -108,7 +111,7 @@ namespace TooD2
                 0, manager.probeCounts.y,
                 0.01f, 100));
             var block = new MaterialPropertyBlock();
-            block.SetFloat("_Alpha", 1f - manager.hysteresis);
+            block.SetFloat("_Alpha", 1f - hysteresis);
             manager.quadsOffsetMaterial.SetPass(0);
             manager.quadsOffsetMaterial.SetFloat("LightSizeMultiplier", manager.LightSizeMultiplier);
             command.DrawMesh(manager.quadsMesh,
@@ -117,7 +120,8 @@ namespace TooD2
                 manager.quadsOffsetMaterial, 0, 0, block);
             
             command.GenerateTempReadableCopy(OldColorId, manager.diffuseFullScreenAverageBuffer);
-            manager.SmartBlendedBlitMaterial.SetFloat("Hysteresis", manager.hysteresis);
+            manager.SmartBlendedBlitMaterial.SetFloat("Hysteresis", hysteresis);
+            manager.SmartBlendedBlitMaterial.SetVector("DarknessBias", manager.DarknessBias.xyxy);
             command.Blit(TempTextureId, manager.diffuseFullScreenAverageBuffer, manager.SmartBlendedBlitMaterial);
             command.ReleaseTemporaryRT(TempTextureId);
             command.ReleaseTemporaryRT(OldColorId);

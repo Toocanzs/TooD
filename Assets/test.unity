@@ -267,7 +267,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.098878615, g: 0.1532129, b: 0.20754719, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -441,6 +441,9 @@ MonoBehaviour:
   MaxDirectRayLength: 512
   MaxFpsHysterisis: 0.999
   MinFpsHysterisis: 0.979
+  DarknessBias:
+    x: 5
+    y: 100
   LightSizeMultiplier: 2.1
   mainCamera: {fileID: 251381488}
   camera: {fileID: 528587658}
