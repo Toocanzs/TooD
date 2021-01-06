@@ -200,12 +200,7 @@ namespace TooD2
 
         public int2 DoMove()
         {
-            if (math.distance(transform.position, mainCamera.position) > 4)
-            {
-                return SetPositionRounded(mainCamera.position);
-            }
-
-            return new int2(0, 0);
+            return SetPositionRounded(mainCamera.position);
         }
         
         private void OnDrawGizmosSelected()

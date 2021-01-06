@@ -442,8 +442,8 @@ MonoBehaviour:
   MaxFpsHysterisis: 0.999
   MinFpsHysterisis: 0.979
   DarknessBias:
-    x: 5
-    y: 100
+    x: 0
+    y: 150
   LightSizeMultiplier: 2.1
   mainCamera: {fileID: 251381488}
   camera: {fileID: 528587658}
