@@ -41,10 +41,13 @@ Shader "TooD/SmartBlendedBlit"
                 {
                     //expects col*a, a premultiplied
                     //Lerp but with a premultiplied newColor
+                    newColor.rgb = pow(newColor.rgb, 2./3);
+                    oldColor.rgb = pow(oldColor.rgb, 2./3);
                     float3 blend = newColor.rgb + (1.-newColor.a)*oldColor.rgb;
                     //Bias so towards darkness so that darkness recedes faster
                     float factor = lerp(hysteresis, 0, smoothstep(DarknessBias.x, DarknessBias.y, length(newColor)));
                     float3 c = lerp(blend, oldColor.rgb, factor);
+                    c.rgb = pow(c.rgb, 3./2);
                     return float4(c, 1.);
                 }
 

@@ -1,4 +1,7 @@
 RWTexture2D<float4> DiffuseRadialBuffer;
+Texture2D<float4> OldReflectionRadialBuffer;
+RWTexture2D<float4> ReflectionRadialBuffer;
+SamplerState samplerDiffuseRadialBuffer;
 RWTexture2D<float4> DiffuseAveragePerProbeBuffer;
 Texture2D<float4> PhiNoise;
 Texture2D<float4> WallBuffer;
@@ -24,7 +27,7 @@ ProbeWorldPos probeToWorld(ProbePos p)
 struct RaycastResult
 {
     float3 color;
-    float2 endPosition;
+    int2 endPosition;
     //bool hit;
 };
 
@@ -110,11 +113,94 @@ RaycastResult raycast(TexturePos start, float ang)
     #endif
 }
 
-#define DispatchRaysThreadsX 1
-#define DispatchRaysThreadsY 1
-#define DispatchRaysThreadsZ 64
+
+float GetAttenuation(TexturePos probePositionInWallBuffer, int2 endPos)
+{
+    float d = distance(probePositionInWallBuffer / float(pixelsPerUnit), endPos/ float(pixelsPerUnit));// divide by pixelsPerProbe to get to world space
+    float worldSpaceMaxRayLength = MaxDirectRayLength/float(pixelsPerUnit);
+    return smoothstep(worldSpaceMaxRayLength, 0, d);
+}
+
+RaycastResult CastRay(TexturePos probePositionInWallBuffer, uint3 id)
+{
+    float oneArc = 1.0 / pixelsPerProbe;
+    float rand01 = PhiNoise[probeToPixelFloat(id.xy, id.z)].z;
+    float ang = TAU * (float(id.z) / pixelsPerProbe + oneArc * rand01);
+    RaycastResult result = raycast(probePositionInWallBuffer, ang);
+    int2 endPos = result.endPosition;
+    float attenuation = GetAttenuation(probePositionInWallBuffer, endPos);
+    result.color *= attenuation;
+    return result;
+}
+
+float2 GetNormal(int2 endPos)
+{
+    float right = WallBuffer[endPos + int2(1, 0)].a;
+    float left = WallBuffer[endPos + int2(-1, 0)].a;
+    float up = WallBuffer[endPos + int2(0, 1)].a;
+    float down = WallBuffer[endPos + int2(0, -1)].a;
+    int2 dir = int2(
+     right - left,
+     up - down
+    );
+    if(all(dir == 0))
+    {
+        return 0;
+    }
+    return normalize(float2(dir));
+}
+
+#define UNITY_PI            3.14159265359f
+#define UNITY_TWO_PI        6.28318530718f
+#define UNITY_FOUR_PI       12.56637061436f
+#define UNITY_INV_PI        0.31830988618f
+#define UNITY_INV_TWO_PI    0.15915494309f
+#define UNITY_INV_FOUR_PI   0.07957747155f
+#define UNITY_HALF_PI       1.57079632679f
+#define UNITY_INV_HALF_PI   0.636619772367f
+
+float4 GetNormalColor(ProbePos probePos, float ang, float w, float h)
+{
+    int2 p = probeToPixelFloat(probePos, (1-frac(ang))*pixelsPerProbe);
+    float4 col = OldReflectionRadialBuffer[p];
+    col.rgb *= all(probePos > 0) * all(probePos < probeCounts) * all(p > 0) * all(p < int2(w,h));
+    return col;
+}
+
+float3 GetReflectionColor(TexturePos probePositionInWallBuffer, float2 normal, RaycastResult result)
+{
+    int w,h;
+    OldReflectionRadialBuffer.GetDimensions(w,h);
+    float a = (atan2(normal.y, normal.x) - UNITY_HALF_PI) * UNITY_INV_TWO_PI;
+    ProbePos BLp = int2(float2(result.endPosition)/pixelsPerUnit - 0.5);
+    ProbePos TRp = BLp + 1;
+    ProbePos BRp = BLp + int2(1,0);
+    ProbePos TLp = BLp + int2(0,1);
+
+    //float dist = distance(probePositionInWallBuffer/float(pixelsPerUnit), result.endPosition/float(pixelsPerUnit));
+
+    //rgb holds color, w holds distance
+    float4 BL = GetNormalColor(BLp, a, w, h);
+    float4 TR = GetNormalColor(TRp, a, w, h);
+    float4 BR = GetNormalColor(BRp, a, w, h);
+    float4 TL = GetNormalColor(TLp, a, w, h);
+    float l1Sum = 0;
+    l1Sum += all(BLp > 0) && all(BLp < probeCounts);
+    l1Sum += all(TRp > 0) && all(TRp < probeCounts);
+    l1Sum += all(BRp > 0) && all(BRp < probeCounts);
+    l1Sum += all(TLp > 0) && all(TLp < probeCounts);
+
+    float3 reflectionColor = 0;
+    if(!all(normal == 0))
+    {
+        reflectionColor = ((BL.rgb + TR.rgb + BR.rgb + TL.rgb)/l1Sum)*4;
+    }
+
+    float attenuation = GetAttenuation(probePositionInWallBuffer, result.endPosition);
+    return reflectionColor * attenuation;
+}
 #pragma kernel DispatchRays
-[numthreads(DispatchRaysThreadsX,DispatchRaysThreadsY,DispatchRaysThreadsZ)]
+[numthreads(1,1,64)]
 void DispatchRays(uint3 groupID : SV_GroupID,
                   uint3 groupThreadID : SV_GroupThreadID,
                   uint groupIndex : SV_GroupIndex,
@@ -124,19 +210,30 @@ void DispatchRays(uint3 groupID : SV_GroupID,
     //.z = ray id
     if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
     {
-        float oneArc = 1.0 / pixelsPerProbe;
-        float rand01 = PhiNoise[probeToPixelFloat(id.xy, id.z)].z;
-        float ang = TAU * (float(id.z) / pixelsPerProbe + oneArc * rand01);
         //Get random probe offset
-        float2 n = PhiNoise[probePosToPixel(id.xy, -1)].xy;
-        float2 randomProbeOffset = n * probeCounts;
+        {
+            float2 n = PhiNoise[probePosToPixel(id.xy, -1)].xy;
+            float2 randomProbeOffset = n * probeCounts;
+            TexturePos probePositionInWallBuffer = (randomProbeOffset + 0.5) * pixelsPerUnit;
+            RaycastResult result = CastRay(probePositionInWallBuffer, id);
+            
+            float2 normal = GetNormal(result.endPosition);
+            float3 reflectionColor = GetReflectionColor(probePositionInWallBuffer, normal, result);
+            
+            DiffuseRadialBuffer[probePosToPixel(id.xy, id.z)] = float4(result.color + reflectionColor, 1);
+        }
+        {
+            TexturePos probePositionInWallBuffer = (id.xy + 0.5) * pixelsPerUnit;
+            RaycastResult result = CastRay(probePositionInWallBuffer, id);
+            
+            float3 color = result.color;
 
-        TexturePos probePositionInWallBuffer = (randomProbeOffset + 0.5) * pixelsPerUnit;
-        RaycastResult result = raycast(probePositionInWallBuffer, ang);
-        float d = distance(probePositionInWallBuffer, result.endPosition);
-        float attenuation = smoothstep(MaxDirectRayLength, MaxDirectRayLength/2.0, d);
-        float3 c = result.color * attenuation;
-        DiffuseRadialBuffer[probePosToPixel(id.xy, id.z)] = float4(c, 1);
+            //End position is in texture space
+            float2 normal = GetNormal(result.endPosition);
+            float3 reflectionColor = GetReflectionColor(probePositionInWallBuffer, normal, result);
+            //float d = distance(result.endPosition/float(pixelsPerUnit), probePositionInWallBuffer/float(pixelsPerUnit));
+            ReflectionRadialBuffer[probePosToPixel(id.xy, id.z)] = float4(color + reflectionColor, 1);
+        }
     }
 }
 
@@ -149,18 +246,54 @@ void SumRays(uint3 groupID : SV_GroupID,
 {
     //.xy = probe position
     //.z = 1
-    float3 sum = 0;
     if (!any(id.xy > uint2(probeCounts)))
     {
+        float3 sum = 0;
         for (int i = 0; i < pixelsPerProbe; i++)
         {
             sum += DiffuseRadialBuffer[probePosToPixel(id.xy, i)].rgb;
         }
         sum /= float(pixelsPerProbe);
-        sum = pow(max(0, sum), 1.0 / 1.5);
+        sum = max(0, sum);
         DiffuseAveragePerProbeBuffer[id.xy] = float4(sum, 1);
     }
 }
+
+RWTexture2D<float4> ReflectionRadialCosineBuffer;
+
+#pragma kernel CosineWeighted
+[numthreads(32,32,1)]
+void CosineWeighted(uint3 groupID : SV_GroupID,
+             uint3 groupThreadID : SV_GroupThreadID,
+             uint groupIndex : SV_GroupIndex,
+             uint3 id : SV_DispatchThreadID)
+{
+    //.xy = probe position
+    //.z = pixelsPerProbe
+    if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
+    {
+        //for (int i = 0; i < pixelsPerProbe; i++)
+        int i = id.z;
+        {
+            float angMe = TAU * (float(i) / pixelsPerProbe);
+            float2 vecMe = float2(cos(angMe), sin(angMe));
+            float3 sum = 0;
+            for (int j = 0; j < pixelsPerProbe; j++)
+            {
+                float angOther = TAU * (float(j) / pixelsPerProbe);
+                float2 vecOther = float2(cos(angOther), sin(angOther));
+
+                float d = max(0, dot(vecMe, vecOther));
+                float4 otherColor = ReflectionRadialBuffer[probePosToPixel(id.xy, j)];
+                sum += otherColor.rgb * d;
+            }
+            sum /= pixelsPerProbe * 2;//Integral from o to pi of sin(x) = 2
+
+            ReflectionRadialCosineBuffer[probePosToPixel(id.xy, i)] = float4(sum, 1);
+        }
+    }
+}
+
 
 #pragma kernel AddGutter
 [numthreads(32,32,1)]
@@ -173,7 +306,9 @@ void AddGutter(uint3 groupID : SV_GroupID,
         return;
     //.xy = probe position
     //Left gutter
+    ReflectionRadialCosineBuffer[probePosToPixel(id.xy, -1)] = ReflectionRadialCosineBuffer[probePosToPixel(id.xy, pixelsPerProbe - 1)];
     DiffuseRadialBuffer[probePosToPixel(id.xy, -1)] = DiffuseRadialBuffer[probePosToPixel(id.xy, pixelsPerProbe - 1)];
     //Right gutter
+    ReflectionRadialCosineBuffer[probePosToPixel(id.xy, pixelsPerProbe)] = ReflectionRadialCosineBuffer[probePosToPixel(id.xy, 0)];
     DiffuseRadialBuffer[probePosToPixel(id.xy, pixelsPerProbe)] = DiffuseRadialBuffer[probePosToPixel(id.xy, 0)];
 }

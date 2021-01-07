@@ -52,8 +52,8 @@ Shader "Unlit/DebugProbes"
                 uv = frac(uv);
                 uv = -1. + 2.* uv;
                 float d = length(uv);
-                float a = atan2(uv.y, uv.x)*UNITY_INV_TWO_PI;
-                float2 p = float2(probeToPixelFloat(index, frac(a)*pixelsPerProbe));
+                float a = (atan2(uv.y, uv.x) - UNITY_HALF_PI) * UNITY_INV_TWO_PI;
+                float2 p = float2(probeToPixelFloat(index, (1-frac(a))*pixelsPerProbe));
                 p += 0.5;
                 float2 st = p/G_IrradianceBand_Size;
                 fixed4 col = tex2Dgrad(G_IrradianceBand, st, ddx(st), ddy(st));

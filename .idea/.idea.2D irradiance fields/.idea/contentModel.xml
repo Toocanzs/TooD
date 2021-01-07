@@ -41,6 +41,7 @@
             <e p="SmartBlendedBlit.shader" t="Include" />
             <e p="TooD2Renderer.cs" t="Include" />
             <e p="TooD2RendererData.cs" t="Include" />
+            <e p="TransferBlit.shader" t="Include" />
           </e>
           <e p="TooD Sprite.shader" t="Include" />
           <e p="TooD Unlit.shader" t="Include" />

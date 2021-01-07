@@ -16,8 +16,10 @@ namespace TooD2
         private KernelInfo DispatchRays = new KernelInfo(computeShader, "DispatchRays");
         private KernelInfo AddGutter = new KernelInfo(computeShader, "AddGutter");
         private KernelInfo SumRays = new KernelInfo(computeShader, "SumRays");
+        private KernelInfo CosineWeighted = new KernelInfo(computeShader, "CosineWeighted");
 
         private static readonly int PerProbeAverageTexture = Shader.PropertyToID("PerProbeAverageTexture");
+        private static readonly int OldReflectionRadialBufferId = Shader.PropertyToID("OldReflectionRadialBuffer");
         private static readonly int OldColorId = Shader.PropertyToID("OldColor");
 
         //TEMP RTS:
@@ -44,7 +46,15 @@ namespace TooD2
             float2 worldOffset = delta;
             float2 uvOffset = (worldOffset * manager.pixelsPerUnit) /
                               manager.diffuseFullScreenAverageBuffer.Dimensions();
-            command.Blit(TempTextureId, manager.diffuseFullScreenAverageBuffer, Vector2.one, -uvOffset);
+            command.SetGlobalVector("TransferBlitOffset", -uvOffset.xyxy);
+            command.Blit(TempTextureId, manager.diffuseFullScreenAverageBuffer, manager.transferBlitMaterial);
+            command.ReleaseTemporaryRT(TempTextureId);
+            command.GenerateTempReadableCopy(TempTextureId, manager.reflectionRadialCosineBuffer);
+            
+            float2 radialOffset = worldOffset * (manager.reflectionRadialCosineBuffer.Dimensions() / manager.probeCounts);
+            command.SetGlobalVector("TransferBlitOffset", -radialOffset.xyxy);
+            command.Blit(TempTextureId, manager.reflectionRadialCosineBuffer, manager.transferBlitMaterial);
+            //TODO: I don't know i guess blit with compute shader loool
             command.ReleaseTemporaryRT(TempTextureId);
             context.ExecuteCommandBuffer(command);
         }
@@ -73,6 +83,9 @@ namespace TooD2
             //Send rays
             command.SetComputeTextureParam(computeShader, DispatchRays.index, "DiffuseRadialBuffer",
                 manager.diffuseRadialBuffer);
+            command.GenerateTempReadableCopy(OldReflectionRadialBufferId, manager.reflectionRadialCosineBuffer);
+            command.SetComputeTextureParam(computeShader, DispatchRays.index, "OldReflectionRadialBuffer", OldReflectionRadialBufferId);
+            command.SetComputeTextureParam(computeShader, DispatchRays.index, "ReflectionRadialBuffer", manager.reflectionRadialBuffer);
             command.SetComputeTextureParam(computeShader, DispatchRays.index, "PhiNoise",
                 manager.phiNoiseBuffer);
             command.GetTemporaryRT(PerProbeAverageTexture, manager.diffuseAveragePerProbeBufferDescriptor);
@@ -83,9 +96,17 @@ namespace TooD2
             command.SetComputeIntParams(computeShader, "probeCounts", manager.probeCounts.x, manager.probeCounts.y);
             command.SetComputeFloatParam(computeShader, "time", Time.time);
             command.SetComputeIntParams(computeShader, "bottomLeft", bl.x, bl.y);
+
             command.DispatchCompute(computeShader, DispatchRays.index, DispatchRays.numthreads,
                 new int3(manager.probeCounts, manager.pixelsPerProbe));
+            command.ReleaseTemporaryRT(OldReflectionRadialBufferId);
             
+            //Setup cosine weighted buffer
+            command.SetComputeTextureParam(computeShader, CosineWeighted.index, "ReflectionRadialBuffer", manager.reflectionRadialBuffer);
+            command.SetComputeTextureParam(computeShader, CosineWeighted.index, "ReflectionRadialCosineBuffer", manager.reflectionRadialCosineBuffer);
+            command.DispatchCompute(computeShader, CosineWeighted.index, CosineWeighted.numthreads, new int3(manager.probeCounts, manager.pixelsPerProbe));
+
+            //Sum rays
             command.SetComputeTextureParam(computeShader, SumRays.index, "DiffuseAveragePerProbeBuffer",
                 PerProbeAverageTexture);
             command.SetComputeTextureParam(computeShader, SumRays.index, "DiffuseRadialBuffer",
@@ -95,11 +116,12 @@ namespace TooD2
             //Add gutter
             command.SetComputeTextureParam(computeShader, AddGutter.index, "DiffuseRadialBuffer",
                 manager.diffuseRadialBuffer);
+            command.SetComputeTextureParam(computeShader, AddGutter.index, "ReflectionRadialCosineBuffer", manager.reflectionRadialCosineBuffer);
             command.DispatchCompute(computeShader, AddGutter.index, AddGutter.numthreads,
                 new int3(manager.probeCounts, 1));
 
 #if DEBUG
-            command.SetGlobalTexture("G_IrradianceBand", manager.diffuseRadialBuffer);
+            command.SetGlobalTexture("G_IrradianceBand", manager.reflectionRadialCosineBuffer);
 #endif
 
             //Draw randomly offset grid over the fullscreen buffer
@@ -120,9 +142,9 @@ namespace TooD2
                 manager.quadsOffsetMaterial, 0, 0, block);
             
             command.GenerateTempReadableCopy(OldColorId, manager.diffuseFullScreenAverageBuffer);
-            manager.SmartBlendedBlitMaterial.SetFloat("Hysteresis", hysteresis);
-            manager.SmartBlendedBlitMaterial.SetVector("DarknessBias", manager.DarknessBias.xyxy);
-            command.Blit(TempTextureId, manager.diffuseFullScreenAverageBuffer, manager.SmartBlendedBlitMaterial);
+            manager.smartBlendedBlitMaterial.SetFloat("Hysteresis", hysteresis);
+            manager.smartBlendedBlitMaterial.SetVector("DarknessBias", manager.DarknessBias.xyxy);
+            command.Blit(TempTextureId, manager.diffuseFullScreenAverageBuffer, manager.smartBlendedBlitMaterial);
             command.ReleaseTemporaryRT(TempTextureId);
             command.ReleaseTemporaryRT(OldColorId);
 

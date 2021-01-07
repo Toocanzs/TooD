@@ -374,7 +374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &434622571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,7 +436,7 @@ MonoBehaviour:
   probeCounts:
     x: 40
     y: 30
-  pixelsPerProbe: 64
+  pixelsPerProbe: 128
   pixelsPerUnit: 32
   MaxDirectRayLength: 512
   MaxFpsHysterisis: 0.999
@@ -451,12 +451,16 @@ MonoBehaviour:
   diffuseRadialBuffer: {fileID: 0}
   diffuseFullScreenAverageBuffer: {fileID: 0}
   phiNoiseBuffer: {fileID: 0}
+  reflectionRadialBuffer: {fileID: 0}
+  reflectionRadialCosineBuffer: {fileID: 0}
   phiNoiseMat: {fileID: 2100000, guid: 22bfee2cd601b504c860126c1181ff42, type: 2}
   debug: {fileID: 0}
   quadsMesh: {fileID: 0}
   debugMat: {fileID: 2100000, guid: cd28972762b20c041addac3580f5b7a1, type: 2}
   quadsOffsetMaterial: {fileID: 2100000, guid: 427e2f65329ab4d4f82eefc355101d60, type: 2}
-  SmartBlendedBlitMaterial: {fileID: 2100000, guid: b7c578890a29ba548aadd8739942dfc9,
+  smartBlendedBlitMaterial: {fileID: 2100000, guid: b7c578890a29ba548aadd8739942dfc9,
+    type: 2}
+  transferBlitMaterial: {fileID: 2100000, guid: e8c108a458cf93447929465a14c9d824,
     type: 2}
 --- !u!114 &528587656
 MonoBehaviour:

@@ -105,6 +105,7 @@
                 
                 float2 LightingUvs = (i.worldPos - G_BottomLeft) / G_ProbeCounts;
                 float3 lightCol = SAMPLE_TEXTURE2D(G_FullScreenAverageBuffer, sampler_G_FullScreenAverageBuffer, LightingUvs).rgb;
+                lightCol = pow(max(lightCol, 0.), 2./3);
                 col.rgb *= lightCol.rgb;
                 return col;
             }

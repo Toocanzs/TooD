@@ -32,6 +32,8 @@ namespace TooD2
         public RenderTextureDescriptor diffuseAveragePerProbeBufferDescriptor;
         public RenderTexture diffuseFullScreenAverageBuffer;
         public RenderTexture phiNoiseBuffer;
+        public RenderTexture reflectionRadialBuffer;
+        public RenderTexture reflectionRadialCosineBuffer;
         private static readonly int TempPhiTextureId = Shader.PropertyToID("__TEMP__PHI__TEXTURE");
 
         public int2 BottomLeft => math.int2(transform.pos().xy) - probeCounts / 2;
@@ -44,8 +46,8 @@ namespace TooD2
         public Mesh quadsMesh;
         public Material debugMat;
         public Material quadsOffsetMaterial;
-        public Material SmartBlendedBlitMaterial;
-
+        public Material smartBlendedBlitMaterial;
+        public Material transferBlitMaterial;
         private void OnValidate()
         {
             camera = GetComponent<Camera>();
@@ -84,6 +86,14 @@ namespace TooD2
             diffuseRadialBuffer.enableRandomWrite = true;
             diffuseRadialBuffer.Create();
             
+            reflectionRadialBuffer = new RenderTexture(diffuseRadialBuffer);
+            reflectionRadialBuffer.enableRandomWrite = true;
+            reflectionRadialBuffer.Create();//TODO: This can be temp we just need a cosine buffer
+            
+            reflectionRadialCosineBuffer = new RenderTexture(diffuseRadialBuffer);
+            reflectionRadialCosineBuffer.enableRandomWrite = true;
+            reflectionRadialCosineBuffer.Create();
+
             diffuseAveragePerProbeBufferDescriptor = new RenderTextureDescriptor(probeCounts.x, probeCounts.y, RenderTextureFormat.DefaultHDR, 0);
             diffuseAveragePerProbeBufferDescriptor.sRGB = false;
             diffuseAveragePerProbeBufferDescriptor.enableRandomWrite = true;
@@ -100,7 +110,7 @@ namespace TooD2
             phiNoiseBuffer.Create();
             InitPhiNoise();
 
-            debug = diffuseFullScreenAverageBuffer;
+            debug = phiNoiseBuffer;
             transform.GetChild(0).GetComponent<MeshRenderer>().material.mainTexture = debug;//TODO: REMVOE
 
             CreateDebugMesh();
