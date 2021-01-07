@@ -8,9 +8,9 @@ using UnityMathematicsExtentions;
 
 namespace TooD2
 {
-    public class TooD2Renderer : ScriptableRenderer
+    public class TooDRenderer : ScriptableRenderer
     {
-        private TooD2SpriteRenderPass tooDSpriteRenderPass;
+        private TooDSpriteRenderPass tooDSpriteRenderPass;
 
         private static ComputeShader computeShader = (ComputeShader) Resources.Load("TooD2");
         private KernelInfo DispatchRays = new KernelInfo(computeShader, "DispatchRays");
@@ -25,18 +25,18 @@ namespace TooD2
         //TEMP RTS:
         private static readonly int TempTextureId = Shader.PropertyToID("__TEMP__TEXTURE");
 
-        public TooD2Renderer(TooD2RendererData data) : base(data)
+        public TooDRenderer(TooDRendererData data) : base(data)
         {
-            tooDSpriteRenderPass = new TooD2SpriteRenderPass();
+            tooDSpriteRenderPass = new TooDSpriteRenderPass();
             RenderPipelineManager.endCameraRendering += OnEndRenderingCamera;
             RenderPipelineManager.beginFrameRendering += BeginFrameRendering;
         }
 
         private void BeginFrameRendering(ScriptableRenderContext context, Camera[] camera)
         {
-            if (IrradianceManager2.Instance == null)
+            if (IrradianceManager.Instance == null)
                 return;
-            var manager = IrradianceManager2.Instance;
+            var manager = IrradianceManager.Instance;
 
 
             int2 delta = manager.DoMove();
@@ -61,11 +61,11 @@ namespace TooD2
 
         private void OnEndRenderingCamera(ScriptableRenderContext context, Camera camera)
         {
-            if (IrradianceManager2.Instance == null)
+            if (IrradianceManager.Instance == null)
                 return;
-            if (camera != IrradianceManager2.Instance.camera)
+            if (camera != IrradianceManager.Instance.camera)
                 return;
-            var manager = IrradianceManager2.Instance;
+            var manager = IrradianceManager.Instance;
 
             float fps = 1f / Time.smoothDeltaTime;
             float hysteresis = math.lerp(manager.MinFpsHysterisis, manager.MaxFpsHysterisis, math.smoothstep(60f, 600f, fps));
@@ -163,7 +163,7 @@ namespace TooD2
         }
     }
 
-    public class TooD2SpriteRenderPass : ScriptableRenderPass
+    public class TooDSpriteRenderPass : ScriptableRenderPass
     {
         static readonly List<ShaderTagId> normalShaderTags = new List<ShaderTagId> {new ShaderTagId("Universal2D")};
 
@@ -171,7 +171,7 @@ namespace TooD2
 
         static SortingLayer[] sortingLayers;
 
-        public TooD2SpriteRenderPass()
+        public TooDSpriteRenderPass()
         {
             sortingLayers = SortingLayer.layers;
         }
@@ -185,12 +185,12 @@ namespace TooD2
             var renderTargetIdentifier = colorAttachment;
             var tags = normalShaderTags;
             var clearFlags = ClearFlag.None;
-            if (camera.TryGetComponent(out TooDIrradianceCamera _) && IrradianceManager2.Instance != null)
+            if (camera.TryGetComponent(out TooDIrradianceCamera _) && IrradianceManager.Instance != null)
             {
                 tags = lightingShaderTags;
                 if (Application.isPlaying)
                 {
-                    renderTargetIdentifier = IrradianceManager2.Instance.wallBuffer;
+                    renderTargetIdentifier = IrradianceManager.Instance.wallBuffer;
                     clearFlags = ClearFlag.All;
                 }
             }

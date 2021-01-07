@@ -8,7 +8,7 @@ using UnityMathematicsExtentions;
 namespace TooD2
 {
     [RequireComponent(typeof(Camera))]
-    public class IrradianceManager2 : MonoBehaviour
+    public class IrradianceManager : MonoBehaviour
     {
         public int2 probeCounts = new int2(10, 10);
         public int pixelsPerProbe = 32;
@@ -26,7 +26,7 @@ namespace TooD2
         public float LightSizeMultiplier = 2;
         [HideInInspector] public Transform mainCamera;
         [HideInInspector] public new Camera camera;
-        public static IrradianceManager2 Instance;
+        public static IrradianceManager Instance;
         public RenderTexture wallBuffer;
         public RenderTexture diffuseRadialBuffer;
         public RenderTextureDescriptor diffuseAveragePerProbeBufferDescriptor;
@@ -59,7 +59,7 @@ namespace TooD2
         {
             if (Instance != null)
             {
-                Debug.LogError($"Duplicate instance of {nameof(IrradianceManager2)}");
+                Debug.LogError($"Duplicate instance of {nameof(IrradianceManager)}");
                 return;
             }
 
@@ -142,8 +142,10 @@ namespace TooD2
         {
             wallBuffer.ReleaseIfExists();
             diffuseRadialBuffer.ReleaseIfExists();
-            phiNoiseBuffer.ReleaseIfExists();
             diffuseFullScreenAverageBuffer.ReleaseIfExists();
+            phiNoiseBuffer.ReleaseIfExists();
+            reflectionRadialBuffer.ReleaseIfExists();
+            reflectionRadialCosineBuffer.ReleaseIfExists();
         }
 
         private void InitPhiNoise()

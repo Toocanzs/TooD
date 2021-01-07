@@ -31,24 +31,19 @@
         </e>
         <e p="TestLineAlgorithm.cs" t="Include" />
         <e p="TooD" t="Include">
-          <e p="2.0" t="Include">
-            <e p="AlphaBlendedBlit.shader" t="Include" />
-            <e p="CommandBufferExtensions.cs" t="Include" />
-            <e p="DebugProbes.shader" t="Include" />
-            <e p="GridOffset.shader" t="Include" />
-            <e p="IrradianceManager2.cs" t="Include" />
-            <e p="PhiNoise.shader" t="Include" />
-            <e p="SmartBlendedBlit.shader" t="Include" />
-            <e p="TooD2Renderer.cs" t="Include" />
-            <e p="TooD2RendererData.cs" t="Include" />
-            <e p="TransferBlit.shader" t="Include" />
-          </e>
+          <e p="AlphaBlendedBlit.shader" t="Include" />
+          <e p="CommandBufferExtensions.cs" t="Include" />
+          <e p="DebugProbes.shader" t="Include" />
+          <e p="GridOffset.shader" t="Include" />
+          <e p="IrradianceManager.cs" t="Include" />
+          <e p="PhiNoise.shader" t="Include" />
+          <e p="SmartBlendedBlit.shader" t="Include" />
           <e p="TooD Sprite.shader" t="Include" />
           <e p="TooD Unlit.shader" t="Include" />
           <e p="TooDIrradianceCamera.cs" t="Include" />
-          <e p="TooDPipeline.cs" t="Include" />
+          <e p="TooDRenderer.cs" t="Include" />
           <e p="TooDRendererData.cs" t="Include" />
-          <e p="TransferData.shader" t="Include" />
+          <e p="TransferBlit.shader" t="Include" />
         </e>
         <e p="TransformExtensions.cs" t="Include" />
       </e>

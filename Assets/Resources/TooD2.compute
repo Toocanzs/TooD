@@ -135,10 +135,10 @@ RaycastResult CastRay(TexturePos probePositionInWallBuffer, uint3 id)
 
 float2 GetNormal(int2 endPos)
 {
-    float right = WallBuffer[endPos + int2(1, 0)].a;
-    float left = WallBuffer[endPos + int2(-1, 0)].a;
-    float up = WallBuffer[endPos + int2(0, 1)].a;
-    float down = WallBuffer[endPos + int2(0, -1)].a;
+    float right = WallBuffer[endPos + int2(1, 0)].a > 0;
+    float left = WallBuffer[endPos + int2(-1, 0)].a > 0;
+    float up = WallBuffer[endPos + int2(0, 1)].a > 0;
+    float down = WallBuffer[endPos + int2(0, -1)].a > 0;
     int2 dir = int2(
      right - left,
      up - down
@@ -210,6 +210,7 @@ void DispatchRays(uint3 groupID : SV_GroupID,
     {
         //TODO: maybe this could be split into separate threads or something?
         //Get random probe offset
+        //g
         {
             float2 n = PhiNoise[probePosToPixel(id.xy, -1)].xy;
             float2 randomProbeOffset = n * probeCounts;
@@ -270,22 +271,21 @@ void CosineWeighted(uint3 groupID : SV_GroupID,
     //.z = pixelsPerProbe
     if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
     {
+        float angMe = TAU * (float(id.z) / pixelsPerProbe);
+        float2 vecMe = float2(cos(angMe), sin(angMe));
+        float3 sum = 0;
+        for (int j = 0; j < pixelsPerProbe; j++)
         {
-            float angMe = TAU * (float(id.z) / pixelsPerProbe);
-            float2 vecMe = float2(cos(angMe), sin(angMe));
-            float3 sum = 0;
-            for (int j = 0; j < pixelsPerProbe; j++)
-            {
-                float angOther = TAU * (float(j) / pixelsPerProbe);
-                float2 vecOther = float2(cos(angOther), sin(angOther));
+            float angOther = TAU * (float(j) / pixelsPerProbe);
+            float2 vecOther = float2(cos(angOther), sin(angOther));
 
-                float d = max(0, dot(vecMe, vecOther));
-                float4 otherColor = ReflectionRadialBuffer[probePosToPixel(id.xy, j)];
-                sum += otherColor.rgb * d;
-            }
-            sum /= pixelsPerProbe * 2;//Integral from 0 to pi of sin(x) = 2
-            ReflectionRadialCosineBuffer[probePosToPixel(id.xy, id.z)] = float4(sum, 1);
+            float d = max(0, dot(vecMe, vecOther));
+            float4 otherColor = ReflectionRadialBuffer[probePosToPixel(id.xy, j)];
+            sum += otherColor.rgb * d;
         }
+        sum /= pixelsPerProbe * 2;//Integral from 0 to pi of sin(x) = 2
+        ReflectionRadialCosineBuffer[probePosToPixel(id.xy, id.z)] = float4(sum, 1);
+        
     }
 }
 
