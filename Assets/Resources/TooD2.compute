@@ -177,7 +177,7 @@ float3 GetReflectionColor(TexturePos probePositionInWallBuffer, float2 normal, R
     ProbePos BRp = BLp + int2(1,0);
     ProbePos TLp = BLp + int2(0,1);
 
-    //float dist = distance(probePositionInWallBuffer/float(pixelsPerUnit), result.endPosition/float(pixelsPerUnit));
+    float dist = distance(probePositionInWallBuffer/float(pixelsPerUnit), result.endPosition/float(pixelsPerUnit));
 
     //rgb holds color, w holds distance
     float4 BL = GetNormalColor(BLp, a, w, h);
@@ -185,10 +185,16 @@ float3 GetReflectionColor(TexturePos probePositionInWallBuffer, float2 normal, R
     float4 BR = GetNormalColor(BRp, a, w, h);
     float4 TL = GetNormalColor(TLp, a, w, h);
     float l1Sum = 0;
-    l1Sum += all(BLp > 0) && all(BLp < probeCounts);
-    l1Sum += all(TRp > 0) && all(TRp < probeCounts);
-    l1Sum += all(BRp > 0) && all(BRp < probeCounts);
-    l1Sum += all(TLp > 0) && all(TLp < probeCounts);
+    float epsilon = 52.;
+    l1Sum += all(BLp > 0) && all(BLp < probeCounts);// && (BL.w < dist + epsilon);
+    l1Sum += all(TRp > 0) && all(TRp < probeCounts);// && (TR.w < dist + epsilon);
+    l1Sum += all(BRp > 0) && all(BRp < probeCounts);// && (BR.w < dist + epsilon);
+    l1Sum += all(TLp > 0) && all(TLp < probeCounts);// && (TL.w < dist + epsilon);
+
+    //BL.rgb *= BL.w < dist + epsilon;
+    //TR.rgb *= TR.w < dist + epsilon;
+    //BR.rgb *= BR.w < dist + epsilon;
+    //TL.rgb *= TL.w < dist + epsilon;
 
     float3 reflectionColor = 0;
     if(!all(normal == 0))
@@ -231,8 +237,8 @@ void DispatchRays(uint3 groupID : SV_GroupID,
             //End position is in texture space
             float2 normal = GetNormal(result.endPosition);
             float3 reflectionColor = GetReflectionColor(probePositionInWallBuffer, normal, result);
-            //float d = distance(result.endPosition/float(pixelsPerUnit), probePositionInWallBuffer/float(pixelsPerUnit));
-            ReflectionRadialBuffer[probePosToPixel(id.xy, id.z)] = float4(color + reflectionColor, 1);
+            float d = distance(result.endPosition/float(pixelsPerUnit), probePositionInWallBuffer/float(pixelsPerUnit));
+            ReflectionRadialBuffer[probePosToPixel(id.xy, id.z)] = float4(color + reflectionColor, d);
         }
     }
 }
@@ -272,10 +278,8 @@ void CosineWeighted(uint3 groupID : SV_GroupID,
     //.z = pixelsPerProbe
     if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
     {
-        //for (int i = 0; i < pixelsPerProbe; i++)
-        int i = id.z;
         {
-            float angMe = TAU * (float(i) / pixelsPerProbe);
+            float angMe = TAU * (float(id.z) / pixelsPerProbe);
             float2 vecMe = float2(cos(angMe), sin(angMe));
             float3 sum = 0;
             for (int j = 0; j < pixelsPerProbe; j++)
@@ -288,8 +292,8 @@ void CosineWeighted(uint3 groupID : SV_GroupID,
                 sum += otherColor.rgb * d;
             }
             sum /= pixelsPerProbe * 2;//Integral from o to pi of sin(x) = 2
-
-            ReflectionRadialCosineBuffer[probePosToPixel(id.xy, i)] = float4(sum, 1);
+            float dist = ReflectionRadialBuffer[probePosToPixel(id.xy, id.z)].w;
+            ReflectionRadialCosineBuffer[probePosToPixel(id.xy, id.z)] = float4(sum, dist);
         }
     }
 }
