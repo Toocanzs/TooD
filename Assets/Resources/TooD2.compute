@@ -116,9 +116,9 @@ RaycastResult raycast(TexturePos start, float ang)
 
 float GetAttenuation(TexturePos probePositionInWallBuffer, int2 endPos)
 {
-    float d = distance(probePositionInWallBuffer / float(pixelsPerUnit), endPos/ float(pixelsPerUnit));// divide by pixelsPerProbe to get to world space
-    float worldSpaceMaxRayLength = MaxDirectRayLength/float(pixelsPerUnit);
-    return smoothstep(worldSpaceMaxRayLength, 0, d);
+    //This distance should be world space (/pixelsPerUnit) but it doesn't matter cause ray length would be divided by pixelsPerUnit anyway
+    float d = distance(probePositionInWallBuffer, endPos);
+    return smoothstep(MaxDirectRayLength, 0, d);
 }
 
 RaycastResult CastRay(TexturePos probePositionInWallBuffer, uint3 id)
@@ -183,10 +183,10 @@ float3 GetReflectionColor(TexturePos probePositionInWallBuffer, float2 normal, R
     float3 BR = GetNormalColor(BRp, a, w, h);
     float3 TL = GetNormalColor(TLp, a, w, h);
     float l1Sum = 0;
-    l1Sum += all(BLp > 0) && all(BLp < probeCounts);
-    l1Sum += all(TRp > 0) && all(TRp < probeCounts);
-    l1Sum += all(BRp > 0) && all(BRp < probeCounts);
-    l1Sum += all(TLp > 0) && all(TLp < probeCounts);
+    l1Sum += all(bool4(BLp > 0, BLp < probeCounts));
+    l1Sum += all(bool4(TRp > 0, TRp < probeCounts));
+    l1Sum += all(bool4(BRp > 0, BRp < probeCounts));
+    l1Sum += all(bool4(TLp > 0, TLp < probeCounts));
 
     float3 reflectionColor = 0;
     if(!all(normal == 0))
@@ -208,6 +208,7 @@ void DispatchRays(uint3 groupID : SV_GroupID,
     //.z = ray id
     if (!any(id.xyz > uint3(probeCounts, pixelsPerProbe)))
     {
+        //TODO: maybe this could be split into separate threads or something?
         //Get random probe offset
         {
             float2 n = PhiNoise[probePosToPixel(id.xy, -1)].xy;

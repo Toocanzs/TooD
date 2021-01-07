@@ -11,7 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad3ec9c0-88bd-4840-883e-9d906858d72e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.2D irradiance fields/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/TooD2.compute" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TooD2.compute" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TooD/2.0/TooD2Renderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TooD/2.0/TooD2Renderer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/test.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/test.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +36,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/65/bb5e6ce2/Transform.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://E:/UnityEditor/2020.2.0b5/Editor/Data/CGIncludes/UnityCG.cginc" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/e1/434ec2da/Graphics.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/TooD2Renderer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/BladeTrailFalloff.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TestLineAlgorithm.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/53/19e29d33/Camera.cs" root0="SKIP_HIGHLIGHTING" />
@@ -57,8 +61,10 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/fc/0f431cbb/CommandBuffer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/PlayerFollower.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TooD/TooDIrradianceCamera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/TooD2Renderer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/03D6B81D-BDC1-44C4-8B32-6B6B735D45EF/e2/03f9f90c/Mesh.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/BasicMovement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/Unity/2017/Projects/2D irradiance fields/Assets/TooD/2.0/TooD2Renderer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TooD/TooDRendererData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/scripts/IrradianceProbeManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/test/SDF_Raycast_test.cs" root0="FORCE_HIGHLIGHTING" />
@@ -109,8 +115,8 @@
         <option value="$PROJECT_DIR$/Assets/TooD/2.0/DebugProbes.shader" />
         <option value="$PROJECT_DIR$/Assets/TooD/2.0/TransferBlit.shader" />
         <option value="$PROJECT_DIR$/Assets/TooD/2.0/IrradianceManager2.cs" />
-        <option value="$PROJECT_DIR$/Assets/TooD/2.0/TooD2Renderer.cs" />
         <option value="$PROJECT_DIR$/Assets/TooD/TooD Sprite.shader" />
+        <option value="$PROJECT_DIR$/Assets/TooD/2.0/TooD2Renderer.cs" />
         <option value="$PROJECT_DIR$/Assets/Resources/TooD2.compute" />
       </list>
     </option>
@@ -227,7 +233,9 @@
       <workItem from="1609895476142" duration="7678000" />
       <workItem from="1609904785767" duration="3044000" />
       <workItem from="1609986107529" duration="3043000" />
-      <workItem from="1609991433969" duration="658000" />
+      <workItem from="1609991433969" duration="860000" />
+      <workItem from="1609996653335" duration="509000" />
+      <workItem from="1610016257902" duration="927000" />
     </task>
     <servers />
   </component>
@@ -252,10 +260,10 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2033" y="191" width="1736" height="844" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1609801877811">
-      <screen x="1920" y="174" width="1920" height="1040" />
+    <state x="-83" y="236" width="1736" height="844" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1610017440139">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="2033" y="191" width="1736" height="844" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040/1920.174.1920.1040@0.0.1920.1040" timestamp="1609801877811" />
+    <state x="-83" y="236" width="1736" height="844" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040/1920.174.1920.1040@0.0.1920.1040" timestamp="1610017440139" />
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040/1920.174.1920.1040@1920.174.1920.1040" timestamp="1609279647863" />
     <state x="638" y="253" width="644" height="534" key="find.popup" timestamp="1609559513874">
       <screen x="0" y="0" width="1920" height="1040" />

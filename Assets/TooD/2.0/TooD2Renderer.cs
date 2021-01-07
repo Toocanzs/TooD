@@ -96,7 +96,6 @@ namespace TooD2
             command.SetComputeIntParams(computeShader, "probeCounts", manager.probeCounts.x, manager.probeCounts.y);
             command.SetComputeFloatParam(computeShader, "time", Time.time);
             command.SetComputeIntParams(computeShader, "bottomLeft", bl.x, bl.y);
-
             command.DispatchCompute(computeShader, DispatchRays.index, DispatchRays.numthreads,
                 new int3(manager.probeCounts, manager.pixelsPerProbe));
             command.ReleaseTemporaryRT(OldReflectionRadialBufferId);
