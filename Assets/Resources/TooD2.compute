@@ -33,6 +33,13 @@ struct RaycastResult
 
 typedef float2 TexturePos;
 
+float GetAttenuation(TexturePos probePositionInWallBuffer, int2 endPos)
+{
+    //This distance should be world space (/pixelsPerUnit) but it doesn't matter cause ray length would be divided by pixelsPerUnit anyway
+    float d = distance(probePositionInWallBuffer, endPos);
+    return smoothstep(MaxDirectRayLength, 0, d);
+}
+
 RaycastResult raycast(TexturePos start, float ang)
 {
     RaycastResult result;
@@ -40,45 +47,10 @@ RaycastResult raycast(TexturePos start, float ang)
     result.color = 0;
     result.endPosition = start;
     //result.hit = false;
-    #if 0
-    float2 dir = float2(cos(ang), sin(ang));
-    //Make the direction vector have at least one side length be 1
-    //That way += dir always moves at least 1 pixel
-    //Since maybe division can produce something that isn't 1, just set it after
-    if(abs(dir.x) >= abs(dir.y))
-    {
-        dir /= abs(dir.x);
-        dir.x = dir.x > 0 ? 1 : -1;//Just to be sure
-    }
-    else
-    {
-        dir /= abs(dir.y);
-        dir.y = dir.y > 0 ? 1 : -1;
-    }
 
-    for(int i = 0; i < MaxDirectRayLength; i++)
-    {
-        float2 pos = start + dir * i;
-        result.endPosition = int2(pos);
-        if(any(bool4(pos.xy < 0, pos.xy >= float2(pixelsPerUnit * probeCounts))))
-        {
-            return result;
-        }
-    
-        float4 color = WallBuffer[int2(pos)];
-        if(color.a > 0)
-        {
-            result.color = color.rgb;
-            //result.hit = true;
-            return result;
-        }
-    }
-    return result;
-    #else
     float2 s, a, b;
     int2 pos = start;
     int2 dir = int2(floor(int2(sin(ang)*MaxDirectRayLength, cos(ang)*MaxDirectRayLength)));
-    
     if (dir.x > 0)
     {s.x =  1; a.x =  dir.x;}
     else
@@ -91,34 +63,27 @@ RaycastResult raycast(TexturePos start, float ang)
     b = a + a;
     int e   = a.y - a.x;
     int len = a.x + a.y;
-    for (int i = 0; i < len; i++)
+
+    int i = 0;
+    for (i = 0; i < len; i++)
     {
         result.endPosition = pos;
         if(any(bool4(pos.xy < 0, pos.xy >= float2(pixelsPerUnit * probeCounts))))
         {
-            return result;
+            break;
         }
         float4 color = WallBuffer[pos];
-        if(color.a > 0)
+        if (any(color.rgba))
         {
-            result.color = color.rgb;
-            //result.hit = true;
-            return result;
+            result.color += color.rgb * GetAttenuation(start, pos);
         }
+        if(color.a > 0)
+            break;
         float3 pos_e_delta = e < 0 ? float3(s.x, 0, b.y) : float3(0, s.y, -b.x);
         pos += pos_e_delta.xy;
         e += pos_e_delta.z; 
     }
     return result;
-    #endif
-}
-
-
-float GetAttenuation(TexturePos probePositionInWallBuffer, int2 endPos)
-{
-    //This distance should be world space (/pixelsPerUnit) but it doesn't matter cause ray length would be divided by pixelsPerUnit anyway
-    float d = distance(probePositionInWallBuffer, endPos);
-    return smoothstep(MaxDirectRayLength, 0, d);
 }
 
 RaycastResult CastRay(TexturePos probePositionInWallBuffer, uint3 id)
@@ -127,9 +92,6 @@ RaycastResult CastRay(TexturePos probePositionInWallBuffer, uint3 id)
     float rand01 = PhiNoise[probeToPixelFloat(id.xy, id.z)].z;
     float ang = TAU * (float(id.z) / pixelsPerProbe + oneArc * rand01);
     RaycastResult result = raycast(probePositionInWallBuffer, ang);
-    int2 endPos = result.endPosition;
-    float attenuation = GetAttenuation(probePositionInWallBuffer, endPos);
-    result.color *= attenuation;
     return result;
 }
 
@@ -252,8 +214,10 @@ void SumRays(uint3 groupID : SV_GroupID,
         {
             sum += DiffuseRadialBuffer[probePosToPixel(id.xy, i)].rgb;
         }
+        //sum = clamp(0, 1000, sum);
         sum /= float(pixelsPerProbe);
         sum = max(0, sum);
+        
         DiffuseAveragePerProbeBuffer[id.xy] = float4(sum, 1);
     }
 }

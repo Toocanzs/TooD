@@ -21,12 +21,12 @@
     {
         Tags {"Queue" = "Transparent" "RenderType" = "Transparent" "RenderPipeline" = "UniversalPipeline" }
 
-        Blend SrcAlpha OneMinusSrcAlpha
         Cull Off
         ZWrite Off
 
         Pass
         {
+            Blend SrcAlpha OneMinusSrcAlpha
             Tags { "LightMode" = "Universal2D" }
             HLSLPROGRAM
             #pragma prefer_hlslcc gles
@@ -60,6 +60,7 @@
             TEXTURE2D(_MaskTex);
             SAMPLER(sampler_MaskTex);
             half4 _MainTex_ST;
+            bool _ColorFromVertex;
             
             #if USE_SHAPE_LIGHT_TYPE_0
             SHAPE_LIGHT(0)
@@ -102,6 +103,12 @@
             {
                 float4 col = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 //half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
+
+                float3 emission;
+                if(_ColorFromVertex)
+                    emission = i.color.rgb * length(_EmissionColor);
+                else
+                    emission =_EmissionColor;
                 
                 float2 LightingUvs = (i.worldPos - G_BottomLeft) / G_ProbeCounts;
                 float3 lightCol = SAMPLE_TEXTURE2D(G_FullScreenAverageBuffer, sampler_G_FullScreenAverageBuffer, LightingUvs).rgb;
@@ -114,6 +121,9 @@
         
         Pass
         {
+            Blend One Zero
+            BlendOp Add, Max
+            
             Tags { "LightMode" = "TooDLighting" }
             HLSLPROGRAM
             #pragma prefer_hlslcc gles
@@ -167,6 +177,11 @@
                 half4 main = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 //half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
                 float4 col = main;//CombinedShapeLightShared(main, mask, i.lightingUV);
+                if(_IsWall == 0)
+                {
+                    //Non wall emissives add color per step so the scale of the emission needs to be lower
+                    _EmissionColor *= 0.03;
+                }
                 clip(col.a - _Clip);
                 if(_ColorFromVertex)
                     return float4(i.color.rgb * length(_EmissionColor), _IsWall);

@@ -39,6 +39,7 @@ Shader "TooD/SmartBlendedBlit"
 
                 float4 smartBlend(float4 newColor, float4 oldColor, float hysteresis)
                 {
+                    newColor.a = clamp(newColor.a, 0, 1);
                     //expects col*a, a premultiplied
                     //Lerp but with a premultiplied newColor
                     newColor.rgb = pow(newColor.rgb, 2./3);
@@ -63,7 +64,8 @@ Shader "TooD/SmartBlendedBlit"
                 {
                     float4 oldColor = OldColor.Sample(sampler_linear_repeat, i.uv);
                     float4 newColor = _MainTex.Sample(sampler_linear_repeat, i.uv);
-                    return smartBlend(newColor, oldColor, Hysteresis);
+                    float4 returnColor = smartBlend(newColor, oldColor, Hysteresis);
+                    return returnColor;
                 }
             ENDCG
         }

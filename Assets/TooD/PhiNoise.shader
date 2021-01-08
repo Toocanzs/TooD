@@ -3,6 +3,7 @@ Shader "Unlit/PhiNoise"
     Properties
     {
         _MainTex ("Source", 2D) = "white" {}
+        _BlueNoise("Blue Noise", 2D) = "white" {}
     }
     SubShader
     {
@@ -48,6 +49,8 @@ Shader "Unlit/PhiNoise"
             #pragma multi_compile_local __ UPDATE
 
             sampler2D _MainTex;
+            Texture2D<float4> _BlueNoise;
+            float4 _BlueNoise_TexelSize;
 
             v2f vert (appdata v)
             {
@@ -63,6 +66,7 @@ Shader "Unlit/PhiNoise"
                 return frac(tex2D(_MainTex, i.uv) + 1.0/float4(phi2, phi2*phi2, phi, phi));
                 #else
                 return hash(i.uv);
+                //return frac(_BlueNoise[i.uv * _BlueNoise_TexelSize.zw] + hash(i.uv));
                 #endif
             }
             ENDCG
