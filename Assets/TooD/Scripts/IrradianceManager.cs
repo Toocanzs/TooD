@@ -251,6 +251,7 @@ public class MeshGenerator
 
         var triangles = new int[vertices.Length];
         var bary = new Vector4[vertices.Length];
+        //TODO: comment what these extra 2 per channel uvs are
         for (int ti = 0, vi = 0; ti < triangles.Length; ti += 6, vi += 6)
         {
             triangles[ti + 0] = vi + 0;

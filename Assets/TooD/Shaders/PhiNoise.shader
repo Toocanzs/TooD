@@ -65,7 +65,10 @@ Shader "Unlit/PhiNoise"
                 #ifdef UPDATE
                 return frac(tex2D(_MainTex, i.uv) + 1.0/float4(phi2, phi2*phi2, phi, phi));
                 #else
-                return hash(i.uv);
+                float4 col = hash(i.uv);
+                //float4 blue = _BlueNoise[i.uv * _BlueNoise_TexelSize.zw];
+                //col.yz = blue.xy;
+                return col;
                 //return frac(_BlueNoise[i.uv * _BlueNoise_TexelSize.zw] + hash(i.uv));
                 #endif
             }
